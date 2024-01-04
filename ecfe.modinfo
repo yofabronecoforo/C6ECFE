@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Mod id="29dfeca5-042a-4259-853d-61f554851af7" version="1.0">
+    <Properties>
+        <Name>LOC_ECFE_MOD_TITLE</Name>
+        <Teaser>LOC_ECFE_MOD_TEASER</Teaser>
+        <Description>LOC_ECFE_MOD_DESCRIPTION</Description>
+        <Authors>LOC_ECFE_MOD_AUTHORS</Authors>
+        <SpecialThanks>LOC_ECFE_MOD_SPECIALTHANKS</SpecialThanks>
+		<Stability>Beta</Stability>
+		<CompatibleVersions>2.0</CompatibleVersions>
+    </Properties>
+    <References>
+		<Mod id="1B28771A-C749-434B-9053-D1380C553DE9" title="LOC_EXPANSION1_MOD_TITLE"/>
+		<Mod id="4873eb62-8ccc-4574-b784-dda455e74e68" title="LOC_EXPANSION2_MOD_TITLE"/>
+	</References>
+    <ActionCriteria>
+		<Criteria id="ECFE" any="1">
+			<RuleSetInUse>RULESET_STANDARD,RULESET_EXPANSION_1,RULESET_EXPANSION_2</RuleSetInUse>
+		</Criteria>
+	</ActionCriteria>
+    <FrontEndActions>
+        <UpdateDatabase id="ECFE_CONFIGURATION_SCHEMA">
+			<!-- this needs to load RFE -->
+			<Properties>
+				<LoadOrder>-52</LoadOrder>
+			</Properties>
+			<!-- configuration db schema changes -->
+			<File Priority="2">ecfe/configuration/schema.sql</File>
+		</UpdateDatabase>
+        <ImportFiles id="ECFE_CONFIGURATION_DUMMY_FILES">
+            <!-- these should be overwritten by any community components that provide these contexts -->
+			<Properties>
+        		<LoadOrder>1000</LoadOrder>
+      		</Properties>
+            <Items>
+                <!-- dummy file for goody hut picker context, prevents errors in log -->
+                <File>ecfe/ui/goodyhutpicker.lua</File>
+                <!-- dummy file for natural wonder picker context, prevents errors in log -->
+				<File>ecfe/ui/naturalwonderpicker.lua</File>
+            </Items>
+        </ImportFiles>
+        <UpdateText id="ECFE_CONFIGURATION_TEXT">
+            <!-- this needs to load RFL -->
+			<Properties>
+        		<LoadOrder>2000000</LoadOrder>
+      		</Properties>
+            <!-- EN_US localized text -->
+			<File>ecfe/localization/en_us/frontend_text.xml</File>
+            <!-- ES_ES localized text -->
+			<File>ecfe/localization/es_es/frontend_text.xml</File>
+            <!-- FR_FR localized text -->
+			<File>ecfe/localization/fr_fr/frontend_text.xml</File>
+		</UpdateText>
+        <ImportFiles id="ECFE_CONFIGURATION_UI">
+            <!-- this needs to load RFL, but before community components that rely on it -->
+			<Properties>
+        		<LoadOrder>2000001</LoadOrder>
+      		</Properties>
+			<Items>
+                <!-- replacement main menu template -->
+				<File>ecfe/ui/mainmenu.xml</File>
+                <!-- new enhanced advanced setup context -->
+				<File>ecfe/ui/enhancedadvancedsetup.lua</File>
+				<File>ecfe/ui/enhancedadvancedsetup.xml</File>
+                <!-- new enhanced host game context -->
+				<File>ecfe/ui/enhancedhostgame.lua</File>
+				<File>ecfe/ui/enhancedhostgame.xml</File>
+                <!-- advanced setup & host game shared components -->
+                <File>ecfe/ui/commonfrontend.lua</File>
+                <!-- game setup logic replacements -->
+                <File>ecfe/ui/enhancedgamesetuplogic.lua</File>
+			</Items>
+		</ImportFiles>
+        <UpdateDatabase id="ECFE_CONFIGURATION_DATABASE">
+            <!-- this needs to load RFL, but before community components that rely on it -->
+			<Properties>
+        		<LoadOrder>2000002</LoadOrder>
+      		</Properties>
+            <!-- configuration database changes -->
+			<File Priority="2">ecfe/configuration/frontend.sql</File>
+        </UpdateDatabase>
+    </FrontEndActions>
+    <InGameActions>
+        <!-- load ECFE Frontend scripts here for YnAMP compatibility -->
+		<ImportFiles id="ECFE_YNAMP_LOAD_DATABASE" criteria="ECFE">
+			<Properties>
+        		<LoadOrder>2000001</LoadOrder>
+      		</Properties>
+			<File>ecfe/ui/commonfrontend.lua</File>
+			<File>ecfe/ui/enhancedadvancedsetup.lua</File>
+			<File>ecfe/ui/enhancedgamesetuplogic.lua</File>
+			<File>ecfe/ui/enhancedhostgame.lua</File>
+		</ImportFiles>
+    </InGameActions>
+    <LocalizedText>
+		<Text id="LOC_ECFE_MOD_TITLE">
+			<en_US>Enhanced Community FrontEnd</en_US>
+			<es_ES>FrontEnd Comunitario Mejorado</es_ES>
+			<fr_FR>FrontEnd Communautaire Amélioré</fr_FR>
+		</Text>
+		<Text id="LOC_ECFE_MOD_TEASER">
+			<en_US>Enables precision FrontEnd script control, and allows disparate FrontEnd mods to coexist peacefully.</en_US>
+			<es_ES>Permite un control preciso de los scripts de FrontEnd y permite que distintos mods de FrontEnd coexistan pacíficamente.</es_ES>
+			<fr_FR>Permet un contrôle précis des scripts FrontEnd et permet à des mods FrontEnd disparates de coexister pacifiquement.</fr_FR>
+		</Text>
+		<Text id="LOC_ECFE_MOD_DESCRIPTION">
+			<en_US>Enables precision FrontEnd script control, and allows disparate FrontEnd mods to coexist peacefully.</en_US>
+			<es_ES>Permite un control preciso de los scripts de FrontEnd y permite que distintos mods de FrontEnd coexistan pacíficamente.</es_ES>
+			<fr_FR>Permet un contrôle précis des scripts FrontEnd et permet à des mods FrontEnd disparates de coexister pacifiquement.</fr_FR>
+		</Text>
+		<Text id="LOC_ECFE_MOD_AUTHORS">
+			<en_US>zzragnar0kzz</en_US>
+			<es_ES>zzragnar0kzz</es_ES>
+			<fr_FR>zzragnar0kzz</fr_FR>
+		</Text>
+		<Text id="LOC_ECFE_MOD_SPECIALTHANKS">
+			<en_US>The Community</en_US>
+			<es_ES>La Comunidad</es_ES>
+			<fr_FR>La Communauté</fr_FR>
+		</Text>
+	</LocalizedText>
+    <Files>
+        <!-- configuration database changes -->
+		<File>ecfe/configuration/frontend.sql</File>
+        <!-- configuration db schema changes -->
+		<File>ecfe/configuration/schema.sql</File>
+        <!-- EN_US localized text -->
+		<File>ecfe/localization/en_us/frontend_text.xml</File>
+        <!-- ES_ES localized text -->
+		<File>ecfe/localization/es_es/frontend_text.xml</File>
+        <!-- FR_FR localized text -->
+		<File>ecfe/localization/fr_fr/frontend_text.xml</File>
+        <!-- advanced setup & host game shared components -->
+        <File>ecfe/ui/commonfrontend.lua</File>
+        <!-- new enhanced advanced setup context -->
+		<File>ecfe/ui/enhancedadvancedsetup.lua</File>
+		<File>ecfe/ui/enhancedadvancedsetup.xml</File>
+        <!-- game setup logic replacements -->
+        <File>ecfe/ui/enhancedgamesetuplogic.lua</File>
+        <!-- new enhanced host game context -->
+		<File>ecfe/ui/enhancedhostgame.lua</File>
+		<File>ecfe/ui/enhancedhostgame.xml</File>
+        <!-- dummy file for goody hut picker context, prevents errors in log -->
+        <File>ecfe/ui/goodyhutpicker.lua</File>
+        <!-- replacement main menu template -->
+		<File>ecfe/ui/mainmenu.xml</File>
+        <!-- dummy file for natural wonder picker context, prevents errors in log -->
+		<File>ecfe/ui/naturalwonderpicker.lua</File>
+    </Files>
+</Mod>
