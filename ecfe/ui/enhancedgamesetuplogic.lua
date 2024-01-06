@@ -29,6 +29,27 @@ function GameParameters_UI_CreateParameterDriver(o, parameter, ...)
 end
 
 --[[ =========================================================================
+	OVERRIDE: call original OnShutdown() and remove LuaEvent listeners for the modified Goody Hut and Natural Wonder pickers
+=========================================================================== ]]
+BASE_OnShutdown = (BASE_OnShutdown ~= nil) and BASE_OnShutdown or OnShutdown;
+function OnShutdown()
+    BASE_OnShutdown();
+    LuaEvents.GoodyHutPicker_SetParameterValues.Remove(OnSetParameterValues);         -- EGHV
+	LuaEvents.NaturalWonderPicker_SetParameterValues.Remove(OnSetParameterValues);    -- ENWS
+end
+
+--[[ =========================================================================
+	reset context pointer handlers with modified functions
+=========================================================================== ]]
+ContextPtr:SetShutdown( OnShutdown );
+
+--[[ =========================================================================
+	add new LuaEvent listeners for the modified Goody Hut and Natural Wonder pickers
+=========================================================================== ]]
+LuaEvents.GoodyHutPicker_SetParameterValues.Add(OnSetParameterValues);         -- EGHV
+LuaEvents.NaturalWonderPicker_SetParameterValues.Add(OnSetParameterValues);    -- ENWS
+
+--[[ =========================================================================
 	log successful loading of this component
 =========================================================================== ]]
 print("[i]: Finished loading EnhancedGameSetupLogic.lua, proceeding . . .");
