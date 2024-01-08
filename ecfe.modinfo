@@ -44,11 +44,11 @@
 			<Properties>
         		<LoadOrder>2000000</LoadOrder>
       		</Properties>
-            <!-- EN_US localized text -->
+            <!-- EN_US localized frontend text -->
 			<File>ecfe/localization/en_us/frontend_text.xml</File>
-            <!-- ES_ES localized text -->
+            <!-- ES_ES localized frontend text -->
 			<File>ecfe/localization/es_es/frontend_text.xml</File>
-            <!-- FR_FR localized text -->
+            <!-- FR_FR localized frontend text -->
 			<File>ecfe/localization/fr_fr/frontend_text.xml</File>
 		</UpdateText>
         <ImportFiles id="ECFE_CONFIGURATION_UI">
@@ -81,11 +81,12 @@
         </UpdateDatabase>
     </FrontEndActions>
     <InGameActions>
-        <!-- load ECFE Frontend scripts here for YnAMP compatibility -->
 		<ImportFiles id="ECFE_YNAMP_LOAD_DATABASE" criteria="ECFE">
+			<!-- this needs to load RFL -->
 			<Properties>
         		<LoadOrder>2000001</LoadOrder>
       		</Properties>
+			<!-- load ECFE Frontend scripts here for YnAMP compatibility -->
 			<File>ecfe/ui/commonfrontend.lua</File>
 			<File>ecfe/ui/enhancedadvancedsetup.lua</File>
 			<File>ecfe/ui/enhancedgamesetuplogic.lua</File>
