@@ -6,6 +6,9 @@
 
 --[[ =========================================================================
 	begin enhancedgamesetuplogic.lua configuration script
+	this file is a wrapper
+	any ECFE modifications that affect GameSetupLogic.lua, and thus both AdvancedSetup and HostGame, should go here
+	any additional modifications to GameSetupLogic will be loaded by directives at the end of this file
 =========================================================================== ]]
 print("[+]: Loading EnhancedGameSetupLogic.lua . . .");
 
@@ -31,9 +34,9 @@ end
 --[[ =========================================================================
 	OVERRIDE: call original OnShutdown() and remove LuaEvent listeners for the modified Goody Hut and Natural Wonder pickers
 =========================================================================== ]]
-BASE_OnShutdown = (BASE_OnShutdown ~= nil) and BASE_OnShutdown or OnShutdown;
-function OnShutdown()
-    BASE_OnShutdown();
+Pre_ECFE_OnShutdown = OnShutdown;
+function OnShutdown() 
+	Pre_ECFE_OnShutdown();
     LuaEvents.GoodyHutPicker_SetParameterValues.Remove(OnSetParameterValues);         -- EGHV
 	LuaEvents.NaturalWonderPicker_SetParameterValues.Remove(OnSetParameterValues);    -- ENWS
 end
@@ -48,6 +51,12 @@ ContextPtr:SetShutdown( OnShutdown );
 =========================================================================== ]]
 LuaEvents.GoodyHutPicker_SetParameterValues.Add(OnSetParameterValues);         -- EGHV
 LuaEvents.NaturalWonderPicker_SetParameterValues.Add(OnSetParameterValues);    -- ENWS
+
+--[[ =========================================================================
+	include any additional modifications to GameSetupLogic
+=========================================================================== ]]
+include("GameSetupLogic_", true);
+include("gamesetuplogic_", true);
 
 --[[ =========================================================================
 	log successful loading of this component

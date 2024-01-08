@@ -10,9 +10,8 @@
 	its job is to load, in order: 
 		(1) new common frontend components
 		(2) the last imported AdvancedSetup.lua script
-		(3) any present additional modifications to the AdvancedSetup.lua script
-		(4) ECFE modifications to the GameSetupLogic.lua script that apply to both this context and the (Enhanced)HostGame context
-		(5) any present additional modifications to the GameSetupLogic.lua script
+		(3) ECFE modifications to the GameSetupLogic.lua script that apply to both this context and the (Enhanced)HostGame context
+		(4) any additional modifications to the AdvancedSetup.lua script
 	any new ECFE modifications to AdvancedSetup, or overrides of existing code, should load after all of the above
 		see the OnShow() override below for an example
 =========================================================================== ]]
@@ -22,36 +21,21 @@ print("[+]: Loading EnhancedAdvancedSetup.lua . . .");
 --[[ =========================================================================
 	include necessary original or modified file(s) here
 =========================================================================== ]]
--- print("[+]: Including new common frontend components . . .");
 include("commonfrontend");
--- print("[i]: Common frontend components successfully included; proceeding . . .");
 print("[+]: Loading last imported AdvancedSetup.lua . . .");
 include("AdvancedSetup");
 local sAdvancedSetupSource = g_bIsEnabledYnAMP and "YnAMP" or "UI/FrontEnd/ or last imported source";
 print(string.format("[i]: Finished loading AdvancedSetup.lua from %s, proceeding . . .", sAdvancedSetupSource));
--- if g_bIsEnabledYnAMP then 
--- 	print("[i]: YnAMP AdvancedSetup.lua and any imported AdvancedSetup_*.lua file(s) successfully included; proceeding . . .");
--- else 
--- 	print("[i]: AdvancedSetup.lua successfully included from UI/FrontEnd/ or last imported source; proceeding . . .");
--- end
+include("enhancedgamesetuplogic");
 if not g_bIsEnabledYnAMP then 
-	-- print("[+]: Including any imported AdvancedSetup_*.lua file(s) . . .");
 	include("AdvancedSetup_", true);
 	include("advancedsetup_", true);
-	-- print("[i]: Imported AdvancedSetup_*.lua file(s) successfully included; proceeding . . .");
 end
--- print("[+]: Including ECFE modifications to GameSetupLogic . . .");
-include("enhancedgamesetuplogic");
--- print("[i]: ECFE modifications to GameSetupLogic successfully included; proceeding . . .");
--- print("[+]: Including any imported GameSetupLogic_*.lua file(s) . . .");
-include("GameSetupLogic_", true);
-include("gamesetuplogic_", true);
--- print("[i]: Imported GameSetupLogic_*.lua file(s) successfully included; proceeding . . .");
 
 --[[ =========================================================================
 	OVERRIDE: refresh active content tooltips and call original OnShow()
 =========================================================================== ]]
-BASE_OnShow = (BASE_OnShow ~= nil) and BASE_OnShow or OnShow;
+Pre_ECFE_OnShow = OnShow;
 function OnShow()
 	if not g_bIsEnabledYnAMP then 	-- hide YnAMP buttons if it is not enabled
 		Controls.LoadDataYnAMP:SetHide(true);
@@ -61,7 +45,7 @@ function OnShow()
 		Controls.IgnoreWarning:SetHide(false);
 	end
     RefreshActiveContentTooltips();
-    BASE_OnShow();
+	Pre_ECFE_OnShow();
 end
 
 --[[ =========================================================================

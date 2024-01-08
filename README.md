@@ -1,5 +1,10 @@
 # Enhanced Community FrontEnd (ECFE) for Civilization VI
-A mod which allows interoperation of disparate Frontend mods. Of major note, ECFE allows multiple mods to make targeted changes to Frontend context script files, which allows mods that provide wholesale replacements to one or more Frontend scripts to work with other mods that only need to add to or replace portions of the same scripts.
+A mod which allows interoperation of disparate Frontend mods.
+
+# Overview
+Of major note, ECFE allows multiple mods to make targeted changes to Frontend context script files, which allows mods that provide wholesale replacements to one or more Frontend scripts to work with other mods that only need to add to or replace small(er) portions of the same scripts.
+
+What does this mean? To a player, not much. ECFE alone changes very little that affects game setup, and nothing that affects gameplay. To a mod developer, though, ECFE allows fine control over which existing files your mod must alter. For example, if your mod is named `YourMod`, and it requires changes to the `AdvancedSetup.lua` script, instead of providing a modified version of that file which may break compatibility with other mods, you can instead make ECFE a dependency of your mod, and put those changes in a file named `AdvancedSetup_YourMod.lua`, which will be automatically loaded by ECFE with no further action required. This provides the changes you need, while preserving the original script file. More comprehensive details can be found below.
 
 New Frontend text fully localized in the following languages:
 - English (en_US)
@@ -106,9 +111,6 @@ Download the [latest release](https://github.com/zzragnar0kzz/C6ECFE/releases/la
 ### Linux
 - Native client: `"~/.local/share/aspyr-media/Sid Meier's Civilization VI/Mods"`
 - Windows client: `"~/.steam/steam/steamapps/compatdata/289070/pfx/drive_c/users/steamuser/Documents/My Games/Sid Meier's Civilization VI/Mods"`
-
-### MacOS
-TO-DO
 
 # Conflicts
 Following is a non-comprehensive list of items that may potentially cause conflicts with other content.

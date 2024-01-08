@@ -10,9 +10,8 @@
 	its job is to load, in order: 
 		(1) new common frontend components
 		(2) the last imported HostGame.lua script
-		(3) any present additional modifications to the HostGame.lua script
-		(4) ECFE modifications to the GameSetupLogic.lua script that apply to both this context and the (Enhanced)AdvancedSetup context
-		(5) any present additional modifications to the GameSetupLogic.lua script
+		(3) ECFE modifications to the GameSetupLogic.lua script that apply to both this context and the (Enhanced)AdvancedSetup context
+		(4) any additional modifications to the HostGame.lua script
 	any new ECFE modifications to HostGame, or overrides of existing code, should load after all of the above
 		see the OnShow() override below for an example
 =========================================================================== ]]
@@ -22,31 +21,21 @@ print("[+]: Loading EnhancedHostGame.lua . . .");
 --[[ =========================================================================
 	include necessary original or modified file(s) here
 =========================================================================== ]]
--- print("[+]: Including new common frontend components . . .");
 include("commonfrontend");
--- print("[i]: Common frontend components successfully included; proceeding . . .");
 print("[+]: Loading last imported HostGame.lua . . .");
 include("HostGame");
 print("[i]: Finished loading HostGame.lua from UI/FrontEnd/Multiplayer/ or last imported source; proceeding . . .");
--- print("[+]: Including any imported HostGame_*.lua file(s) . . .");
+include("enhancedgamesetuplogic");
 include("HostGame_", true);
 include("hostgame_", true);
--- print("[i]: Imported HostGame_*.lua file(s) successfully included; proceeding . . .");
--- print("[+]: Including ECFE modifications to GameSetupLogic . . .");
-include("enhancedgamesetuplogic");
--- print("[i]: ECFE modifications to GameSetupLogic successfully included; proceeding . . .");
--- print("[+]: Including any imported GameSetupLogic_*.lua file(s) . . .");
-include("GameSetupLogic_", true);
-include("gamesetuplogic_", true);
--- print("[i]: Imported GameSetupLogic_*.lua file(s) successfully included; proceeding . . .");
 
 --[[ =========================================================================
 	OVERRIDE: refresh active content tooltips and call original OnShow()
 =========================================================================== ]]
-BASE_OnShow = (BASE_OnShow ~= nil) and BASE_OnShow or OnShow;
+Pre_ECFE_OnShow = OnShow;
 function OnShow() 
     RefreshActiveContentTooltips();
-    BASE_OnShow();
+	Pre_ECFE_OnShow();
 end
 
 --[[ =========================================================================
