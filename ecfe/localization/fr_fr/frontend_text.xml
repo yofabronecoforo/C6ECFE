@@ -7,6 +7,31 @@
 <!-- localized frontend text for fr_FR -->
 <GameData>
 	<LocalizedText>
+        <!-- community ingame logging parameter -->
+        <Replace Tag="LOC_GAME_ECFE_LOGGING_NAME" Language="fr_FR">
+			<Text>Verbosité de la journalisation</Text>
+		</Replace>
+        <Replace Tag="LOC_GAME_ECFE_LOGGING_DESC" Language="fr_FR">
+			<Text>Contrôlez la verbosité de la sortie du journal du jeu pour les composants de communauté compatibles.[NEWLINE][NEWLINE]Cela ne sert à rien au-delà du dépannage et doit rester au paramètre par défaut, sauf si cela est nécessaire à cette fin.</Text>
+		</Replace>
+        <Replace Tag="LOC_ECFE_LOGGING_MINIMAL_NAME" Language="fr_FR">
+			<Text>Minimale</Text>
+		</Replace>
+        <Replace Tag="LOC_ECFE_LOGGING_MINIMAL_DESC" Language="fr_FR">
+			<Text>Journalisation minimale: ce paramètre devrait supprimer la plupart des sorties de journaux en jeu provenant des composants de la communauté compatibles.</Text>
+		</Replace>
+        <Replace Tag="LOC_ECFE_LOGGING_NORMAL_NAME" Language="fr_FR">
+			<Text>Normale</Text>
+		</Replace>
+        <Replace Tag="LOC_ECFE_LOGGING_NORMAL_DESC" Language="fr_FR">
+			<Text>Journalisation normale: ce paramètre doit enregistrer les sorties importantes du jeu provenant des composants de la communauté compatibles.[NEWLINE][NEWLINE]Ce sont les paramètres par défauts.</Text>
+		</Replace>
+        <Replace Tag="LOC_ECFE_LOGGING_VERBOSE_NAME" Language="fr_FR">
+			<Text>Verbeuse</Text>
+		</Replace>
+        <Replace Tag="LOC_ECFE_LOGGING_VERBOSE_DESC" Language="fr_FR">
+			<Text>Journalisation détaillée: ce paramètre doit enregistrer toutes les sorties du jeu provenant des composants de la communauté compatibles.</Text>
+		</Replace>
 		<!-- button labels for picker windows -->
 		<Replace Tag="LOC_SELECTION_NOTHING" Language="fr_FR">
 			<Text>Aucune sélection</Text>

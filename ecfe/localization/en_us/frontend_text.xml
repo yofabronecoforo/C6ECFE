@@ -7,6 +7,31 @@
 <!-- localized frontend text for en_US -->
 <GameData>
 	<LocalizedText>
+        <!-- community ingame logging parameter -->
+        <Replace Tag="LOC_GAME_ECFE_LOGGING_NAME" Language="en_US">
+			<Text>Logging Verbosity</Text>
+		</Replace>
+        <Replace Tag="LOC_GAME_ECFE_LOGGING_DESC" Language="en_US">
+			<Text>Control the verbosity of ingame log output for compatible community components.[NEWLINE][NEWLINE]This serves no purpose beyond troubleshooting, and should remain at the default setting unless needed for that purpose.</Text>
+		</Replace>
+        <Replace Tag="LOC_ECFE_LOGGING_MINIMAL_NAME" Language="en_US">
+			<Text>Minimal</Text>
+		</Replace>
+        <Replace Tag="LOC_ECFE_LOGGING_MINIMAL_DESC" Language="en_US">
+			<Text>Minimal logging: This setting should suppress most ingame log output from compatible community components.</Text>
+		</Replace>
+        <Replace Tag="LOC_ECFE_LOGGING_NORMAL_NAME" Language="en_US">
+			<Text>Normal</Text>
+		</Replace>
+        <Replace Tag="LOC_ECFE_LOGGING_NORMAL_DESC" Language="en_US">
+			<Text>Normal logging: This setting should log important ingame output from compatible community components.[NEWLINE][NEWLINE]This is the default setting.</Text>
+		</Replace>
+        <Replace Tag="LOC_ECFE_LOGGING_VERBOSE_NAME" Language="en_US">
+			<Text>Verbose</Text>
+		</Replace>
+        <Replace Tag="LOC_ECFE_LOGGING_VERBOSE_DESC" Language="en_US">
+			<Text>Verbose logging: This setting should log all ingame output from compatible community components.</Text>
+		</Replace>
 		<!-- button labels for picker windows -->
 		<Replace Tag="LOC_SELECTION_NOTHING" Language="en_US">
 			<Text>None selected</Text>

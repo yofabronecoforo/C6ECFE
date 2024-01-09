@@ -32,6 +32,20 @@ VALUES
     ('EGHV', 'Enhanced Goodies and Hostile Villagers', 'a4b1fac6-8c9e-4873-a1c1-7ddf08dbbf11', 0, 1, 0, 0, 1, 1, 1, 'LOC_EGHV_TT'),
     ('WGH', 'Wondrous Goody Huts', '2d90451f-08c9-47de-bce8-e9b7fdecbe92', 0, 1, 0, 0, 1, 1, 1, 'LOC_WGH_TT');
 
+-- ingamme logging parameter
+REPLACE INTO Parameters 
+    (ParameterId, Name, Description, Domain, DefaultValue, ConfigurationGroup, ConfigurationId, GroupId, SortIndex)
+VALUES
+    ('ECFE_Logging', 'LOC_GAME_ECFE_LOGGING_NAME', 'LOC_GAME_ECFE_LOGGING_DESC', 'ECFE_Logging', 2, 'Game', 'GAME_ECFE_LOGGING', 'AdvancedOptions', 2049);
+
+-- ingame logging parameter values
+REPLACE INTO DomainValues 
+    (Domain, Value, Name, Description, SortIndex)
+VALUES
+    ('ECFE_Logging', 1, 'LOC_ECFE_LOGGING_MINIMAL_NAME', 'LOC_ECFE_LOGGING_MINIMAL_DESC', 10),
+    ('ECFE_Logging', 2, 'LOC_ECFE_LOGGING_NORMAL_NAME', 'LOC_ECFE_LOGGING_NORMAL_DESC', 20),
+    ('ECFE_Logging', 3, 'LOC_ECFE_LOGGING_VERBOSE_NAME', 'LOC_ECFE_LOGGING_VERBOSE_DESC', 30);
+
 /* ###########################################################################
     end C6ECFE configuration
 ########################################################################### */

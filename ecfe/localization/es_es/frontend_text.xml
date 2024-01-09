@@ -7,6 +7,31 @@
 <!-- localized frontend text for es_ES -->
 <GameData>
 	<LocalizedText>
+        <!-- community ingame logging parameter -->
+        <Replace Tag="LOC_GAME_ECFE_LOGGING_NAME" Language="es_ES">
+			<Text>Verbosidad del registro</Text>
+		</Replace>
+        <Replace Tag="LOC_GAME_ECFE_LOGGING_DESC" Language="es_ES">
+			<Text>Controle la detalle de la salida del registro dentro del juego para componentes comunitarios compatibles.[NEWLINE][NEWLINE]Esto no sirve más que para solucionar problemas y debe permanecer en la configuración predeterminada a menos que sea necesario para ese fin.</Text>
+		</Replace>
+        <Replace Tag="LOC_ECFE_LOGGING_MINIMAL_NAME" Language="es_ES">
+			<Text>Mínimo</Text>
+		</Replace>
+        <Replace Tag="LOC_ECFE_LOGGING_MINIMAL_DESC" Language="es_ES">
+			<Text>Registro mínimo: esta configuración debería suprimir la mayor parte de la salida de registros dentro del juego de los componentes de la comunidad compatibles.</Text>
+		</Replace>
+        <Replace Tag="LOC_ECFE_LOGGING_NORMAL_NAME" Language="es_ES">
+			<Text>Normal</Text>
+		</Replace>
+        <Replace Tag="LOC_ECFE_LOGGING_NORMAL_DESC" Language="es_ES">
+			<Text>Registro normal: esta configuración debería registrar resultados importantes dentro del juego de los componentes de la comunidad compatibles.[NEWLINE][NEWLINE]Esta es la configuración predeterminada.</Text>
+		</Replace>
+        <Replace Tag="LOC_ECFE_LOGGING_VERBOSE_NAME" Language="es_ES">
+			<Text>Verboso</Text>
+		</Replace>
+        <Replace Tag="LOC_ECFE_LOGGING_VERBOSE_DESC" Language="es_ES">
+			<Text>Registro detallado: esta configuración debería registrar toda la salida del juego de los componentes de la comunidad compatibles.</Text>
+		</Replace>
 		<!-- button labels for picker windows -->
 		<Replace Tag="LOC_SELECTION_NOTHING" Language="es_ES">
 			<Text>Ninguna seleccionada</Text>
