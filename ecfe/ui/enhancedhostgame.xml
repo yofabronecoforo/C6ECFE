@@ -109,8 +109,10 @@
 					<Stack StackGrowth="Right" Size="auto,53" Anchor="R,T">
 						<Label ID="OptionTitle" Style="ShellOptionText" Anchor="L,C" String=""/>
 						<Slider ID="OptionSlider" Style="SliderControl" Size="198,13" Anchor="L,C" />
-						<Image Texture="Controls_CircleCompass" Size="52,53" Color="ShellControl">
-							<Label ID="NumberDisplay" Style="FontFlair40" String="10" Anchor="C,C" FontStyle="stroke" Color0="208,212,217,255"	Color1="0,0,0,50"/>
+						<!-- <Image Texture="Controls_CircleCompass" Size="52,53" Color="ShellControl"> -->
+						<Image Texture="Controls_CircleCompass" Size="64,53" Color="ShellControl">
+							<!-- <Label ID="NumberDisplay" Style="FontFlair40" String="10" Anchor="C,C" FontStyle="stroke" Color0="208,212,217,255"	Color1="0,0,0,50"/> -->
+							<Label ID="NumberDisplay" Style="FontFlair40" FontSize="24" String="10" Anchor="C,C" FontStyle="stroke" Color0="208,212,217,255"	Color1="0,0,0,50"/>
 						</Image>
 					</Stack>
 			</Container>
