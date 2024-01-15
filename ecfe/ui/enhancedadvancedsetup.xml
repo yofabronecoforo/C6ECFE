@@ -340,7 +340,8 @@
 			<!-- Selection Windows -->
 			<LuaContext ID="MapSelectWindow" FileName="MapSelect" Hidden="1"/>
 			<LuaContext ID="MultiSelectWindow" FileName="MultiSelectWindow" Hidden="1"/>
-			<LuaContext ID="CityStatePicker" FileName="CityStatePicker" Hidden="1"/>
+			<!-- <LuaContext ID="CityStatePicker" FileName="CityStatePicker" Hidden="1"/> -->
+			<LuaContext ID="CityStatePicker" FileName="citystatepicker" Hidden="1"/>
       		<LuaContext ID="LeaderPicker" FileName="LeaderPicker" Hidden="1"/>
 			
 			<!-- ECFE: new selection windows -->

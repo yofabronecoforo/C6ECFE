@@ -67,8 +67,11 @@ ECFE modifies the text of picker buttons to reflect the number of selected items
 ## New Picker Button Tooltip Text
 ECFE modifies the tooltip text of picker buttons to reflect the sources of available content if such sources are recognized by ECFE. These sources will vary depending on the particular picker button and will dynamically update when a recognized source is enabled or disabled via the mod manager.
 
+## CityStatePicker XML Template:
+ECFE makes cosmetic changes to the `CityStatePicker.xml` file so that its slider compass and font size align with other ECFE changes.
+
 # Limitations 
-ECFE simulates the behavior of the Ingame "ReplaceUIScript" modinfo tag, which does nothing in the Frontend. This removes the need to overwrite the aforementioned original scripts with new versions containing any necessary changes, and allows for such changes to be placed in separate files that are loaded as needed after the existing scripts are loaded. When care is exercised, this allows multiple mods to make precision changes to these scripts and interoperate with one another. Crucially, since ECFE's load order generally makes it one of the last mods loaded, if not the last one loaded, it also allows for ECFE to function alongside other mods that **DO** replace the original scripts, without resorting to a Frankenstein's monster of a single script containing changes from different mods. This functionality has been tested with YnAMP, but it *should* work with any mod that replaces the AdvancedSetup, GameSetupLogic, and/or HostGame script(s).
+ECFE simulates the behavior of the Ingame "ReplaceUIScript" modinfo tag, which does nothing in the Frontend. This removes the need to overwrite the aforementioned original scripts with new versions containing any necessary changes, and allows for such changes to be placed in separate files that are loaded as needed after the existing scripts are loaded. When care is exercised, this allows multiple mods to make precision changes to these scripts and interoperate with one another. Crucially, since ECFE's load order generally makes it one of the last mods loaded, it also allows ECFE to function alongside other mods that **DO** replace the original scripts, without resorting to a Frankenstein's monster of a single script containing changes from different mods. This functionality has been tested with YnAMP, but with some exceptions, it *should* work with any mod that replaces the AdvancedSetup, GameSetupLogic, and/or HostGame script(s).
 
 ECFE cannot make the game retain multiple versions of a script with the same name, so only the last imported version of each of these files will be used. This means other mods that overwrite one or more of these scripts will likely continue to conflict with each other.
 
@@ -89,7 +92,6 @@ ECFE was developed with the following mods enabled, and is thus known to be comp
 - Civilizations Expanded
 - CIVITAS City-States
 - Colorized Historic Moments
-- Community Quick User Interface (CQUI)
 - Enhanced Mod Manager
 - Extended Policy Cards
 - More Barbarian EXP
@@ -139,6 +141,7 @@ If your mod uses any similarly-named custom tables in this database, compatibili
 ## Frontend Context
 ECFE replaces the following existing Frontend context file(s):
 - `MainMenu.xml`
+- `CityStatePicker.xml`
 
 ECFE adds the following new Frontend context file(s):
 - `CommonFrontend.lua`
@@ -146,4 +149,4 @@ ECFE adds the following new Frontend context file(s):
 - `EnhancedGameSetupLogic.lua`
 - `EnhancedHostGame.lua` and `EnhancedHostGame.xml`
 
-If your mod replaces any of these files, compatibility issues ***WILL*** arise.
+If your mod replaces any of these files, compatibility issues **WILL** arise.
