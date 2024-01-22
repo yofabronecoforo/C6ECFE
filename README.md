@@ -40,8 +40,9 @@ This is the UI template for this context. It is essentially unchanged from the b
 2. Lua contexts are defined for the following mods that provide customized content pickers:
     - [Enhanced Goodies and Hostile Villagers (EGHV)](https://steamcommunity.com/sharedfiles/filedetails/?id=2474051781)
     - [Enhanced Natural Wonders Selection (ENWS)](https://steamcommunity.com/sharedfiles/filedetails/?id=2273495829)
+3. The compass image used by the slider parameter has been widened slightly, and the size of the font used for that parameter's value has been reduced slightly.
 
-For each Lua context defined per (2) above, ECFE provides a dummy script file that serves only to suppress error messages in the Lua.log file when that mod is not present or is disabled.
+For each Lua context defined per (2) above, ECFE provides a dummy script file that serves only to suppress error messages in the Lua.log file when the corresponding mod is not present or is disabled.
 
 ## EnhancedHostGame
 The Enhanced HostGame context is implemented as two files.
@@ -58,8 +59,9 @@ This is the UI template for this context. It is essentially unchanged from the b
 1. Lua contexts are defined for the following mods that provide customized content pickers:
     - [Enhanced Goodies and Hostile Villagers (EGHV)](https://steamcommunity.com/sharedfiles/filedetails/?id=2474051781)
     - [Enhanced Natural Wonders Selection (ENWS)](https://steamcommunity.com/sharedfiles/filedetails/?id=2273495829)
+2. The compass image used by the slider parameter has been widened slightly, and the size of the font used for that parameter's value has been reduced slightly.
 
-For each Lua context defined per (1) above, ECFE provides a dummy script file that serves only to suppress error messages in the Lua.log file when that mod is not present or is disabled.
+For each Lua context defined per (1) above, ECFE provides a dummy script file that serves only to suppress error messages in the Lua.log file when the corresponding mod is not present or is disabled.
 
 ## New Picker Button Text
 ECFE modifies the text of picker buttons to reflect the number of selected items and the number of available items at all times.
