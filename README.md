@@ -6,6 +6,8 @@ Of major note, ECFE allows multiple mods to make targeted changes to Frontend co
 
 What does this mean? To a player, not much. ECFE alone changes very little that affects game setup, and nothing that affects gameplay. To a mod developer, though, ECFE allows fine control over which existing files your mod must alter. For example, if your mod is named `YourMod`, and it requires changes to the `AdvancedSetup.lua` script, instead of providing a modified version of that file which may break compatibility with other mods, you can instead make ECFE a dependency of your mod, and put those changes in a file named `AdvancedSetup_YourMod.lua`, which will be automatically loaded by ECFE with no further action required. This provides the changes you need, while preserving the original script file.
 
+Other mods in the author's "Enhanced" series have been redesigned with the above in mind, and now depend upon ECFE; this dependency will be noted in the individual mods' README if it applies.
+
 Some limitations apply; see below for these and more comprehensive details.
 
 # Translations
@@ -36,7 +38,7 @@ This is a script wrapper for the single-player AdvancedSetup context. It consist
 
 ### File `enhancedadvancedsetup.xml`:
 This is the UI template for this context. It is essentially unchanged from the built-in `AdvancedSetup.xml` template, except for the following:
-1. UI controls specific to [Yet (not) Another Maps Pack (YnAMP)](https://steamcommunity.com/sharedfiles/filedetails/?id=871861883) are provided. If YnAMP is present and enabled, these controls will provide their normal functionality as defined by that mod's AdvancedSetup.lua script; if YnAMP is not present or is disabled, these controls will be hidden.
+1. UI controls specific to [Yet (not) Another Maps Pack (YnAMP)](https://steamcommunity.com/sharedfiles/filedetails/?id=871861883) are provided. If YnAMP is present and enabled, and its `AdvancedSetup.lua` script was the last or only one that was imported, these controls will provide their normal functionality as defined by that script. If YnAMP is not present or is disabled, these controls will be hidden; if another mod replaces `AdvancedSetup.lua` after YnAMP replaces it, these controls will be present, but may not function as intended.
 2. Lua contexts are defined for the following mods that provide customized content pickers:
     - [Enhanced Goodies and Hostile Villagers (EGHV)](https://steamcommunity.com/sharedfiles/filedetails/?id=2474051781)
     - [Enhanced Natural Wonders Selection (ENWS)](https://steamcommunity.com/sharedfiles/filedetails/?id=2273495829)
