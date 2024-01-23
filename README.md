@@ -116,7 +116,7 @@ The dynamic content tooltip feature will only apply to pickers that are recogniz
 ECFE can be installed via the Steam Workshop or GitHub.
 
 ## Automatic
-Subscribe to ECFE in the Steam Workshop to automatically download and install the latest published release, and to automatically receive any updates as they are published to the Workshop.
+[Subscribe to ECFE in the Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3145434774) to automatically download and install the latest published release, and to automatically receive any updates as they are published to the Workshop.
 
 ## Manual
 Download the [latest release](https://github.com/zzragnar0kzz/C6ECFE/releases/latest) and extract it into the game's local mods folder. Alternately, clone the repository into a new folder within the game's local mods folder using your preferred tools. To update to a newer release, clone or download the latest release as described above, overwriting any existing items in the destination folder. The local mods folder varies.
