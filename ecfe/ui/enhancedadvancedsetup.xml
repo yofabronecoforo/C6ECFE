@@ -3,6 +3,8 @@
 		Style="FontNormal14">
 
   <Include File="PopupDialog"/>
+  <!-- ECFE: community UI element instances -->
+  <Include File="communityinstances"/>
 
   <Box ID="MainGrid" Style="ShellBGBox">
 
@@ -200,7 +202,9 @@
 						<Grid ID="PlayersSection" Style="DecoGrid" Size="445,parent" Anchor="L,T" Color="30,66,96,255">
 							<Grid Size="parent,21" Texture="Shell_SectionHeader" SliceCorner="154,10" SliceTextureSize="308,21" Color="20,144,140,100" Offset="0,8">
 								<Image Texture="Controls_Gradient_HalfRadial" Color="20,144,140,100" FlipY="1" Anchor="C,T" Size="225,94"/>
-								<Label Anchor="C,C" Style="ShellOptionText" WrapWidth="320" String="LOC_PLAYERS"/>
+								<!-- <Label Anchor="C,C" Style="ShellOptionText" WrapWidth="320" String="LOC_PLAYERS"/> -->
+								<!-- ECFE: for displaying participating player count in the players stack header -->
+								<Label ID="MajorPlayerCount" Anchor="C,C" Style="ShellOptionText" WrapWidth="320" String="LOC_PLAYERS"/>
 							</Grid>
 
 							<Stack Anchor="C,T" Offset="0,50" StackGrowth="Bottom" Padding="5">
@@ -275,7 +279,7 @@
 									</Grid>
 								</Box>
 								<!-- AI Player Listing Background -->
-								<ScrollPanel  ID="NonLocalPlayersPanel" Anchor="C,C" Vertical="1" Size="parent,parent-120" AutoScrollBar="1">
+								<!-- <ScrollPanel  ID="NonLocalPlayersPanel" Anchor="C,C" Vertical="1" Size="parent,parent-120" AutoScrollBar="1">
 									<Stack ID="NonLocalPlayersStack" StackGrowth="Down" Offset="25,0" Size="parent-50,auto">
 										<Stack ID="NonLocalPlayersSlotStack" StackGrowth="Bottom" Padding="4" />
 										<GridButton ID="AddAIButton" Style="ShellButtonControlLarge" Size="parent,54" Offset="0,10" ToolTip="LOC_SETUP_ADD_AI_PLAYER_TT" String="{LOC_SETUP_ADD_AI_PLAYER:upper}">
@@ -283,7 +287,19 @@
 										</GridButton>
 									</Stack>
 									<ScrollBar Style="Slider_Blue" Anchor="R,C"/>
-								</ScrollPanel>
+								</ScrollPanel> -->
+								<!-- ECFE: put the players panel and stack in a separate box and anchor the "Add AI" button to the bottom of it -->
+								<Box Color="62,152,203,0" Anchor="C,C" Size="parent,parent-120">
+									<ScrollPanel  ID="NonLocalPlayersPanel" Anchor="C,T" Vertical="1" Size="parent,parent-50" AutoScrollBar="1">
+										<Stack ID="NonLocalPlayersStack" StackGrowth="Down" Offset="25,0" Size="parent,auto">
+											<Stack ID="NonLocalPlayersSlotStack" StackGrowth="Bottom" Padding="4" />
+										</Stack>
+										<ScrollBar Style="Slider_Blue" Anchor="R,C"/>
+									</ScrollPanel>
+									<GridButton ID="AddAIButton" Style="ShellButtonControlLarge" Size="parent,54" Anchor="C,B" Offset="0,0" ToolTip="LOC_SETUP_ADD_AI_PLAYER_TT" String="{LOC_SETUP_ADD_AI_PLAYER:upper}">
+										<Image Anchor="R,C" Offset="6,0" Texture="Shell_Add" Size="37,37"/>
+									</GridButton>
+								</Box>
 							</Stack>
 						</Grid>
 
@@ -341,6 +357,7 @@
 			<LuaContext ID="MapSelectWindow" FileName="MapSelect" Hidden="1"/>
 			<LuaContext ID="MultiSelectWindow" FileName="MultiSelectWindow" Hidden="1"/>
 			<!-- <LuaContext ID="CityStatePicker" FileName="CityStatePicker" Hidden="1"/> -->
+			<!-- ECFE: citystatepicker's slider compass and font align with similar alterations herein -->
 			<LuaContext ID="CityStatePicker" FileName="citystatepicker" Hidden="1"/>
       		<LuaContext ID="LeaderPicker" FileName="LeaderPicker" Hidden="1"/>
 			
@@ -675,5 +692,7 @@
 
   <!-- Dialog Support -->
   <MakeInstance Name="PopupDialog" />
+  <!-- ECFE: community UI element instances -->
+  <MakeInstance Name="communityinstances" />
   
 </Context>

@@ -14,9 +14,12 @@ print("[+]: Loading CommonFrontend.lua . . .");
 --[[ =========================================================================
 	global content presence booleans
 =========================================================================== ]]
+g_bIsEnabledECSS  = Modding.IsModEnabled("772960cc-ddaf-4432-870c-e97d698d7011");    -- Enhanced City-States Selection
+-- print(string.format("ECSS: %s", tostring(g_bIsEnabledECSS)));
 g_bIsEnabledEGHV  = Modding.IsModEnabled("a4b1fac6-8c9e-4873-a1c1-7ddf08dbbf11");    -- Enhanced Goodies and Hostile Villagers
 g_bIsEnabledENWS  = Modding.IsModEnabled("d0afae5b-02f8-4d01-bd54-c2bbc3d89858");    -- Enhanced Natural Wonders Selection
 g_bIsEnabledYnAMP = Modding.IsModEnabled("36e88483-48fe-4545-b85f-bafc50dde315");    -- Yet (not) Another Map Pack
+g_bIsEnabledGCM   = Modding.IsModEnabled("c185a48b-75d0-4897-9134-83308c5fe5ae");    -- Game Config Manager
 
 --[[ =========================================================================
 	global picker tooltip tables; these will be indexed by ruleset
@@ -25,6 +28,11 @@ g_tCityStatesTooltip     = {};
 g_tGoodyHutsTooltip      = {};
 g_tLeadersTooltip        = {};
 g_tNaturalWondersTooltip = {};
+
+--[[ =========================================================================
+	global strings
+=========================================================================== ]]
+g_sRowOfDashes = "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -";
 
 --[[ =========================================================================
 	NEW: append localized text to picker tooltips
@@ -156,7 +164,9 @@ function CreatePickerDriverByParameter(o, parameter, parent)
 			local valueAmount :number = 0;
 
 			local priorityAmount :number = 0;
-			if (parameterId == "NaturalWonders" and g_bIsEnabledENWS) then 
+			if (parameterId == "CityStates" and g_bIsEnabledECSS) then 
+				priorityAmount = GameConfiguration.GetValue("PRIORITY_CITY_STATES_COUNT") or 0;
+			elseif (parameterId == "NaturalWonders" and g_bIsEnabledENWS) then 
 				priorityAmount = GameConfiguration.GetValue("PRIORITY_NATURAL_WONDERS_COUNT") or 0;
 			end
 			local priorityText = (priorityAmount > 0) and string.format(", %s %d", Locale.Lookup("LOC_PICKER_PRIORITIZED_TEXT"), priorityAmount) or "";

@@ -29,7 +29,18 @@ print(string.format("[i]: Finished loading AdvancedSetup.lua from %s, proceeding
 include("enhancedgamesetuplogic");
 if not g_bIsEnabledYnAMP then 
 	include("AdvancedSetup_", true);
-	include("advancedsetup_", true);
+	-- include("advancedsetup_", true);
+end
+include("advancedsetup_", true);
+
+--[[ =========================================================================
+	
+=========================================================================== ]]
+Pre_ECFE_RefreshPlayerSlots = RefreshPlayerSlots;
+function RefreshPlayerSlots()
+	Pre_ECFE_RefreshPlayerSlots();
+	local player_ids = GameConfiguration.GetParticipatingPlayerIDs();
+	Controls.MajorPlayerCount:SetText(Locale.Lookup("LOC_PLAYERS") .. ": " .. #player_ids);
 end
 
 --[[ =========================================================================

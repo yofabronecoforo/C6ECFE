@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--==========================================================================
+	C6ECFE : Enhanced Community FrontEnd for Civilization VI
+	Copyright (C) 2023-2024 zzragnar0kzz
+	All rights reserved
+===========================================================================-->
+<!-- this file contains UI element instances used by other community projects -->
+<Include File="communityinstances" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="..\..\..\..\..\..\CivTech\Libs\ForgeUI\ForgeUI_Assets\Controls.xsd">
+    <!-- Game Config Manager is the property of LastSword -->
+    <!-- scroll panel and button stack for quick config load/save -->
+    <Instance Name="GameConfigInstance">
+        <ScrollPanel Anchor="L,B" Offset="-258,50" ID="MyConfigScrollPanel" Vertical="1" Size="270,900" >
+			<Stack ID="MyConfigButtonStack" Anchor="L,B" Padding="5" StackGrowth="Top">
+			</Stack>
+			<ScrollBar Style="Slider_Blue" Length="516" Anchor="R,T"/>
+		</ScrollPanel>
+    </Instance>
+    <!-- button for loading quick config settings -->
+    <Instance Name="LoadConfigInstance">
+	    <GridButton ID="LoadPreDefConfig" Size="260,45" Style="MainButton" Anchor="C,B" String="???"/>
+	</Instance>
+    <!-- button for "saving" quick config settings; check Lua.log -->
+    <Instance Name="SaveConfigInstance">
+        <GridButton ID="SavePreDefConfig" Size="260,45" Style="MainButton" Anchor="C,B" String="Save GameConfig"/>
+    </Instance>
+</Include>
