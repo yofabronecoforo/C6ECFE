@@ -8,14 +8,13 @@
 	begin enhancedadvancedsetup.lua configuration script
 	this file is a wrapper for the (Enhanced)AdvancedSetup context
 =========================================================================== ]]
-print("[i]: Enhanced Community FrontEnd v2 (2024-05-02)");
-print("[+]: Loading EnhancedAdvancedSetup.lua wrapper . . .");
+print("[i]: Enhanced Community FrontEnd v2 (2024-05-02): Loading EnhancedAdvancedSetup.lua UI implementation script . . .");
 
 --[[ =========================================================================
 	here is where the wrapper magic happens; in order, load the following:
 		(I) new frontend components common to both this context and (Enhanced)HostGame
-		(II) the last imported AdvancedSetup.lua script
-		(III) the contents of any files matching these patterns:
+		(II) the last imported AdvancedSetup.lua UI implementation script
+		(III) any files matching these patterns:
 			(A) AdvancedSetup_
 			(B) advancedsetup_
 		(IV) the EnhancedGameSetupLogic.lua wrapper
@@ -60,7 +59,7 @@ ContextPtr:SetShowHandler( OnShow );
 --[[ =========================================================================
 	log successful completed loading of this component
 =========================================================================== ]]
-print("[i]: Finished loading EnhancedAdvancedSetup.lua wrapper, proceeding . . .");
+print("[i]: Finished loading EnhancedAdvancedSetup.lua UI implementation script, proceeding . . .");
 
 --[[ =========================================================================
 	end enhancedadvancedsetup.lua configuration script

@@ -8,14 +8,13 @@
 	begin enhancedhostgame.lua configuration script
 	this file is a wrapper for the (Enhanced)HostGame context
 =========================================================================== ]]
-print("[i]: Enhanced Community FrontEnd v2 (2024-05-02)");
-print("[+]: Loading EnhancedHostGame.lua wrapper . . .");
+print("[i]: Enhanced Community FrontEnd v2 (2024-05-02): Loading EnhancedHostGame.lua UI implementation script . . .");
 
 --[[ =========================================================================
 	here is where the wrapper magic happens; in order, load the following:
 		(I) new frontend components common to both this context and (Enhanced)AdvancedSetup
-		(II) the last imported HostGame.lua script
-		(III) the contents of any files matching these patterns:
+		(II) the last imported HostGame.lua UI implementation script
+		(III) any files matching these patterns:
 			(A) HostGame_
 			(B) hostgame_
 		(IV) the EnhancedGameSetupLogic.lua wrapper
@@ -47,7 +46,7 @@ ContextPtr:SetShowHandler( OnShow );
 --[[ =========================================================================
 	log successful completed loading of this component
 =========================================================================== ]]
-print("[i]: Finished loading EnhancedHostGame.lua wrapper, proceeding . . .");
+print("[i]: Finished loading EnhancedHostGame.lua UI implementation script, proceeding . . .");
 
 --[[ =========================================================================
 	end enhancedhostgame.lua configuration script

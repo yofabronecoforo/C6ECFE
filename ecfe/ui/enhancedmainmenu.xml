@@ -1,0 +1,29 @@
+<!--==========================================================================
+	C6ECFE : Enhanced Community FrontEnd for Civilization VI
+    Copyright (c) 2023-2024 zzragnar0kzz
+	All rights reserved
+===========================================================================-->
+<?xml version="1.0" encoding="utf-8"?>
+<!--==========================================================================
+	enhancedmainmenu.xml 
+	this file is a wrapper for the (Enhanced)MainMenu context
+	it loads the following, in order: 
+		(I) the last imported MainMenu.xml UI controls template
+		(II) overwrites of existing Lua contexts with (Enhanced) versions
+===========================================================================-->
+<ContextDefaults ColorSet="BodyTextCool" 
+	Style="FontNormal22" 
+	FontStyle="Stroke" 
+	Name="MainMenu" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:noNamespaceSchemaLocation="..\..\ForgeUI_Assets\Controls.xsd">
+
+	<Include File="MainMenu"/>
+
+	<!-- EnhancedAdvancedSetup replaces and extends AdvancedSetup -->
+	<LuaContext ID="AdvancedSetup" DeferLoad="1" FileName="enhancedadvancedsetup" Hidden="1" />
+  
+	<!-- EnhancedHostGame replaces and extends HostGame -->
+	<LuaContext ID="HostGame"                    FileName="enhancedhostgame"      Hidden="1" />
+  
+</ContextDefaults>
