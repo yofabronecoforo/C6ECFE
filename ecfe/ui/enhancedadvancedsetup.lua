@@ -6,55 +6,48 @@
 
 --[[ =========================================================================
 	begin enhancedadvancedsetup.lua configuration script
-	this file is a wrapper for the EnhancedAdvancedSetup context
-	its job is to load, in order: 
-		(1) new common frontend components
-		(2) the last imported AdvancedSetup.lua script
-		(3) ECFE modifications to the GameSetupLogic.lua script that apply to both this context and the (Enhanced)HostGame context
-		(4) any additional modifications to the AdvancedSetup.lua script
-	any new ECFE modifications to AdvancedSetup, or overrides of existing code, should load after all of the above
-		see the OnShow() override below for an example
+	this file is a wrapper for the (Enhanced)AdvancedSetup context
 =========================================================================== ]]
-print("[i]: Enhanced Community FrontEnd v1 (2024-01-02)");
-print("[+]: Loading EnhancedAdvancedSetup.lua . . .");
+print("[i]: Enhanced Community FrontEnd v2 (2024-05-02)");
+print("[+]: Loading EnhancedAdvancedSetup.lua wrapper . . .");
 
 --[[ =========================================================================
-	include necessary original or modified file(s) here
+	here is where the wrapper magic happens; in order, load the following:
+		(I) new frontend components common to both this context and (Enhanced)HostGame
+		(II) the last imported AdvancedSetup.lua script
+		(III) the contents of any files matching these patterns:
+			(A) AdvancedSetup_
+			(B) advancedsetup_
+		(IV) the EnhancedGameSetupLogic.lua wrapper
+	this should catch all changes to this context provided by ECFE and other mods that utilize this framework
 =========================================================================== ]]
 include("commonfrontend");
-print("[+]: Loading last imported AdvancedSetup.lua . . .");
+print("[+]: Including AdvancedSetup.lua from last imported source . . .");
 include("AdvancedSetup");
-local sAdvancedSetupSource = g_bIsEnabledYnAMP and "YnAMP" or "UI/FrontEnd/ or last imported source";
-print(string.format("[i]: Finished loading AdvancedSetup.lua from %s, proceeding . . .", sAdvancedSetupSource));
-include("enhancedgamesetuplogic");
+-- ignore the directive to include imported files matching the AdvancedSetup_ pattern if YnAMP is enabled, as it contains its own directive to do this
 if not g_bIsEnabledYnAMP then 
+	print("[+]: Including any imported files matching pattern 'AdvancedSetup_' . . .");
 	include("AdvancedSetup_", true);
-	-- include("advancedsetup_", true);
 end
+print("[+]: Including any imported files matching pattern 'advancedsetup_' . . .");
 include("advancedsetup_", true);
+include("enhancedgamesetuplogic");
 
 --[[ =========================================================================
 	
 =========================================================================== ]]
-Pre_ECFE_RefreshPlayerSlots = RefreshPlayerSlots;
-function RefreshPlayerSlots()
-	Pre_ECFE_RefreshPlayerSlots();
-	local player_ids = GameConfiguration.GetParticipatingPlayerIDs();
-	Controls.MajorPlayerCount:SetText(Locale.Lookup("LOC_PLAYERS") .. ": " .. #player_ids);
-end
+-- Pre_ECFE_RefreshPlayerSlots = RefreshPlayerSlots;
+-- function RefreshPlayerSlots()
+-- 	Pre_ECFE_RefreshPlayerSlots();
+-- 	local player_ids = GameConfiguration.GetParticipatingPlayerIDs();
+-- 	Controls.MajorPlayerCount:SetText(Locale.Lookup("LOC_PLAYERS") .. ": " .. #player_ids);
+-- end
 
 --[[ =========================================================================
 	OVERRIDE: refresh active content tooltips and call original OnShow()
 =========================================================================== ]]
 Pre_ECFE_OnShow = OnShow;
 function OnShow()
-	if not g_bIsEnabledYnAMP then 	-- hide YnAMP buttons if it is not enabled
-		Controls.LoadDataYnAMP:SetHide(true);
-		Controls.IgnoreWarning:SetHide(true);
-	else 
-		Controls.LoadDataYnAMP:SetHide(false);
-		Controls.IgnoreWarning:SetHide(false);
-	end
     RefreshActiveContentTooltips();
 	Pre_ECFE_OnShow();
 end
@@ -65,9 +58,9 @@ end
 ContextPtr:SetShowHandler( OnShow );
 
 --[[ =========================================================================
-	log successful loading of this component
+	log successful completed loading of this component
 =========================================================================== ]]
-print("[i]: Finished loading EnhancedAdvancedSetup.lua, proceeding . . .");
+print("[i]: Finished loading EnhancedAdvancedSetup.lua wrapper, proceeding . . .");
 
 --[[ =========================================================================
 	end enhancedadvancedsetup.lua configuration script

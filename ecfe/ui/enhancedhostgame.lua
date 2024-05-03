@@ -6,28 +6,29 @@
 
 --[[ =========================================================================
 	begin enhancedhostgame.lua configuration script
-	this file is a wrapper for the EnhancedHostGame context
-	its job is to load, in order: 
-		(1) new common frontend components
-		(2) the last imported HostGame.lua script
-		(3) ECFE modifications to the GameSetupLogic.lua script that apply to both this context and the (Enhanced)AdvancedSetup context
-		(4) any additional modifications to the HostGame.lua script
-	any new ECFE modifications to HostGame, or overrides of existing code, should load after all of the above
-		see the OnShow() override below for an example
+	this file is a wrapper for the (Enhanced)HostGame context
 =========================================================================== ]]
-print("[i]: Enhanced Community FrontEnd v1 (2024-01-02)");
-print("[+]: Loading EnhancedHostGame.lua . . .");
+print("[i]: Enhanced Community FrontEnd v2 (2024-05-02)");
+print("[+]: Loading EnhancedHostGame.lua wrapper . . .");
 
 --[[ =========================================================================
-	include necessary original or modified file(s) here
+	here is where the wrapper magic happens; in order, load the following:
+		(I) new frontend components common to both this context and (Enhanced)AdvancedSetup
+		(II) the last imported HostGame.lua script
+		(III) the contents of any files matching these patterns:
+			(A) HostGame_
+			(B) hostgame_
+		(IV) the EnhancedGameSetupLogic.lua wrapper
+	this should catch all changes to this context provided by ECFE and other mods that utilize this framework
 =========================================================================== ]]
 include("commonfrontend");
-print("[+]: Loading last imported HostGame.lua . . .");
+print("[+]: Including HostGame.lua from last imported source . . .");
 include("HostGame");
-print("[i]: Finished loading HostGame.lua from UI/FrontEnd/Multiplayer/ or last imported source; proceeding . . .");
-include("enhancedgamesetuplogic");
+print("[+]: Including any imported files matching pattern 'HostGame_' . . .");
 include("HostGame_", true);
+print("[+]: Including any imported files matching pattern 'hostgame_' . . .");
 include("hostgame_", true);
+include("enhancedgamesetuplogic");
 
 --[[ =========================================================================
 	OVERRIDE: refresh active content tooltips and call original OnShow()
@@ -44,9 +45,9 @@ end
 ContextPtr:SetShowHandler( OnShow );
 
 --[[ =========================================================================
-	log successful loading of this component
+	log successful completed loading of this component
 =========================================================================== ]]
-print("[i]: Finished loading EnhancedHostGame.lua, proceeding . . .");
+print("[i]: Finished loading EnhancedHostGame.lua wrapper, proceeding . . .");
 
 --[[ =========================================================================
 	end enhancedhostgame.lua configuration script

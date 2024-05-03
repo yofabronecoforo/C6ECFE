@@ -8,9 +8,9 @@
 	begin enhancedgamesetuplogic.lua configuration script
 	this file is a wrapper
 	any ECFE modifications that affect GameSetupLogic.lua, and thus both AdvancedSetup and HostGame, should go here
-	any additional modifications to GameSetupLogic will be loaded by directives at the end of this file
+	any additional modifications to GameSetupLogic will be included by directives at the end of this file
 =========================================================================== ]]
-print("[+]: Loading EnhancedGameSetupLogic.lua . . .");
+print("[+]: Loading EnhancedGameSetupLogic.lua wrapper . . .");
 
 --[[ =========================================================================
 	OVERRIDE: the various picker drivers have been condensed into CreatePickerDriverByParameter()
@@ -19,7 +19,8 @@ print("[+]: Loading EnhancedGameSetupLogic.lua . . .");
 =========================================================================== ]]
 function GameParameters_UI_CreateParameterDriver(o, parameter, ...) 
 	local parameterId = parameter.ParameterId;
-	if(parameterId == "CityStates" or parameterId == "LeaderPool1" or parameterId == "LeaderPool2" or (parameterId == "GoodyHutConfig" and g_bIsEnabledEGHV) or (parameterId == "NaturalWonders" and g_bIsEnabledENWS)) then 
+	-- if(parameterId == "CityStates" or parameterId == "LeaderPool1" or parameterId == "LeaderPool2" or parameterId == "GoodyHutConfig" or parameterId == "NaturalWonders") then 
+	if(parameterId == "CityStates" or parameterId == "LeaderPool1" or parameterId == "LeaderPool2" or parameterId == "NaturalWonders") then 
 		if GameConfiguration.IsWorldBuilderEditor() then
 			return nil;
 		end
@@ -34,34 +35,36 @@ end
 --[[ =========================================================================
 	OVERRIDE: call original OnShutdown() and remove LuaEvent listeners for the modified Goody Hut and Natural Wonder pickers
 =========================================================================== ]]
-Pre_ECFE_OnShutdown = OnShutdown;
-function OnShutdown() 
-	Pre_ECFE_OnShutdown();
-    LuaEvents.GoodyHutPicker_SetParameterValues.Remove(OnSetParameterValues);         -- EGHV
-	LuaEvents.NaturalWonderPicker_SetParameterValues.Remove(OnSetParameterValues);    -- ENWS
-end
+-- Pre_ECFE_OnShutdown = OnShutdown;
+-- function OnShutdown() 
+-- 	Pre_ECFE_OnShutdown();
+--     LuaEvents.GoodyHutPicker_SetParameterValues.Remove(OnSetParameterValues);         -- EGHV
+-- 	LuaEvents.NaturalWonderPicker_SetParameterValues.Remove(OnSetParameterValues);    -- ENWS
+-- end
 
 --[[ =========================================================================
 	reset context pointer handlers with modified functions
 =========================================================================== ]]
-ContextPtr:SetShutdown( OnShutdown );
+-- ContextPtr:SetShutdown( OnShutdown );
 
 --[[ =========================================================================
 	add new LuaEvent listeners for the modified Goody Hut and Natural Wonder pickers
 =========================================================================== ]]
-LuaEvents.GoodyHutPicker_SetParameterValues.Add(OnSetParameterValues);         -- EGHV
-LuaEvents.NaturalWonderPicker_SetParameterValues.Add(OnSetParameterValues);    -- ENWS
+-- LuaEvents.GoodyHutPicker_SetParameterValues.Add(OnSetParameterValues);         -- EGHV
+-- LuaEvents.NaturalWonderPicker_SetParameterValues.Add(OnSetParameterValues);    -- ENWS
 
 --[[ =========================================================================
 	include any additional modifications to GameSetupLogic
 =========================================================================== ]]
+print("[+]: Including any imported files matching pattern 'GameSetupLogic_' . . .");
 include("GameSetupLogic_", true);
+print("[+]: Including any imported files matching pattern 'gamesetuplogic_' . . .");
 include("gamesetuplogic_", true);
 
 --[[ =========================================================================
 	log successful loading of this component
 =========================================================================== ]]
-print("[i]: Finished loading EnhancedGameSetupLogic.lua, proceeding . . .");
+print("[i]: Finished loading EnhancedGameSetupLogic.lua wrapper, proceeding . . .");
 
 --[[ =========================================================================
 	end enhancedgamesetuplogic.lua configuration script

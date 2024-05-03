@@ -9,13 +9,12 @@
 	this file contains new components that are used by both the (Enhanced)AdvancedSetup and (Enhanced)HostGame contexts
 	it should be included by those contexts before any other files that are to be included
 =========================================================================== ]]
-print("[+]: Loading CommonFrontend.lua . . .");
+print("[+]: Including CommonFrontend.lua . . .");
 
 --[[ =========================================================================
 	global content presence booleans
 =========================================================================== ]]
 g_bIsEnabledECSS  = Modding.IsModEnabled("772960cc-ddaf-4432-870c-e97d698d7011");    -- Enhanced City-States Selection
--- print(string.format("ECSS: %s", tostring(g_bIsEnabledECSS)));
 g_bIsEnabledEGHV  = Modding.IsModEnabled("a4b1fac6-8c9e-4873-a1c1-7ddf08dbbf11");    -- Enhanced Goodies and Hostile Villagers
 g_bIsEnabledENWS  = Modding.IsModEnabled("d0afae5b-02f8-4d01-bd54-c2bbc3d89858");    -- Enhanced Natural Wonders Selection
 g_bIsEnabledYnAMP = Modding.IsModEnabled("36e88483-48fe-4545-b85f-bafc50dde315");    -- Yet (not) Another Map Pack
@@ -86,14 +85,9 @@ function UpdateButtonToolTip(parameterId)
     local sRuleset = GameConfiguration.GetValue("RULESET");
 	if (parameterId == "CityStates") then return g_tCityStatesTooltip[sRuleset];
 	elseif (parameterId == "LeaderPool1" or parameterId == "LeaderPool2") then return g_tLeadersTooltip[sRuleset];
-	-- elseif (parameterId == "GoodyHutConfig" and g_bIsEnabledEGHV) then return g_tGoodyHutsTooltip[sRuleset];
 	elseif (parameterId == "GoodyHutConfig") then return g_tGoodyHutsTooltip[sRuleset];
-	-- elseif (parameterId == "NaturalWonders" and g_bIsEnabledENWS) then return g_tNaturalWondersTooltip[sRuleset];
 	elseif (parameterId == "NaturalWonders" or parameterId == "StartWonders") then return g_tNaturalWondersTooltip[sRuleset];
-	-- else
-	-- 	if (parameterId == "NaturalWonders") then return g_tNaturalWondersTooltip[sRuleset];
-		else return "";    -- return empty string here to prevent attempts to concatenate nil
-		-- end
+	else return "";    -- return empty string here to prevent attempts to concatenate nil
 	end
 end
 
@@ -117,6 +111,8 @@ function CreatePickerDriverByParameter(o, parameter, parent)
 	local parameterId = parameter.ParameterId;
 	local button = c.Button;
 
+	print(string.format("[+]: Creating driver for %s picker . . .", parameterId));
+
 	-- define picker based on parameterId
 	if (parameterId == "CityStates") then												-- built-in city-state picker
 		button:RegisterCallback( Mouse.eLClick, function()
@@ -128,16 +124,16 @@ function CreatePickerDriverByParameter(o, parameter, parent)
 			LuaEvents.LeaderPicker_Initialize(o.Parameters[parameterId], g_GameParameters);
 			Controls.LeaderPicker:SetHide(false);
 		end);
-	elseif (parameterId == "GoodyHutConfig" and g_bIsEnabledEGHV) then					-- EGHV : Goody Hut picker
-		button:RegisterCallback( Mouse.eLClick, function()
-			LuaEvents.GoodyHutPicker_Initialize(o.Parameters[parameterId]);
-			Controls.GoodyHutPicker:SetHide(false);
-		end);
-	elseif (parameterId == "NaturalWonders" and g_bIsEnabledENWS) then					-- ENWS : Natural Wonder picker
-		button:RegisterCallback( Mouse.eLClick, function()
-			LuaEvents.NaturalWonderPicker_Initialize(o.Parameters[parameterId]);
-			Controls.NaturalWonderPicker:SetHide(false);
-		end);
+	-- elseif (parameterId == "GoodyHutConfig" and g_bIsEnabledEGHV) then					-- EGHV : Goody Hut picker
+	-- 	button:RegisterCallback( Mouse.eLClick, function()
+	-- 		LuaEvents.GoodyHutPicker_Initialize(o.Parameters[parameterId]);
+	-- 		Controls.GoodyHutPicker:SetHide(false);
+	-- 	end);
+	-- elseif (parameterId == "NaturalWonders" and g_bIsEnabledENWS) then					-- ENWS : Natural Wonder picker
+	-- 	button:RegisterCallback( Mouse.eLClick, function()
+	-- 		LuaEvents.NaturalWonderPicker_Initialize(o.Parameters[parameterId]);
+	-- 		Controls.NaturalWonderPicker:SetHide(false);
+	-- 	end);
 	else																				-- fallback to generic multi-select window
 		button:RegisterCallback( Mouse.eLClick, function()
 			LuaEvents.MultiSelectWindow_Initialize(o.Parameters[parameterId]);
@@ -163,13 +159,24 @@ function CreatePickerDriverByParameter(o, parameter, parent)
 			local valueText = value and value.Name or nil;
 			local valueAmount :number = 0;
 
-			local priorityAmount :number = 0;
-			if (parameterId == "CityStates" and g_bIsEnabledECSS) then 
-				priorityAmount = GameConfiguration.GetValue("PRIORITY_CITY_STATES_COUNT") or 0;
-			elseif (parameterId == "NaturalWonders" and g_bIsEnabledENWS) then 
-				priorityAmount = GameConfiguration.GetValue("PRIORITY_NATURAL_WONDERS_COUNT") or 0;
+			-- if this driver is for one of the leader pickers, remove random leaders from the Values table that is used to determine number of leaders selected
+			if (parameterId == "LeaderPool1" or parameterId == "LeaderPool2") then 
+				for i = #p.Values, 1, -1 do
+					local kItem:table = p.Values[i];
+					-- print(kItem.Value);
+					if kItem.Value == "RANDOM" or kItem.Value == "RANDOM_POOL1" or kItem.Value == "RANDOM_POOL2" then
+						table.remove(p.Values, i);
+					end
+				end
 			end
-			local priorityText = (priorityAmount > 0) and string.format(", %s %d", Locale.Lookup("LOC_PICKER_PRIORITIZED_TEXT"), priorityAmount) or "";
+
+			-- local priorityAmount :number = 0;
+			-- if (parameterId == "CityStates" and g_bIsEnabledECSS) then 
+			-- 	priorityAmount = GameConfiguration.GetValue("PRIORITY_CITY_STATES_COUNT") or 0;
+			-- elseif (parameterId == "NaturalWonders" and g_bIsEnabledENWS) then 
+			-- 	priorityAmount = GameConfiguration.GetValue("PRIORITY_NATURAL_WONDERS_COUNT") or 0;
+			-- end
+			-- local priorityText = (priorityAmount > 0) and string.format(", %s %d", Locale.Lookup("LOC_PICKER_PRIORITIZED_TEXT"), priorityAmount) or "";
 
 			if(valueText == nil) then
 				if(value == nil) then
@@ -205,14 +212,20 @@ function CreatePickerDriverByParameter(o, parameter, parent)
 				end
 			end
 
-			if(cache.ValueText ~= valueText) or (cache.ValueAmount ~= valueAmount) or (cache.PriorityAmount ~= priorityAmount) then
-				local button = c.Button;
-				valueText = string.format("%s %d of %d%s", Locale.Lookup("LOC_PICKER_SELECTED_TEXT"), valueAmount, #p.Values, priorityText);
-				button:LocalizeAndSetText(valueText);
-				-- 	button:LocalizeAndSetText(valueText, valueAmount);
+			-- if(cache.ValueText ~= valueText) or (cache.ValueAmount ~= valueAmount) or (cache.PriorityAmount ~= priorityAmount) then
+			-- 	local button = c.Button;
+			-- 	valueText = string.format("%s %d of %d%s", Locale.Lookup("LOC_PICKER_SELECTED_TEXT"), valueAmount, #p.Values, priorityText);
+			-- 	button:LocalizeAndSetText(valueText);
+			-- 	cache.ValueText = valueText;
+			-- 	cache.ValueAmount = valueAmount;
+			-- 	cache.PriorityAmount = priorityAmount;
+			-- 	button:SetToolTipString(parameter.Description .. UpdateButtonToolTip(parameterId)); 	-- update button tooltip text
+			-- end
+			if(cache.ValueText ~= valueText) or (cache.ValueAmount ~= valueAmount) then
+				local button = c.Button;			
+				button:LocalizeAndSetText(valueText, valueAmount);
 				cache.ValueText = valueText;
 				cache.ValueAmount = valueAmount;
-				cache.PriorityAmount = priorityAmount;
 				button:SetToolTipString(parameter.Description .. UpdateButtonToolTip(parameterId)); 	-- update button tooltip text
 			end
 		end,
@@ -232,11 +245,6 @@ function CreatePickerDriverByParameter(o, parameter, parent)
 
 	return kDriver;
 end
-
---[[ =========================================================================
-	log successful loading of this component
-=========================================================================== ]]
-print("[i]: Finished loading CommonFrontend.lua, proceeding . . .");
 
 --[[ =========================================================================
 	end commonfrontend.lua configuration script

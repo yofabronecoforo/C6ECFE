@@ -58,9 +58,9 @@
       		</Properties>
 			<Items>
 				<!-- replacement city state picker template -->
-				<File>ecfe/ui/citystatepicker.xml</File>
+				<!-- <File>ecfe/ui/citystatepicker.xml</File> -->
 				<!--  -->
-				<File>ecfe/ui/communityinstances.xml</File>
+				<!-- <File>ecfe/ui/communityinstances.xml</File> -->
                 <!-- replacement main menu template -->
 				<File>ecfe/ui/mainmenu.xml</File>
                 <!-- new enhanced advanced setup context -->
@@ -136,11 +136,11 @@
         <!-- FR_FR localized frontend text -->
 		<File>ecfe/localization/fr_fr/frontend_text.xml</File>
 		<!-- replacement city state picker template -->
-		<File>ecfe/ui/citystatepicker.xml</File>
+		<!-- <File>ecfe/ui/citystatepicker.xml</File> -->
         <!-- advanced setup & host game shared components -->
         <File>ecfe/ui/commonfrontend.lua</File>
 		<!--  -->
-		<File>ecfe/ui/communityinstances.xml</File>
+		<!-- <File>ecfe/ui/communityinstances.xml</File> -->
         <!-- new enhanced advanced setup context -->
 		<File>ecfe/ui/enhancedadvancedsetup.lua</File>
 		<File>ecfe/ui/enhancedadvancedsetup.xml</File>
