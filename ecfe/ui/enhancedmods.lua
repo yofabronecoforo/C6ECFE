@@ -13,31 +13,32 @@ print("[i]: Loading EnhancedMods UI script . . .");
 --[[ =========================================================================
 	pre-init
 =========================================================================== ]]
+ExposedMembers.MainMenuVersionString = string.format("Game: %s", tostring(UI.GetAppVersion()));
+
 ExposedMembers.ContentHandles = ExposedMembers.ContentHandles or {};
--- ContentHandles = ExposedMembers.ContentHandles;
 local tMods = Modding.GetInstalledMods();
 if (tMods and #tMods > 0) then 
 	for _, mod in ipairs(tMods) do 
-		-- print(mod.Id);
 		ExposedMembers.ContentHandles[mod.Id] = mod.Handle;
 	end
 end
 tMods = nil;
 
 ExposedMembers.RecognizedContent = ExposedMembers.RecognizedContent or {};
--- RecognizedContent = ExposedMembers.RecognizedContent;
 if (#ExposedMembers.RecognizedContent < 1) then 
 	local tContent = DB.ConfigurationQuery("SELECT DISTINCT * from ContentFlags");
 	if tContent and #tContent > 0 then 
 		for _, mod in ipairs(tContent) do 
 			ExposedMembers.RecognizedContent[mod.Id] = ExposedMembers.RecognizedContent[mod.Id] or {};
 			ExposedMembers.RecognizedContent[mod.Id].IsEnabled = (Modding.IsModInstalled(mod.GUID) and Modding.IsModEnabled(mod.GUID));
-			ExposedMembers.RecognizedContent[mod.Id].Version =  Modding.GetModProperty(ExposedMembers.ContentHandles[mod.GUID], "Version") or nil;
-			-- print(string.format("%s %s %s Version %s %s", tostring(ExposedMembers.RecognizedContent[mod.Id].IsEnabled), mod.Id, mod.Name, tostring(ExposedMembers.RecognizedContent[mod.Id].Version), mod.GUID));
+			local sVersion = Modding.GetModProperty(ExposedMembers.ContentHandles[mod.GUID], "Version") or nil;
+			if sVersion then 
+				ExposedMembers.MainMenuVersionString = string.format("%s[NEWLINE][%s]%s: %s[ENDCOLOR]", ExposedMembers.MainMenuVersionString, (mod.Id == "MPH") and "COLOR_LIGHTBLUE" or "COLOR:Green", mod.Id, sVersion);
+				ExposedMembers.RecognizedContent[mod.Id].Version = sVersion
+			end
 		end
 	end
 end
-ExposedMembers.MainMenuVersionString = string.format("Game: %s%s%s", tostring(UI.GetAppVersion()), ExposedMembers.RecognizedContent.ECFE.IsEnabled and string.format("  |  [COLOR:Green]ECFE: %s[ENDCOLOR]", ExposedMembers.RecognizedContent.ECFE.Version) or "", ExposedMembers.RecognizedContent.MPH.IsEnabled and string.format("  |  [COLOR_LIGHTBLUE]MPH: %s[ENDCOLOR]", ExposedMembers.RecognizedContent.MPH.Version) or "");
 
 --[[ =========================================================================
 	here is where the wrapper magic happens; in order, load the following: 
