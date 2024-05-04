@@ -8,7 +8,7 @@
 	begin enhancedmainmenu.lua configuration script
 	this file is a wrapper for the (Enhanced)MainMenu context
 =========================================================================== ]]
-print("[i]: Enhanced Community FrontEnd v2 (2024-05-02): Loading EnhancedMainMenu.lua UI implementation script . . .");
+print("[i]: Loading EnhancedMainMenu UI script . . .");
 
 --[[ =========================================================================
 	here is where the wrapper magic happens; in order, load the following: 
@@ -20,15 +20,20 @@ print("[i]: Enhanced Community FrontEnd v2 (2024-05-02): Loading EnhancedMainMen
 =========================================================================== ]]
 print("[+]: Including MainMenu.lua from last imported source . . .");
 include("MainMenu");
-print("[+]: Including any imported files matching pattern 'MainMenu_' . . .");
+-- print("[+]: Including any imported files matching pattern 'MainMenu_*.lua' . . .");
 include("MainMenu_", true);
-print("[+]: Including any imported files matching pattern 'mainmenu_' . . .");
+-- print("[+]: Including any imported files matching pattern 'mainmenu_*.lua' . . .");
 include("mainmenu_", true);
+
+--[[ =========================================================================
+	reset version string
+=========================================================================== ]]
+Controls.VersionLabel:SetText(ExposedMembers.MainMenuVersionString and ExposedMembers.MainMenuVersionString or string.format("Game: %s", tostring(UI.GetAppVersion())));
 
 --[[ =========================================================================
 	log successful completed loading of this component
 =========================================================================== ]]
-print("[i]: Finished loading EnhancedMainMenu.lua UI implementation script, proceeding . . .");
+print("[!]: Finished loading EnhancedMainMenu UI script, proceeding . . .");
 
 --[[ =========================================================================
 	end enhancedmainmenu.lua configuration script

@@ -12,6 +12,12 @@
 print("[+]: Including CommonFrontend.lua . . .");
 
 --[[ =========================================================================
+	pre-init
+=========================================================================== ]]
+ExposedMembers.RecognizedContent = ExposedMembers.RecognizedContent or {};
+RecognizedContent = ExposedMembers.RecognizedContent;
+
+--[[ =========================================================================
 	global content presence booleans
 =========================================================================== ]]
 g_bIsEnabledECSS  = Modding.IsModEnabled("772960cc-ddaf-4432-870c-e97d698d7011");    -- Enhanced City-States Selection

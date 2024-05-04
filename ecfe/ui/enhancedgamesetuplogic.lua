@@ -10,7 +10,7 @@
 	any ECFE modifications that affect GameSetupLogic.lua, and thus both AdvancedSetup and HostGame, should go here
 	any additional modifications to GameSetupLogic will be included by directives at the end of this file
 =========================================================================== ]]
-print("[+]: Loading EnhancedGameSetupLogic.lua wrapper . . .");
+print("[i]: Loading EnhancedGameSetupLogic wrapper . . .");
 
 --[[ =========================================================================
 	OVERRIDE: the various picker drivers have been condensed into CreatePickerDriverByParameter()
@@ -56,15 +56,15 @@ end
 --[[ =========================================================================
 	include any additional modifications to GameSetupLogic
 =========================================================================== ]]
-print("[+]: Including any imported files matching pattern 'GameSetupLogic_' . . .");
+-- print("[i]: Including any imported files matching pattern 'GameSetupLogic_*.lua' . . .");
 include("GameSetupLogic_", true);
-print("[+]: Including any imported files matching pattern 'gamesetuplogic_' . . .");
+-- print("[i]: Including any imported files matching pattern 'gamesetuplogic_*.lua' . . .");
 include("gamesetuplogic_", true);
 
 --[[ =========================================================================
 	log successful loading of this component
 =========================================================================== ]]
-print("[i]: Finished loading EnhancedGameSetupLogic.lua wrapper, proceeding . . .");
+print("[!]: Finished loading EnhancedGameSetupLogic wrapper, proceeding . . .");
 
 --[[ =========================================================================
 	end enhancedgamesetuplogic.lua configuration script

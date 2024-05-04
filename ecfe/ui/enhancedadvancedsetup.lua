@@ -8,7 +8,7 @@
 	begin enhancedadvancedsetup.lua configuration script
 	this file is a wrapper for the (Enhanced)AdvancedSetup context
 =========================================================================== ]]
-print("[i]: Enhanced Community FrontEnd v2 (2024-05-02): Loading EnhancedAdvancedSetup.lua UI implementation script . . .");
+print("[i]: Loading EnhancedAdvancedSetup UI script . . .");
 
 --[[ =========================================================================
 	here is where the wrapper magic happens; in order, load the following:
@@ -25,10 +25,10 @@ print("[+]: Including AdvancedSetup.lua from last imported source . . .");
 include("AdvancedSetup");
 -- ignore the directive to include imported files matching the AdvancedSetup_ pattern if YnAMP is enabled, as it contains its own directive to do this
 if not g_bIsEnabledYnAMP then 
-	print("[+]: Including any imported files matching pattern 'AdvancedSetup_' . . .");
+	-- print("[i]: Including any imported files matching pattern 'AdvancedSetup_*.lua' . . .");
 	include("AdvancedSetup_", true);
 end
-print("[+]: Including any imported files matching pattern 'advancedsetup_' . . .");
+-- print("[i]: Including any imported files matching pattern 'advancedsetup_*.lua' . . .");
 include("advancedsetup_", true);
 include("enhancedgamesetuplogic");
 
@@ -59,7 +59,7 @@ ContextPtr:SetShowHandler( OnShow );
 --[[ =========================================================================
 	log successful completed loading of this component
 =========================================================================== ]]
-print("[i]: Finished loading EnhancedAdvancedSetup.lua UI implementation script, proceeding . . .");
+print("[!]: Finished loading EnhancedAdvancedSetup UI script, proceeding . . .");
 
 --[[ =========================================================================
 	end enhancedadvancedsetup.lua configuration script

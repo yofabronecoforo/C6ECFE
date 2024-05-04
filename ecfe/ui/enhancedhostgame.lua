@@ -8,7 +8,7 @@
 	begin enhancedhostgame.lua configuration script
 	this file is a wrapper for the (Enhanced)HostGame context
 =========================================================================== ]]
-print("[i]: Enhanced Community FrontEnd v2 (2024-05-02): Loading EnhancedHostGame.lua UI implementation script . . .");
+print("[i]: Loading EnhancedHostGame UI script . . .");
 
 --[[ =========================================================================
 	here is where the wrapper magic happens; in order, load the following:
@@ -23,9 +23,9 @@ print("[i]: Enhanced Community FrontEnd v2 (2024-05-02): Loading EnhancedHostGam
 include("commonfrontend");
 print("[+]: Including HostGame.lua from last imported source . . .");
 include("HostGame");
-print("[+]: Including any imported files matching pattern 'HostGame_' . . .");
+-- print("[i]: Including any imported files matching pattern 'HostGame_*.lua' . . .");
 include("HostGame_", true);
-print("[+]: Including any imported files matching pattern 'hostgame_' . . .");
+-- print("[i]: Including any imported files matching pattern 'hostgame_*.lua' . . .");
 include("hostgame_", true);
 include("enhancedgamesetuplogic");
 
@@ -46,7 +46,7 @@ ContextPtr:SetShowHandler( OnShow );
 --[[ =========================================================================
 	log successful completed loading of this component
 =========================================================================== ]]
-print("[i]: Finished loading EnhancedHostGame.lua UI implementation script, proceeding . . .");
+print("[!]: Finished loading EnhancedHostGame UI script, proceeding . . .");
 
 --[[ =========================================================================
 	end enhancedhostgame.lua configuration script

@@ -8,7 +8,36 @@
 	begin enhancedmods.lua configuration script
 	this file is a wrapper for the (Enhanced)Mods context
 =========================================================================== ]]
-print("[i]: Enhanced Community FrontEnd v2 (2024-05-02): Loading EnhancedMods.lua UI implementation script . . .");
+print("[i]: Loading EnhancedMods UI script . . .");
+
+--[[ =========================================================================
+	pre-init
+=========================================================================== ]]
+ExposedMembers.ContentHandles = ExposedMembers.ContentHandles or {};
+-- ContentHandles = ExposedMembers.ContentHandles;
+local tMods = Modding.GetInstalledMods();
+if (tMods and #tMods > 0) then 
+	for _, mod in ipairs(tMods) do 
+		-- print(mod.Id);
+		ExposedMembers.ContentHandles[mod.Id] = mod.Handle;
+	end
+end
+tMods = nil;
+
+ExposedMembers.RecognizedContent = ExposedMembers.RecognizedContent or {};
+-- RecognizedContent = ExposedMembers.RecognizedContent;
+if (#ExposedMembers.RecognizedContent < 1) then 
+	local tContent = DB.ConfigurationQuery("SELECT DISTINCT * from ContentFlags");
+	if tContent and #tContent > 0 then 
+		for _, mod in ipairs(tContent) do 
+			ExposedMembers.RecognizedContent[mod.Id] = ExposedMembers.RecognizedContent[mod.Id] or {};
+			ExposedMembers.RecognizedContent[mod.Id].IsEnabled = (Modding.IsModInstalled(mod.GUID) and Modding.IsModEnabled(mod.GUID));
+			ExposedMembers.RecognizedContent[mod.Id].Version =  Modding.GetModProperty(ExposedMembers.ContentHandles[mod.GUID], "Version") or nil;
+			-- print(string.format("%s %s %s Version %s %s", tostring(ExposedMembers.RecognizedContent[mod.Id].IsEnabled), mod.Id, mod.Name, tostring(ExposedMembers.RecognizedContent[mod.Id].Version), mod.GUID));
+		end
+	end
+end
+ExposedMembers.MainMenuVersionString = string.format("Game: %s%s%s", tostring(UI.GetAppVersion()), ExposedMembers.RecognizedContent.ECFE.IsEnabled and string.format("  |  [COLOR:Green]ECFE: %s[ENDCOLOR]", ExposedMembers.RecognizedContent.ECFE.Version) or "", ExposedMembers.RecognizedContent.MPH.IsEnabled and string.format("  |  [COLOR_LIGHTBLUE]MPH: %s[ENDCOLOR]", ExposedMembers.RecognizedContent.MPH.Version) or "");
 
 --[[ =========================================================================
 	here is where the wrapper magic happens; in order, load the following: 
@@ -20,15 +49,15 @@ print("[i]: Enhanced Community FrontEnd v2 (2024-05-02): Loading EnhancedMods.lu
 =========================================================================== ]]
 print("[+]: Including Mods.lua from last imported source . . .");
 include("Mods");
-print("[+]: Including any imported files matching pattern 'Mods_' . . .");
+-- print("[+]: Including any imported files matching pattern 'Mods_*.lua' . . .");
 include("Mods_", true);
-print("[+]: Including any imported files matching pattern 'mods_' . . .");
+-- print("[+]: Including any imported files matching pattern 'mods_*.lua' . . .");
 include("mods_", true);
 
 --[[ =========================================================================
 	log successful completed loading of this component
 =========================================================================== ]]
-print("[i]: Finished loading EnhancedMods.lua UI implementation script, proceeding . . .");
+print("[!]: Finished loading EnhancedMods UI script, proceeding . . .");
 
 --[[ =========================================================================
 	end enhancedmods.lua configuration script
