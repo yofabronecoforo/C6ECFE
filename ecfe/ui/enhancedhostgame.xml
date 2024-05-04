@@ -17,6 +17,9 @@
 	
 	<Include File="HostGame"/>
 
+	<!-- EnhancedMods replaces and extends Mods -->
+	<LuaContext ID="ModsMenu"            FileName="enhancedmods"        Hidden="1" />
+
 	<!-- new Lua context for Enhanced Goodies and Hostile Villagers -->
 	<LuaContext ID="GoodyHutPicker"      FileName="goodyhutpicker"      Hidden="1"/>
 	

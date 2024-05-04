@@ -20,6 +20,9 @@
 
 	<Include File="MainMenu"/>
 
+	<!-- EnhancedMods replaces and extends Mods -->
+	<LuaContext ID="ModsContext"   DeferLoad="1" FileName="enhancedmods"          Hidden="1" />
+
 	<!-- EnhancedAdvancedSetup replaces and extends AdvancedSetup -->
 	<LuaContext ID="AdvancedSetup" DeferLoad="1" FileName="enhancedadvancedsetup" Hidden="1" />
   

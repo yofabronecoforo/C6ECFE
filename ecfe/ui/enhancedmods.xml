@@ -1,0 +1,20 @@
+﻿<!--==========================================================================
+	C6ECFE : Enhanced Community FrontEnd for Civilization VI
+    Copyright (c) 2023-2024 zzragnar0kzz
+	All rights reserved
+===========================================================================-->
+<?xml version="1.0" encoding="utf-8"?>
+<!--==========================================================================
+	enhancedmods.xml 
+	this file is a wrapper for the (Enhanced)Mods context
+	it loads the last imported Mods.xml UI controls template
+===========================================================================-->
+<Context xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:noNamespaceSchemaLocation="..\..\..\..\..\CivTech\Libs\ForgeUI\ForgeUI_Assets\Controls.xsd"
+	ColorSet="BodyTextCool" 
+	Style="FontNormal22" 
+	FontEffect="Stroke">
+
+	<Include File="Mods" />
+	
+</Context>

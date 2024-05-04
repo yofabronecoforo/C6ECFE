@@ -57,25 +57,23 @@
         		<LoadOrder>2000001</LoadOrder>
       		</Properties>
 			<Items>
-				<!-- replacement city state picker template -->
-				<!-- <File>ecfe/ui/citystatepicker.xml</File> -->
-				<!--  -->
-				<!-- <File>ecfe/ui/communityinstances.xml</File> -->
-				<!-- replacement front end template -->
+				<!-- replacement front end UI controls template -->
 				<File>ecfe/ui/frontend.xml</File>
-                <!-- replacement main menu template -->
-				<!-- <File>ecfe/ui/mainmenu.xml</File> -->
+				<!-- enhanced main menu context -->
 				<File>ecfe/ui/enhancedmainmenu.lua</File>
 				<File>ecfe/ui/enhancedmainmenu.xml</File>
-                <!-- new enhanced advanced setup context -->
+				<!-- enhanced mods context -->
+				<File>ecfe/ui/enhancedmods.lua</File>
+				<File>ecfe/ui/enhancedmods.xml</File>
+                <!-- enhanced advanced setup context -->
 				<File>ecfe/ui/enhancedadvancedsetup.lua</File>
 				<File>ecfe/ui/enhancedadvancedsetup.xml</File>
-                <!-- new enhanced host game context -->
+                <!-- enhanced host game context -->
 				<File>ecfe/ui/enhancedhostgame.lua</File>
 				<File>ecfe/ui/enhancedhostgame.xml</File>
                 <!-- advanced setup & host game shared components -->
                 <File>ecfe/ui/commonfrontend.lua</File>
-                <!-- game setup logic replacements -->
+                <!-- enhanced game setup logic wrapper -->
                 <File>ecfe/ui/enhancedgamesetuplogic.lua</File>
 			</Items>
 		</ImportFiles>
@@ -133,34 +131,32 @@
 		<File>ecfe/configuration/frontend.sql</File>
         <!-- configuration db schema changes -->
 		<File>ecfe/configuration/schema.sql</File>
-		<!-- replacement front end template -->
-		<File>ecfe/ui/frontend.xml</File>
         <!-- EN_US localized frontend text -->
 		<File>ecfe/localization/en_us/frontend_text.xml</File>
         <!-- ES_ES localized frontend text -->
 		<File>ecfe/localization/es_es/frontend_text.xml</File>
         <!-- FR_FR localized frontend text -->
 		<File>ecfe/localization/fr_fr/frontend_text.xml</File>
-		<!-- replacement city state picker template -->
-		<!-- <File>ecfe/ui/citystatepicker.xml</File> -->
         <!-- advanced setup & host game shared components -->
         <File>ecfe/ui/commonfrontend.lua</File>
-		<!--  -->
-		<!-- <File>ecfe/ui/communityinstances.xml</File> -->
-        <!-- new enhanced advanced setup context -->
+        <!-- enhanced advanced setup context -->
 		<File>ecfe/ui/enhancedadvancedsetup.lua</File>
 		<File>ecfe/ui/enhancedadvancedsetup.xml</File>
-        <!-- game setup logic replacements -->
+        <!-- enhanced game setup logic wrapper -->
         <File>ecfe/ui/enhancedgamesetuplogic.lua</File>
-        <!-- new enhanced host game context -->
+        <!-- enhanced host game context -->
 		<File>ecfe/ui/enhancedhostgame.lua</File>
 		<File>ecfe/ui/enhancedhostgame.xml</File>
-        <!-- dummy file for goody hut picker context, prevents errors in log -->
-        <File>ecfe/ui/goodyhutpicker.lua</File>
-        <!-- replacement main menu template -->
-		<!-- <File>ecfe/ui/mainmenu.xml</File> -->
+		<!-- enhanced main menu context -->
 		<File>ecfe/ui/enhancedmainmenu.lua</File>
 		<File>ecfe/ui/enhancedmainmenu.xml</File>
+		<!-- enhanced mods context -->
+		<File>ecfe/ui/enhancedmods.lua</File>
+		<File>ecfe/ui/enhancedmods.xml</File>
+		<!-- replacement front end UI controls template -->
+		<File>ecfe/ui/frontend.xml</File>
+        <!-- dummy file for goody hut picker context, prevents errors in log -->
+        <File>ecfe/ui/goodyhutpicker.lua</File>
         <!-- dummy file for natural wonder picker context, prevents errors in log -->
 		<File>ecfe/ui/naturalwonderpicker.lua</File>
     </Files>
