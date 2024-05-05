@@ -6,7 +6,7 @@ ECFE replaces several existing Frontend contexts. Replaced contexts are implemen
 - Files whose names match any explicitly specified names (Lua and XML) or defined patterns (Lua only)
 - The wrapper files themselves
 
-What does this mean? To a player, not much. ECFE alone changes very little that affects game setup, and nothing that affects gameplay. To a mod developer, though, [ECFE allows fine(r) control](#features) over exactly which existing files a mod must alter.
+What does this mean? To a player, not much. ECFE alone changes very little that affects game setup, and nothing that affects gameplay. To a mod developer, though, [ECFE allows fine(r) control](CONTEXTS.md#replacing-contexts) over exactly which existing files a mod must alter.
 
 Other mods which rely upon ECFE behavior can explicitly define ECFE as a dependency, which will help ensure that ECFE loads before any such mods.
 
@@ -28,10 +28,8 @@ ECFE replaces the following Frontend contexts:
 - MainMenu
 - Mods
 
-A somewhat technical explanation of replacing contexts can be found [here](CONTEXTS.md#replacing-contexts).
-
 ## `FrontEnd.xml` 
-This UI template file is a custom version which provides the `EnhancedMainMenu` context by modifying the LuaContext node for the `MainMenu` context as outlined [here](CONTEXTS.md#replacing-contexts). There are no other differences between this file and the built-in version.
+This UI template file is a custom version which provides the `EnhancedMainMenu` context by [modifying the LuaContext node](CONTEXTS.md#replacing-contexts) for the `MainMenu` context. There are no other differences between this file and the built-in version.
 
 ## EnhancedMainMenu 
 This context replaces the MainMenu context.
