@@ -18,11 +18,11 @@
 	<Include File="HostGame"/>
 
 	<!-- EnhancedMods replaces and extends Mods -->
-	<LuaContext ID="ModsMenu"            FileName="enhancedmods"        Hidden="1" />
+	<LuaContext ID="ModsMenu"            FileName="EnhancedMods"        Hidden="1" />
 
 	<!-- new Lua context for Enhanced Goodies and Hostile Villagers -->
-	<LuaContext ID="GoodyHutPicker"      FileName="goodyhutpicker"      Hidden="1"/>
+	<LuaContext ID="GoodyHutPicker"      FileName="GoodyHutPicker"      Hidden="1"/>
 	
 	<!-- new Lua context for Enhanced Natural Wonders Selection -->
-	<LuaContext ID="NaturalWonderPicker" FileName="naturalwonderpicker" Hidden="1"/>
+	<LuaContext ID="NaturalWonderPicker" FileName="NaturalWonderPicker" Hidden="1"/>
 </Context>

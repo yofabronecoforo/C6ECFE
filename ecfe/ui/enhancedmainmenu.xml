@@ -21,12 +21,12 @@
 	<Include File="MainMenu"/>
 
 	<!-- EnhancedMods replaces and extends Mods -->
-	<LuaContext ID="ModsContext"   DeferLoad="1" FileName="enhancedmods"          Hidden="1" />
+	<LuaContext ID="ModsContext"   DeferLoad="1" FileName="EnhancedMods"          Hidden="1" />
 
 	<!-- EnhancedAdvancedSetup replaces and extends AdvancedSetup -->
-	<LuaContext ID="AdvancedSetup" DeferLoad="1" FileName="enhancedadvancedsetup" Hidden="1" />
+	<LuaContext ID="AdvancedSetup" DeferLoad="1" FileName="EnhancedAdvancedSetup" Hidden="1" />
   
 	<!-- EnhancedHostGame replaces and extends HostGame -->
-	<LuaContext ID="HostGame"                    FileName="enhancedhostgame"      Hidden="1" />
+	<LuaContext ID="HostGame"                    FileName="EnhancedHostGame"      Hidden="1" />
   
 </ContextDefaults>
