@@ -6,11 +6,11 @@ ECFE replaces several existing Frontend contexts. Replaced contexts are implemen
 - Files whose names match any explicitly specified names (Lua and XML) or defined patterns (Lua only)
 - The wrapper files themselves
 
-What does this mean? To a player, not much. ECFE alone changes very little that affects game setup, and nothing that affects gameplay. To a mod developer, though, [ECFE allows fine(r) control](CONTEXTS.md#replacing-contexts) over exactly which existing files a mod must alter.
+What does this mean? To a player, not much. ECFE alone changes very little that affects game setup, and nothing that affects gameplay. To a mod developer, though, ECFE allows [fine(r) control](CONTEXTS.md) over exactly which existing files a mod must alter.
 
 Other mods which rely upon ECFE behavior can explicitly define ECFE as a dependency, which will help ensure that ECFE loads before any such mods.
 
-[Some limitations apply](#limitations). Continue reading for comprehensive details.
+Some [limitations](#limitations) apply. Continue reading for comprehensive details.
 
 # Translations 
 New Frontend text fully localized in the following languages:
@@ -29,12 +29,12 @@ ECFE replaces the following Frontend contexts:
 - Mods
 
 ## `FrontEnd.xml` 
-This UI template file is a custom version which provides the `EnhancedMainMenu` context by [modifying the LuaContext node](CONTEXTS.md#replacing-contexts) for the `MainMenu` context. There are no other differences between this file and the built-in version.
+This UI controls file is a modified version which provides the `EnhancedMainMenu` context by [modifying the LuaContext node](CONTEXTS.md#parent-contexts) for the `MainMenu` context. There are no other differences between this file and the built-in version.
 
 ## EnhancedMainMenu 
 This context replaces the MainMenu context.
 
-This context is a parent of the following replaced contexts:
+This context is a [parent](CONTEXTS.md#parent-contexts) of the following replaced contexts:
 - `AdvancedSetup` --> `EnhancedAdvancedSetup`
 - `HostGame` --> `EnhancedHostGame`
 - `Mods` --> `EnhancedMods`
@@ -42,17 +42,17 @@ This context is a parent of the following replaced contexts:
 ## EnhancedAdvancedSetup 
 This context replaces the AdvancedSetup context.
 
-This context is a parent of the following new contexts:
+This context is a [parent](CONTEXTS.md#parent-contexts) of the following new contexts:
 - `GoodyHutPicker` used by [Enhanced Goodies and Hostile Villagers (EGHV)](https://steamcommunity.com/sharedfiles/filedetails/?id=2474051781)
 - `NaturalWondersPicker` used by [Enhanced Natural Wonders Selection (ENWS)](https://steamcommunity.com/sharedfiles/filedetails/?id=2273495829)
 
 ## EnhancedHostGame 
 This context replaces the HostGame context.
 
-This context is a parent of the following replaced contexts:
+This context is a [parent](CONTEXTS.md#parent-contexts) of the following replaced contexts:
 - `Mods` --> `EnhancedMods`
 
-This context is a parent of the following new contexts:
+This context is a [parent](CONTEXTS.md#parent-contexts) of the following new contexts:
 - `GoodyHutPicker` used by [Enhanced Goodies and Hostile Villagers (EGHV)](https://steamcommunity.com/sharedfiles/filedetails/?id=2474051781)
 - `NaturalWondersPicker` used by [Enhanced Natural Wonders Selection (ENWS)](https://steamcommunity.com/sharedfiles/filedetails/?id=2273495829)
 
