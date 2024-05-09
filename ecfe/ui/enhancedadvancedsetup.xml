@@ -9,7 +9,8 @@
 	this file is a wrapper for the (Enhanced)AdvancedSetup context
 	it loads the following, in order: 
 		(I) the last imported AdvancedSetup.xml UI controls template
-		(II) definitions for new Lua contexts used by (Enhanced)AdvancedSetup and provided by community projects
+		(II) declarations for any new Lua contexts used by this context and implemented by community projects
+		(III) definitions for any instances which are new or overwrite previously defined instances
 ===========================================================================-->
 <Context xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xsi:noNamespaceSchemaLocation="..\..\..\..\..\..\CivTech\Libs\ForgeUI\ForgeUI_Assets\Controls.xsd" 
@@ -17,7 +18,7 @@
 	
 	<Include File="AdvancedSetup"/>
 
-	<!--  -->
+	<!-- Better FrontEnd (UI) compatibility; will have no effect if BFE is not enabled -->
 	<Include File="AdvancedSetupBFE"/>
 
 	<!-- new Lua context for Enhanced Goodies and Hostile Villagers -->
@@ -25,4 +26,34 @@
 
 	<!-- new Lua context for Enhanced Natural Wonders Selection -->
 	<LuaContext ID="NaturalWonderPicker" FileName="NaturalWonderPicker" Hidden="1"/>
+
+	<!-- Simplified string instance -->
+	<Instance Name="SimpleSliderParameterInstance">
+		<Container ID="Root" Size="parent,90">
+			<Box Color="62,152,203,20" Anchor="L,B" Size="parent,55">
+				<Label ID="OptionTitle" Anchor="C,T" Style="ShellSubHeaderText" String="$Name$" AnchorSide="I,O"/>
+				<Stack StackGrowth="Right" Anchor="C,T">
+					<Slider ID="OptionSlider" Style="SliderControl" Size="198,13" Anchor="L,C" />
+					<Image Texture="Controls_CircleCompass" Size="52,53" Color="ShellControl">
+						<Label ID="NumberDisplay" Style="FontFlair24" String="10" Anchor="C,C" FontStyle="stroke" Color0="208,212,217,255"	Color1="0,0,0,50"/>
+					</Image>
+				</Stack>
+			</Box>
+		</Container>
+	</Instance>
+
+	<!-- Slider with number display -->
+	<Instance Name="SliderParameterInstance">
+		<Container ID="Root" Size="parent,55" Anchor="C,T">
+			<Container Size="auto,55" Anchor="R,T" Offset="40,0">
+				<Stack StackGrowth="Right" Anchor="R,T">
+					<Label ID="OptionTitle" Style="ShellOptionText" Anchor="L,C" String="" />
+					<Slider ID="OptionSlider" Style="SliderControl" Size="250,13" Anchor="L,C" />
+					<Image Texture="Controls_CircleCompass" Size="52,53" Color="ShellControl">
+						<Label ID="NumberDisplay" Style="FontFlair24" String="10" Anchor="C,C" FontStyle="stroke" Color0="208,212,217,255"	Color1="0,0,0,50"/>
+					</Image>
+				</Stack>
+			</Container>
+		</Container>
+	</Instance>
 </Context>

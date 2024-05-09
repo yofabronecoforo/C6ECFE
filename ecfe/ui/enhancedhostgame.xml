@@ -9,7 +9,8 @@
 	this file is a wrapper for the (Enhanced)HostGame context
 	it loads the following, in order: 
 		(I) the last imported HostGame.xml UI controls template
-		(II) definitions for new Lua contexts used by (Enhanced)HostGame and provided by community projects
+		(II) declarations for any new Lua contexts used by this context and implemented by community projects
+		(III) definitions for any instances which are new or overwrite previously defined instances
 ===========================================================================-->
 <Context Style="FontNormal18" 
 	ColorSet="Beige_Black_Alpha" 
@@ -25,4 +26,19 @@
 	
 	<!-- new Lua context for Enhanced Natural Wonders Selection -->
 	<LuaContext ID="NaturalWonderPicker" FileName="NaturalWonderPicker" Hidden="1"/>
+
+	<!-- Slider with number display -->
+	<Instance Name="SliderParameterInstance">
+		<Container ID="Root" Size="330,55" Anchor="C,T">
+			<Container Size="auto,55" Anchor="R,T">
+					<Stack StackGrowth="Right" Size="auto,53" Anchor="R,T">
+						<Label ID="OptionTitle" Style="ShellOptionText" Anchor="L,C" String=""/>
+						<Slider ID="OptionSlider" Style="SliderControl" Size="198,13" Anchor="L,C" />
+						<Image Texture="Controls_CircleCompass" Size="52,53" Color="ShellControl">
+							<Label ID="NumberDisplay" Style="FontFlair24" String="10" Anchor="C,C" FontStyle="stroke" Color0="208,212,217,255"	Color1="0,0,0,50"/>
+						</Image>
+					</Stack>
+			</Container>
+		</Container>
+	</Instance>
 </Context>
