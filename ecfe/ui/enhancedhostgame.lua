@@ -8,7 +8,7 @@
 	begin enhancedhostgame.lua configuration script
 	this file is a wrapper for the (Enhanced)HostGame context
 =========================================================================== ]]
-print("[i]: Loading EnhancedHostGame UI script . . .");
+print("[i]: Loading EnhancedHostGame.lua UI wrapper . . .");
 
 --[[ =========================================================================
 	here is where the wrapper magic happens; in order, load the following:
@@ -20,33 +20,33 @@ print("[i]: Loading EnhancedHostGame UI script . . .");
 		(IV) the EnhancedGameSetupLogic.lua wrapper
 	this should catch all changes to this context provided by ECFE and other mods that utilize this framework
 =========================================================================== ]]
+include("exposedmembers");
 include("commonfrontend");
 print("[+]: Including HostGame.lua from last imported source . . .");
 include("HostGame");
--- print("[i]: Including any imported files matching pattern 'HostGame_*.lua' . . .");
+print("[i]: Including any imported files matching pattern '{H|h}ost{G|g}ame_*.lua' . . .");
 include("HostGame_", true);
--- print("[i]: Including any imported files matching pattern 'hostgame_*.lua' . . .");
 include("hostgame_", true);
 include("enhancedgamesetuplogic");
 
 --[[ =========================================================================
 	OVERRIDE: refresh active content tooltips and call original OnShow()
 =========================================================================== ]]
-Pre_ECFE_OnShow = OnShow;
-function OnShow() 
-    RefreshActiveContentTooltips();
-	Pre_ECFE_OnShow();
-end
+-- Pre_ECFE_OnShow = OnShow;
+-- function OnShow() 
+--     RefreshActiveContentTooltips();
+-- 	Pre_ECFE_OnShow();
+-- end
 
 --[[ =========================================================================
 	reset context pointer handlers with modified functions
 =========================================================================== ]]
-ContextPtr:SetShowHandler( OnShow );
+-- ContextPtr:SetShowHandler( OnShow );
 
 --[[ =========================================================================
 	log successful completed loading of this component
 =========================================================================== ]]
-print("[!]: Finished loading EnhancedHostGame UI script, proceeding . . .");
+print("[!]: Finished loading EnhancedHostGame.lua UI wrapper.");
 
 --[[ =========================================================================
 	end enhancedhostgame.lua configuration script

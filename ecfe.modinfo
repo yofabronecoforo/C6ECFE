@@ -2,7 +2,7 @@
 <Mod id="29dfeca5-042a-4259-853d-61f554851af7" version="2">
     <Properties>
         <Name>LOC_ECFE_MOD_TITLE</Name>
-		<Version>2.0.240505.1602</Version>
+		<Version>2.0.240507.2334</Version>
         <Teaser>LOC_ECFE_MOD_TEASER</Teaser>
         <Description>LOC_ECFE_MOD_DESCRIPTION</Description>
         <Authors>LOC_ECFE_MOD_AUTHORS</Authors>
@@ -31,7 +31,7 @@
         <ImportFiles id="ECFE_CONFIGURATION_DUMMY_FILES">
             <!-- these should be overwritten by any community components that provide these contexts -->
 			<Properties>
-        		<LoadOrder>1000</LoadOrder>
+        		<LoadOrder>100</LoadOrder>
       		</Properties>
             <Items>
                 <!-- dummy file for goody hut picker context, prevents errors in log -->
@@ -43,7 +43,7 @@
         <UpdateText id="ECFE_CONFIGURATION_TEXT">
             <!-- this needs to load RFL -->
 			<Properties>
-        		<LoadOrder>2000000</LoadOrder>
+        		<LoadOrder>100</LoadOrder>
       		</Properties>
             <!-- EN_US localized frontend text -->
 			<File>ecfe/localization/en_us/frontend_text.xml</File>
@@ -55,11 +55,17 @@
         <ImportFiles id="ECFE_CONFIGURATION_UI">
             <!-- this needs to load RFL, but before community components that rely on it -->
 			<Properties>
-        		<LoadOrder>2000001</LoadOrder>
+        		<LoadOrder>100</LoadOrder>
       		</Properties>
 			<Items>
 				<!-- replacement front end UI controls template -->
 				<File>ecfe/ui/frontend.xml</File>
+				<!-- components accessible by any context -->
+                <File>ecfe/ui/exposedmembers.lua</File>
+				<!-- advanced setup & host game shared components -->
+                <File>ecfe/ui/commonfrontend.lua</File>
+                <!-- enhanced game setup logic wrapper -->
+                <File>ecfe/ui/enhancedgamesetuplogic.lua</File>
 				<!-- enhanced main menu context -->
 				<File>ecfe/ui/enhancedmainmenu.lua</File>
 				<File>ecfe/ui/enhancedmainmenu.xml</File>
@@ -72,16 +78,12 @@
                 <!-- enhanced host game context -->
 				<File>ecfe/ui/enhancedhostgame.lua</File>
 				<File>ecfe/ui/enhancedhostgame.xml</File>
-                <!-- advanced setup & host game shared components -->
-                <File>ecfe/ui/commonfrontend.lua</File>
-                <!-- enhanced game setup logic wrapper -->
-                <File>ecfe/ui/enhancedgamesetuplogic.lua</File>
 			</Items>
 		</ImportFiles>
         <UpdateDatabase id="ECFE_CONFIGURATION_DATABASE">
             <!-- this needs to load RFL, but before community components that rely on it -->
 			<Properties>
-        		<LoadOrder>2000002</LoadOrder>
+        		<LoadOrder>100</LoadOrder>
       		</Properties>
             <!-- configuration database changes -->
 			<File Priority="2">ecfe/configuration/frontend.sql</File>
@@ -91,7 +93,7 @@
 		<ImportFiles id="ECFE_YNAMP_LOAD_DATABASE" criteria="ECFE">
 			<!-- this needs to load RFL -->
 			<Properties>
-        		<LoadOrder>2000001</LoadOrder>
+        		<LoadOrder>100</LoadOrder>
       		</Properties>
 			<!-- load ECFE Frontend scripts here for YnAMP compatibility -->
 			<File>ecfe/ui/commonfrontend.lua</File>
@@ -154,6 +156,8 @@
 		<!-- enhanced mods context -->
 		<File>ecfe/ui/enhancedmods.lua</File>
 		<File>ecfe/ui/enhancedmods.xml</File>
+		<!-- components accessible by any context -->
+        <File>ecfe/ui/exposedmembers.lua</File>
 		<!-- replacement front end UI controls template -->
 		<File>ecfe/ui/frontend.xml</File>
         <!-- dummy file for goody hut picker context, prevents errors in log -->

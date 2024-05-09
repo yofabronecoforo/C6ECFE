@@ -8,37 +8,7 @@
 	begin enhancedmods.lua configuration script
 	this file is a wrapper for the (Enhanced)Mods context
 =========================================================================== ]]
-print("[i]: Loading EnhancedMods UI script . . .");
-
---[[ =========================================================================
-	pre-init
-=========================================================================== ]]
-ExposedMembers.MainMenuVersionString = string.format("Game: %s", tostring(UI.GetAppVersion()));
-
-ExposedMembers.ContentHandles = ExposedMembers.ContentHandles or {};
-local tMods = Modding.GetInstalledMods();
-if (tMods and #tMods > 0) then 
-	for _, mod in ipairs(tMods) do 
-		ExposedMembers.ContentHandles[mod.Id] = mod.Handle;
-	end
-end
-tMods = nil;
-
-ExposedMembers.RecognizedContent = ExposedMembers.RecognizedContent or {};
-if (#ExposedMembers.RecognizedContent < 1) then 
-	local tContent = DB.ConfigurationQuery("SELECT DISTINCT * from ContentFlags");
-	if tContent and #tContent > 0 then 
-		for _, mod in ipairs(tContent) do 
-			ExposedMembers.RecognizedContent[mod.Id] = ExposedMembers.RecognizedContent[mod.Id] or {};
-			ExposedMembers.RecognizedContent[mod.Id].IsEnabled = (Modding.IsModInstalled(mod.GUID) and Modding.IsModEnabled(mod.GUID));
-			local sVersion = Modding.GetModProperty(ExposedMembers.ContentHandles[mod.GUID], "Version") or nil;
-			if sVersion then 
-				ExposedMembers.MainMenuVersionString = string.format("%s[NEWLINE][%s]%s: %s[ENDCOLOR]", ExposedMembers.MainMenuVersionString, (mod.Id == "MPH") and "COLOR_LIGHTBLUE" or "COLOR:Green", mod.Id, sVersion);
-				ExposedMembers.RecognizedContent[mod.Id].Version = sVersion
-			end
-		end
-	end
-end
+print("[i]: Loading EnhancedMods.lua UI wrapper . . .");
 
 --[[ =========================================================================
 	here is where the wrapper magic happens; in order, load the following: 
@@ -48,17 +18,72 @@ end
 			(B) mods_
 	this should catch all changes to this context provided by ECFE and other mods that utilize this framework
 =========================================================================== ]]
+include("exposedmembers");
 print("[+]: Including Mods.lua from last imported source . . .");
 include("Mods");
--- print("[+]: Including any imported files matching pattern 'Mods_*.lua' . . .");
+print("[i]: Including any imported files matching pattern '{M|m}ods_*.lua' . . .");
 include("Mods_", true);
--- print("[+]: Including any imported files matching pattern 'mods_*.lua' . . .");
 include("mods_", true);
+
+--[[ =========================================================================
+	
+=========================================================================== ]]
+Pre_ECFE_HandleExitRequest = HandleExitRequest;
+function HandleExitRequest() 
+	Pre_ECFE_HandleExitRequest();
+	local installed = ECFE.GetInstalledMods();
+	if #installed ~= #ECFE.Content.Installed then 
+		print(string.format("[!]: Installed content count has changed from %d item%s; queueing content refresh.", #ECFE.Content.Installed, (#ECFE.Content.Installed ~= 1) and "s" or ""));
+		ECFE.Content = ECFE.RefreshActiveContent();
+		return;
+	else 
+		for _, mod in ipairs(installed) do 
+			local modWasInstalled = ECFE.Content.IsInstalled[mod.Id] or false;
+			if not modWasInstalled then 
+				print(string.format("[!]: Item %s was not previously installed; queueing content refresh.", mod.Id));
+				ECFE.Content = ECFE.RefreshActiveContent();
+				return;
+			end
+		end
+		for _, mod in ipairs(ECFE.Content.Installed) do 
+			local modIsInstalled = Modding.IsModInstalled(mod.Id);
+			if not modIsInstalled then 
+				print(string.format("[!]: Item %s has been removed; queueing content refresh.", mod.Id));
+				ECFE.Content = ECFE.RefreshActiveContent();
+				return;
+			end
+		end
+	end
+	local enabled = ECFE.GetEnabledMods();
+	if #enabled ~= #ECFE.Content.Enabled then 
+		print(string.format("[!]: Enabled content count has changed from %d item%s; queueing content refresh.", #ECFE.Content.Enabled, (#ECFE.Content.Enabled ~= 1) and "s" or ""));
+		ECFE.Content = ECFE.RefreshActiveContent();
+		return;
+	else 
+		for _, mod in ipairs(enabled) do 
+			local modWasEnabled = ECFE.Content.IsEnabled[mod.Id] or false;
+			if not modWasEnabled then 
+				print(string.format("[!]: Item %s was not previously enabled; queueing content refresh.", mod.Id));
+				ECFE.Content = ECFE.RefreshActiveContent();
+				return;
+			end
+		end
+		for _, mod in ipairs(ECFE.Content.Enabled) do 
+			local modIsEnabled = Modding.IsModEnabled(mod.Id);
+			if not modIsEnabled then 
+				print(string.format("[!]: Item %s has been disabled; queueing content refresh.", mod.Id));
+				ECFE.Content = ECFE.RefreshActiveContent();
+				return;
+			end
+		end
+	end
+	print("[i]: No changes to installed or enabled content detected.");
+end
 
 --[[ =========================================================================
 	log successful completed loading of this component
 =========================================================================== ]]
-print("[!]: Finished loading EnhancedMods UI script, proceeding . . .");
+print("[!]: Finished loading EnhancedMods.lua UI wrapper.");
 
 --[[ =========================================================================
 	end enhancedmods.lua configuration script

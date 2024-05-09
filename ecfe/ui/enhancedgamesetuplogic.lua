@@ -10,7 +10,7 @@
 	any ECFE modifications that affect GameSetupLogic.lua, and thus both AdvancedSetup and HostGame, should go here
 	any additional modifications to GameSetupLogic will be included by directives at the end of this file
 =========================================================================== ]]
-print("[i]: Loading EnhancedGameSetupLogic wrapper . . .");
+print("[i]: Loading EnhancedGameSetupLogic.lua UI wrapper . . .");
 
 --[[ =========================================================================
 	OVERRIDE: the various picker drivers have been condensed into CreatePickerDriverByParameter()
@@ -18,17 +18,19 @@ print("[i]: Loading EnhancedGameSetupLogic wrapper . . .");
 	the original pickers are found in AdvancedSetup and HostGame, but this is going here to avoid duplicating code
 =========================================================================== ]]
 function GameParameters_UI_CreateParameterDriver(o, parameter, ...) 
-	local parameterId = parameter.ParameterId;
-	-- if(parameterId == "CityStates" or parameterId == "LeaderPool1" or parameterId == "LeaderPool2" or parameterId == "GoodyHutConfig" or parameterId == "NaturalWonders") then 
-	if(parameterId == "CityStates" or parameterId == "LeaderPool1" or parameterId == "LeaderPool2" or parameterId == "NaturalWonders") then 
-		if GameConfiguration.IsWorldBuilderEditor() then
-			return nil;
-		end
-		return CreatePickerDriverByParameter(o, parameter);
-	elseif(parameter.Array) then								-- fallback for generic multi-select window; no WorldBuilder check
-		return CreatePickerDriverByParameter(o, parameter);
-	else
+	if not parameter.Array then 
 		return GameParameters_UI_DefaultCreateParameterDriver(o, parameter, ...);
+	else 
+		local parameterId = parameter.ParameterId;
+		if parameterId == "NaturalWonders" then 
+			return CreatePickerDriverByParameter(o, parameter);
+		else 
+			if not GameConfiguration.IsWorldBuilderEditor() then 
+				return CreatePickerDriverByParameter(o, parameter);
+			else 
+				return nil;
+			end
+		end
 	end
 end
 
@@ -56,15 +58,14 @@ end
 --[[ =========================================================================
 	include any additional modifications to GameSetupLogic
 =========================================================================== ]]
--- print("[i]: Including any imported files matching pattern 'GameSetupLogic_*.lua' . . .");
+print("[i]: Including any imported files matching pattern '{G|g}ame{S|s}etup{L|l}ogic_*.lua' . . .");
 include("GameSetupLogic_", true);
--- print("[i]: Including any imported files matching pattern 'gamesetuplogic_*.lua' . . .");
 include("gamesetuplogic_", true);
 
 --[[ =========================================================================
 	log successful loading of this component
 =========================================================================== ]]
-print("[!]: Finished loading EnhancedGameSetupLogic wrapper, proceeding . . .");
+print("[!]: Finished loading EnhancedGameSetupLogic.lua UI wrapper.");
 
 --[[ =========================================================================
 	end enhancedgamesetuplogic.lua configuration script

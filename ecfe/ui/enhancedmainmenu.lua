@@ -8,7 +8,7 @@
 	begin enhancedmainmenu.lua configuration script
 	this file is a wrapper for the (Enhanced)MainMenu context
 =========================================================================== ]]
-print("[i]: Loading EnhancedMainMenu UI script . . .");
+print("[i]: Loading EnhancedMainMenu.lua UI wrapper . . .");
 
 --[[ =========================================================================
 	here is where the wrapper magic happens; in order, load the following: 
@@ -18,22 +18,21 @@ print("[i]: Loading EnhancedMainMenu UI script . . .");
 			(B) mainmenu_
 	this should catch all changes to this context provided by ECFE and other mods that utilize this framework
 =========================================================================== ]]
+include("exposedmembers");
 print("[+]: Including MainMenu.lua from last imported source . . .");
 include("MainMenu");
--- print("[+]: Including any imported files matching pattern 'MainMenu_*.lua' . . .");
 include("MainMenu_", true);
--- print("[+]: Including any imported files matching pattern 'mainmenu_*.lua' . . .");
 include("mainmenu_", true);
 
 --[[ =========================================================================
 	reset version string
 =========================================================================== ]]
-Controls.VersionLabel:SetText(ExposedMembers.MainMenuVersionString and ExposedMembers.MainMenuVersionString or string.format("Game: %s", tostring(UI.GetAppVersion())));
+Controls.VersionLabel:SetText(ECFE.GetMainMenuVersionString(ECFE.Content.Version));
 
 --[[ =========================================================================
 	log successful completed loading of this component
 =========================================================================== ]]
-print("[!]: Finished loading EnhancedMainMenu UI script, proceeding . . .");
+print("[!]: Finished loading EnhancedMainMenu.lua UI wrapper.");
 
 --[[ =========================================================================
 	end enhancedmainmenu.lua configuration script

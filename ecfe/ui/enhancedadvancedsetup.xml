@@ -17,6 +17,9 @@
 	
 	<Include File="AdvancedSetup"/>
 
+	<!--  -->
+	<Include File="AdvancedSetupBFE"/>
+
 	<!-- new Lua context for Enhanced Goodies and Hostile Villagers -->
 	<LuaContext ID="GoodyHutPicker"      FileName="GoodyHutPicker"      Hidden="1"/>
 

@@ -9,30 +9,24 @@
 	this file contains new components that are used by both the (Enhanced)AdvancedSetup and (Enhanced)HostGame contexts
 	it should be included by those contexts before any other files that are to be included
 =========================================================================== ]]
-print("[+]: Including CommonFrontend.lua . . .");
-
---[[ =========================================================================
-	pre-init
-=========================================================================== ]]
-ExposedMembers.RecognizedContent = ExposedMembers.RecognizedContent or {};
-RecognizedContent = ExposedMembers.RecognizedContent;
+print("[i]: Loading CommonFrontend.lua UI script . . .");
 
 --[[ =========================================================================
 	global content presence booleans
 =========================================================================== ]]
-g_bIsEnabledECSS  = Modding.IsModEnabled("772960cc-ddaf-4432-870c-e97d698d7011");    -- Enhanced City-States Selection
-g_bIsEnabledEGHV  = Modding.IsModEnabled("a4b1fac6-8c9e-4873-a1c1-7ddf08dbbf11");    -- Enhanced Goodies and Hostile Villagers
-g_bIsEnabledENWS  = Modding.IsModEnabled("d0afae5b-02f8-4d01-bd54-c2bbc3d89858");    -- Enhanced Natural Wonders Selection
-g_bIsEnabledYnAMP = Modding.IsModEnabled("36e88483-48fe-4545-b85f-bafc50dde315");    -- Yet (not) Another Map Pack
-g_bIsEnabledGCM   = Modding.IsModEnabled("c185a48b-75d0-4897-9134-83308c5fe5ae");    -- Game Config Manager
+-- g_bIsEnabledECSS  = Modding.IsModEnabled("772960cc-ddaf-4432-870c-e97d698d7011");    -- Enhanced City-States Selection
+-- g_bIsEnabledEGHV  = Modding.IsModEnabled("a4b1fac6-8c9e-4873-a1c1-7ddf08dbbf11");    -- Enhanced Goodies and Hostile Villagers
+-- g_bIsEnabledENWS  = Modding.IsModEnabled("d0afae5b-02f8-4d01-bd54-c2bbc3d89858");    -- Enhanced Natural Wonders Selection
+-- g_bIsEnabledYnAMP = Modding.IsModEnabled("36e88483-48fe-4545-b85f-bafc50dde315");    -- Yet (not) Another Map Pack
+-- g_bIsEnabledGCM   = Modding.IsModEnabled("c185a48b-75d0-4897-9134-83308c5fe5ae");    -- Game Config Manager
 
 --[[ =========================================================================
 	global picker tooltip tables; these will be indexed by ruleset
 =========================================================================== ]]
-g_tCityStatesTooltip     = {};
-g_tGoodyHutsTooltip      = {};
-g_tLeadersTooltip        = {};
-g_tNaturalWondersTooltip = {};
+-- g_tCityStatesTooltip     = {};
+-- g_tGoodyHutsTooltip      = {};
+-- g_tLeadersTooltip        = {};
+-- g_tNaturalWondersTooltip = {};
 
 --[[ =========================================================================
 	global strings
@@ -42,60 +36,60 @@ g_sRowOfDashes = "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 --[[ =========================================================================
 	NEW: append localized text to picker tooltips
 =========================================================================== ]]
-function UpdateTooltipText( r, s, t ) 
-	if t.CityStates then g_tCityStatesTooltip[r] = string.format("%s%s", g_tCityStatesTooltip[r], s); end
-	if t.GoodyHuts then g_tGoodyHutsTooltip[r] = string.format("%s%s", g_tGoodyHutsTooltip[r], s); end
-	if t.Leaders then g_tLeadersTooltip[r] = string.format("%s%s", g_tLeadersTooltip[r], s); end
-	if t.NaturalWonders then g_tNaturalWondersTooltip[r] = string.format("%s%s", g_tNaturalWondersTooltip[r], s); end
-end
+-- function UpdateTooltipText( r, s, t ) 
+-- 	if t.CityStates then g_tCityStatesTooltip[r] = string.format("%s%s", g_tCityStatesTooltip[r], s); end
+-- 	if t.GoodyHuts then g_tGoodyHutsTooltip[r] = string.format("%s%s", g_tGoodyHutsTooltip[r], s); end
+-- 	if t.Leaders then g_tLeadersTooltip[r] = string.format("%s%s", g_tLeadersTooltip[r], s); end
+-- 	if t.NaturalWonders then g_tNaturalWondersTooltip[r] = string.format("%s%s", g_tNaturalWondersTooltip[r], s); end
+-- end
 
 --[[ =========================================================================
 	NEW: validate active content and set tooltip strings
 	Modding.IsModActive() does not appear to work in Frontend context, so we're using IsModInstalled() and IsModEnabled() instead
 =========================================================================== ]]
-function RefreshActiveContentTooltips() 
-	-- known and active recognized items, and the default picker tooltip string
-	local iKnownItems, iActiveItems = 0, 0;
-	local sStandard                 = Locale.Lookup("LOC_STANDARD_TT");
-	-- (re)set tooltip string tables
-    g_tCityStatesTooltip     = { ["RULESET_STANDARD"] = sStandard, ["RULESET_EXPANSION_1"] = sStandard, ["RULESET_EXPANSION_2"] = sStandard };
-    g_tGoodyHutsTooltip      = { ["RULESET_STANDARD"] = sStandard, ["RULESET_EXPANSION_1"] = sStandard, ["RULESET_EXPANSION_2"] = sStandard };
-    g_tLeadersTooltip        = { ["RULESET_STANDARD"] = sStandard, ["RULESET_EXPANSION_1"] = sStandard, ["RULESET_EXPANSION_2"] = sStandard };
-    g_tNaturalWondersTooltip = { ["RULESET_STANDARD"] = sStandard, ["RULESET_EXPANSION_1"] = sStandard, ["RULESET_EXPANSION_2"] = sStandard };
-	-- query ContentFlags and parse results for active content
-	print("[i]: Querying Configuration table ContentFlags for known content . . .");
-	local tContent = DB.ConfigurationQuery("SELECT DISTINCT * from ContentFlags");
-	if tContent and #tContent > 0 then 
-		iKnownItems = #tContent;
-		local sItems = (iKnownItems ~= 1) and "items" or "item";
-		print(string.format("[i]: Identified %d known %s; parsing for active content and updating picker tooltip text accordingly . . .", iKnownItems, sItems));
-		for _, item in ipairs(tContent) do 
-			if (Modding.IsModInstalled(item.GUID) and Modding.IsModEnabled(item.GUID)) then 
-				iActiveItems   = iActiveItems + 1;
-				local sTooltip = Locale.Lookup(item.Tooltip);
-				if item.Base then UpdateTooltipText("RULESET_STANDARD", sTooltip, item); end
-				if item.XP1 then UpdateTooltipText("RULESET_EXPANSION_1", sTooltip, item); end
-				if item.XP2 then UpdateTooltipText("RULESET_EXPANSION_2", sTooltip, item); end
-			end
-		end
-		print(string.format("[i]: Picker tooltip text updated to reflect %d active of %d known %s; proceeding . . .", iActiveItems, iKnownItems, sItems));
-	else
-		print("[i]: Configuration table ContentFlags is empty or undefined; proceeding without parsing content flags . . .");
-	end
-end
+-- function RefreshActiveContentTooltips() 
+-- 	-- known and active recognized items, and the default picker tooltip string
+-- 	local iKnownItems, iActiveItems = 0, 0;
+-- 	local sStandard                 = Locale.Lookup("LOC_STANDARD_TT");
+-- 	-- (re)set tooltip string tables
+--     g_tCityStatesTooltip     = { ["RULESET_STANDARD"] = sStandard, ["RULESET_EXPANSION_1"] = sStandard, ["RULESET_EXPANSION_2"] = sStandard };
+--     g_tGoodyHutsTooltip      = { ["RULESET_STANDARD"] = sStandard, ["RULESET_EXPANSION_1"] = sStandard, ["RULESET_EXPANSION_2"] = sStandard };
+--     g_tLeadersTooltip        = { ["RULESET_STANDARD"] = sStandard, ["RULESET_EXPANSION_1"] = sStandard, ["RULESET_EXPANSION_2"] = sStandard };
+--     g_tNaturalWondersTooltip = { ["RULESET_STANDARD"] = sStandard, ["RULESET_EXPANSION_1"] = sStandard, ["RULESET_EXPANSION_2"] = sStandard };
+-- 	-- query ContentFlags and parse results for active content
+-- 	print("[i]: Querying Configuration table ContentFlags for known content . . .");
+-- 	local tContent = DB.ConfigurationQuery("SELECT DISTINCT * from ContentFlags");
+-- 	if tContent and #tContent > 0 then 
+-- 		iKnownItems = #tContent;
+-- 		local sItems = (iKnownItems ~= 1) and "items" or "item";
+-- 		print(string.format("[i]: Identified %d known %s; parsing for active content and updating picker tooltip text accordingly . . .", iKnownItems, sItems));
+-- 		for _, item in ipairs(tContent) do 
+-- 			if (Modding.IsModInstalled(item.GUID) and Modding.IsModEnabled(item.GUID)) then 
+-- 				iActiveItems   = iActiveItems + 1;
+-- 				local sTooltip = Locale.Lookup(item.Tooltip);
+-- 				if item.Base then UpdateTooltipText("RULESET_STANDARD", sTooltip, item); end
+-- 				if item.XP1 then UpdateTooltipText("RULESET_EXPANSION_1", sTooltip, item); end
+-- 				if item.XP2 then UpdateTooltipText("RULESET_EXPANSION_2", sTooltip, item); end
+-- 			end
+-- 		end
+-- 		print(string.format("[i]: Picker tooltip text updated to reflect %d active of %d known %s; proceeding . . .", iActiveItems, iKnownItems, sItems));
+-- 	else
+-- 		print("[i]: Configuration table ContentFlags is empty or undefined; proceeding without parsing content flags . . .");
+-- 	end
+-- end
 
 --[[ =========================================================================
 	NEW: update a specific picker's tooltip text based on selected ruleset
 =========================================================================== ]]
-function UpdateButtonToolTip(parameterId) 
-    local sRuleset = GameConfiguration.GetValue("RULESET");
-	if (parameterId == "CityStates") then return g_tCityStatesTooltip[sRuleset];
-	elseif (parameterId == "LeaderPool1" or parameterId == "LeaderPool2") then return g_tLeadersTooltip[sRuleset];
-	elseif (parameterId == "GoodyHutConfig") then return g_tGoodyHutsTooltip[sRuleset];
-	elseif (parameterId == "NaturalWonders" or parameterId == "StartWonders") then return g_tNaturalWondersTooltip[sRuleset];
-	else return "";    -- return empty string here to prevent attempts to concatenate nil
-	end
-end
+-- function UpdateButtonToolTip(parameterId) 
+--     local sRuleset = GameConfiguration.GetValue("RULESET");
+-- 	if (parameterId == "CityStates") then return g_tCityStatesTooltip[sRuleset];
+-- 	elseif (parameterId == "LeaderPool1" or parameterId == "LeaderPool2") then return g_tLeadersTooltip[sRuleset];
+-- 	elseif (parameterId == "GoodyHutConfig") then return g_tGoodyHutsTooltip[sRuleset];
+-- 	elseif (parameterId == "NaturalWonders" or parameterId == "StartWonders") then return g_tNaturalWondersTooltip[sRuleset];
+-- 	else return "";    -- return empty string here to prevent attempts to concatenate nil
+-- 	end
+-- end
 
 --[[ =========================================================================
 	NEW: this driver is for launching the picker indicated by parameter in a separate window
@@ -146,7 +140,8 @@ function CreatePickerDriverByParameter(o, parameter, parent)
 			Controls.MultiSelectWindow:SetHide(false);
 		end);
 	end
-	button:SetToolTipString(parameter.Description .. UpdateButtonToolTip(parameterId));		-- update button tooltip text
+	-- button:SetToolTipString(parameter.Description .. UpdateButtonToolTip(parameterId));		-- update button tooltip text
+	button:SetToolTipString(parameter.Description .. ECFE.Content.Tooltips[GameConfiguration.GetValue("RULESET")][parameterId]);		-- update button tooltip text
 
 	-- Store the root control, NOT the instance table.
 	g_SortingMap[tostring(c.ButtonRoot)] = parameter;
@@ -232,7 +227,8 @@ function CreatePickerDriverByParameter(o, parameter, parent)
 				button:LocalizeAndSetText(valueText, valueAmount);
 				cache.ValueText = valueText;
 				cache.ValueAmount = valueAmount;
-				button:SetToolTipString(parameter.Description .. UpdateButtonToolTip(parameterId)); 	-- update button tooltip text
+				-- button:SetToolTipString(parameter.Description .. UpdateButtonToolTip(parameterId)); 	-- update button tooltip text
+				button:SetToolTipString(parameter.Description .. ECFE.Content.Tooltips[GameConfiguration.GetValue("RULESET")][parameterId]);		-- update button tooltip text
 			end
 		end,
 		UpdateValues = function(values, p) 
