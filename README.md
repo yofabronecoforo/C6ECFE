@@ -73,6 +73,9 @@ This Lua wrapper consists of changes to the `GameSetupLogic.lua` script used by 
     - `gamesetuplogic_*.lua`
 2. Any additional changes to `GameSetupLogic.lua` that should be loaded after the files listed above.
 
+## `ExposedMembers.lua` 
+This Lua wrapper consists of components which are declared in the ExposedMembers table, and can thus be shared between contexts.
+
 ## New Picker Button Text 
 ECFE modifies the text of picker buttons to reflect the number of selected items and the number of available items at all times.
 
@@ -83,15 +86,15 @@ ECFE modifies the tooltip text of picker buttons to reflect the sources of avail
 Though it does not directly affect any Ingame components, ECFE does provide an option that can be used to adjust Ingame logging verbosity by mods that support it.
 
 # Limitations 
-ECFE is not a panacea. It cannot alter core game behavior, so when multiple versions of any file with the same name have been imported, the game will still only retain and use the last-imported version of that file. This means that mods which are incompatible with each other because they replace the same file(s) will continue to be incompatible with each other.
+ECFE is not a panacea. It cannot alter core game behavior, so when multiple versions of any file with the same name have been imported, the game will still only retain and use the last-imported version of that file. This means that mods which are incompatible with each other because they replace the same file(s) will likely continue to be incompatible with each other, although there are [exceptions](#other-mods-which-alter-replaced-contexts) to this rule.
 
 Unlike Lua, XML does not support the use of wildcards in Include nodes. ECFE is therefore unable to dynamically load XML content through the use of pattern-matching. This makes it harder, though not impossible, for multiple mods to make changes to existing controls within a given context, or to add new controls therein.
 
 The dynamic content tooltip feature will only apply to picker types that are recognized by ECFE. Currently, these include:
 - All built-in pickers (City-States, Leaders, Natural Wonders)
 - Any other picker which initializes by reusing components of any of the above pickers
-- The Goody Hut picker provided by Enhanced Goodies and Hostile Villagers (EGHV)
-- The modified Natural Wonders Picker used by Enhanced Natural Wonders Selection (ENWS)
+- The Goody Hut picker provided by [Enhanced Goodies and Hostile Villagers (EGHV)](https://steamcommunity.com/sharedfiles/filedetails/?id=2474051781)
+- The Natural Wonders Picker used by [Enhanced Natural Wonders Selection (ENWS)](https://steamcommunity.com/sharedfiles/filedetails/?id=2273495829)
 
 # Compatibility 
 ECFE is compatible with single- and multi-player setups.
@@ -100,19 +103,32 @@ ECFE is compatible with all official rulesets.
 
 As it does not directly affect any Ingame content, ECFE *should* be compatible with any game mode, whether official or provided by a mod. However, this has not been thoroughly tested.
 
-## Known Mod Compatibility 
-ECFE is compatible with other mods that replace Frontend context files, but [due to limitations](#limitations), for each context below in which files are replaced, it can only interoperate with any one of the listed mods at a time:
-- AdvancedSetup:
-    - Sukritact's Civ Selection Screen
-    - Yet (not) Another Maps Pack
-- HostGame:
-    - Multiplayer Helper
-- MainMenu:
-    - Multiplayer Helper
-- Mods
-    - Enhanced Mod Manager
+## Other Mods Which Alter Replaced Contexts 
+ECFE is compatible with other mods that replace Frontend context files, but [due to limitations](#limitations), mods that replace the same core files are still generally incompatible with one another. For the best experience with the least chance of breakage, unless specifically designed to utilize ECFE's framework, only a single mod which alters core files in a given context should be enabled at a time.
 
-ECFE was developed with the following mods enabled, and is thus known to be compatible with them:
+Following is a non-comprehensive list of known compatible mods which replace core files in contexts that ECFE replaces, along with any behavior exhibited by them which deviates from the above.
+
+### AdvancedSetup 
+- Better FrontEnd (UI)
+- Sukritact's Civ Selection Screen
+- Yet (not) Another Maps Pack
+
+BFE is a special case as it is explicitly compatible with YnAMP. By utilizing some [additional](./ecfe/ui/enhancedadvancedsetup.xml) [trickery](./ecfe/ui/enhancedadvancedsetup.lua), ECFE can thus interoperate with both BFE and YnAMP enabled simultaneously.
+
+### HostGame 
+- Multiplayer Helper
+
+### MainMenu 
+- Better FrontEnd (UI)
+- Multiplayer Helper
+
+BFE and MPH will actually sort-of interoperate. Currently, MPH's replacement files for this context are the last ones imported, and are therefore the ones used. Both mods' changes to other contexts can coexist. ECFE can thus interoperate with both simultaneously, unless BFE's changes to this context are desired.
+
+### Mods 
+- Enhanced Mod Manager
+
+## Other Compatible Mods 
+ECFE was developed with the following additional mods enabled, and is thus known to be compatible with them:
 - Better Civilization Icons
 - Better Coastal Cities and Water Tiles
 - Better Report Screen (UI)
@@ -172,5 +188,6 @@ ECFE adds the following new Frontend context file(s):
 ECFE adds the following new Frontend Lua script file(s):
 - `CommonFrontend.lua`
 - `EnhancedGameSetupLogic.lua`
+- `ExposedMembers.lua`
 
 If your mod replaces any of these files, compatibility issues **WILL** arise.
