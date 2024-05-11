@@ -99,118 +99,118 @@ g_sRowOfDashes = "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 	any new picker(s) can be handled by adding new and/or modifying existing (else)if statement(s) below
 	the original drivers that this driver replaces should still exist in an unmodified state
 =========================================================================== ]]
-function CreatePickerDriverByParameter(o, parameter, parent) 
-	if(parent == nil) then 
-		parent = GetControlStack(parameter.GroupId);
-	end
+-- function CreatePickerDriverByParameter(o, parameter, parent) 
+-- 	if(parent == nil) then 
+-- 		parent = GetControlStack(parameter.GroupId);
+-- 	end
 			
-	-- Get the UI instance
-	local c :object = g_ButtonParameterManager:GetInstance();	
+-- 	-- Get the UI instance
+-- 	local c :object = g_ButtonParameterManager:GetInstance();	
 
-	local parameterId = parameter.ParameterId;
-	local button = c.Button;
+-- 	local parameterId = parameter.ParameterId;
+-- 	local button = c.Button;
 
-	-- print(string.format("[+]: Creating driver for %s picker . . .", parameterId));
+-- 	-- print(string.format("[+]: Creating driver for %s picker . . .", parameterId));
 
-	-- define picker based on parameterId
-	if (parameterId == "CityStates") then    -- built-in city-state picker
-		button:RegisterCallback( Mouse.eLClick, function()
-			LuaEvents.CityStatePicker_Initialize(o.Parameters[parameterId], g_GameParameters);
-			Controls.CityStatePicker:SetHide(false);
-		end);
-	elseif (parameterId == "LeaderPool1" or parameterId == "LeaderPool2") then    -- built-in leader picker
-		button:RegisterCallback( Mouse.eLClick, function()
-			LuaEvents.LeaderPicker_Initialize(o.Parameters[parameterId], g_GameParameters);
-			Controls.LeaderPicker:SetHide(false);
-		end);
-	else    -- fallback to generic multi-select window
-		button:RegisterCallback( Mouse.eLClick, function()
-			LuaEvents.MultiSelectWindow_Initialize(o.Parameters[parameterId]);
-			Controls.MultiSelectWindow:SetHide(false);
-		end);
-	end
-	button:SetToolTipString(parameter.Description .. ECFE.Content.Tooltips[GameConfiguration.GetValue("RULESET")][parameterId]);    -- show content sources in tooltip text
+-- 	-- define picker based on parameterId
+-- 	if (parameterId == "CityStates") then    -- built-in city-state picker
+-- 		button:RegisterCallback( Mouse.eLClick, function()
+-- 			LuaEvents.CityStatePicker_Initialize(o.Parameters[parameterId], g_GameParameters);
+-- 			Controls.CityStatePicker:SetHide(false);
+-- 		end);
+-- 	elseif (parameterId == "LeaderPool1" or parameterId == "LeaderPool2") then    -- built-in leader picker
+-- 		button:RegisterCallback( Mouse.eLClick, function()
+-- 			LuaEvents.LeaderPicker_Initialize(o.Parameters[parameterId], g_GameParameters);
+-- 			Controls.LeaderPicker:SetHide(false);
+-- 		end);
+-- 	else    -- fallback to generic multi-select window
+-- 		button:RegisterCallback( Mouse.eLClick, function()
+-- 			LuaEvents.MultiSelectWindow_Initialize(o.Parameters[parameterId]);
+-- 			Controls.MultiSelectWindow:SetHide(false);
+-- 		end);
+-- 	end
+-- 	button:SetToolTipString(parameter.Description .. ECFE.Content.Tooltips[GameConfiguration.GetValue("RULESET")][parameterId]);    -- show content sources in tooltip text
 
-	-- Store the root control, NOT the instance table.
-	g_SortingMap[tostring(c.ButtonRoot)] = parameter;
+-- 	-- Store the root control, NOT the instance table.
+-- 	g_SortingMap[tostring(c.ButtonRoot)] = parameter;
 
-	c.ButtonRoot:ChangeParent(parent);
-	if c.StringName ~= nil then
-		c.StringName:SetText(parameter.Name);
-	end
+-- 	c.ButtonRoot:ChangeParent(parent);
+-- 	if c.StringName ~= nil then
+-- 		c.StringName:SetText(parameter.Name);
+-- 	end
 
-	local cache = {};
+-- 	local cache = {};
 
-	local kDriver :table = {
-		Control = c,
-		Cache = cache,
-		UpdateValue = function(value, p)
-			local valueText = value and value.Name or nil;
-			local valueAmount :number = 0;
+-- 	local kDriver :table = {
+-- 		Control = c,
+-- 		Cache = cache,
+-- 		UpdateValue = function(value, p)
+-- 			local valueText = value and value.Name or nil;
+-- 			local valueAmount :number = 0;
 
-			-- if this driver is for one of the leader pickers, remove random leaders from the Values table that is used to determine number of leaders selected
-			if (parameterId == "LeaderPool1" or parameterId == "LeaderPool2") then 
-				for i = #p.Values, 1, -1 do
-					local kItem:table = p.Values[i];
-					-- print(kItem.Value);
-					if kItem.Value == "RANDOM" or kItem.Value == "RANDOM_POOL1" or kItem.Value == "RANDOM_POOL2" then
-						table.remove(p.Values, i);
-					end
-				end
-			end
+-- 			-- if this driver is for one of the leader pickers, remove random leaders from the Values table that is used to determine number of leaders selected
+-- 			if (parameterId == "LeaderPool1" or parameterId == "LeaderPool2") then 
+-- 				for i = #p.Values, 1, -1 do
+-- 					local kItem:table = p.Values[i];
+-- 					-- print(kItem.Value);
+-- 					if kItem.Value == "RANDOM" or kItem.Value == "RANDOM_POOL1" or kItem.Value == "RANDOM_POOL2" then
+-- 						table.remove(p.Values, i);
+-- 					end
+-- 				end
+-- 			end
 
-			-- only amounts displayed by valueText change now so updates to it have been removed here; can this be further simplified?
-			if(valueText == nil) then 
-				if(value == nil) then 
-					if (parameter.UxHint ~= nil and parameter.UxHint == "InvertSelection") then 
-						valueAmount = #p.Values;    -- all available items
-					end
-				elseif(type(value) == "table") then 
-					local count = #value;
-					if (parameter.UxHint ~= nil and parameter.UxHint == "InvertSelection") then 
-						if(count == 0) then 
-							valueAmount = #p.Values;    -- all available items
-						else 
-							valueAmount = #p.Values - count;
-						end
-					else 
-						if(count == #p.Values) then 
-							valueAmount = #p.Values;    -- all available items
-						else 
-							valueAmount = count;
-						end
-					end
-				end
-			end
+-- 			-- only amounts displayed by valueText change now so updates to it have been removed here; can this be further simplified?
+-- 			if(valueText == nil) then 
+-- 				if(value == nil) then 
+-- 					if (parameter.UxHint ~= nil and parameter.UxHint == "InvertSelection") then 
+-- 						valueAmount = #p.Values;    -- all available items
+-- 					end
+-- 				elseif(type(value) == "table") then 
+-- 					local count = #value;
+-- 					if (parameter.UxHint ~= nil and parameter.UxHint == "InvertSelection") then 
+-- 						if(count == 0) then 
+-- 							valueAmount = #p.Values;    -- all available items
+-- 						else 
+-- 							valueAmount = #p.Values - count;
+-- 						end
+-- 					else 
+-- 						if(count == #p.Values) then 
+-- 							valueAmount = #p.Values;    -- all available items
+-- 						else 
+-- 							valueAmount = count;
+-- 						end
+-- 					end
+-- 				end
+-- 			end
 
-			-- update valueText here
-			valueText = string.format("%s %d of %d", Locale.Lookup("LOC_PICKER_SELECTED_TEXT"), valueAmount, #p.Values);
+-- 			-- update valueText here
+-- 			valueText = string.format("%s %d of %d", Locale.Lookup("LOC_PICKER_SELECTED_TEXT"), valueAmount, #p.Values);
 
-			-- add update to tooltip text here
-			if(cache.ValueText ~= valueText) or (cache.ValueAmount ~= valueAmount) then 
-				local button = c.Button;
-				button:LocalizeAndSetText(valueText);
-				cache.ValueText = valueText;
-				cache.ValueAmount = valueAmount;
-				button:SetToolTipString(parameter.Description .. ECFE.Content.Tooltips[GameConfiguration.GetValue("RULESET")][parameterId]);    -- show content sources in tooltip text
-			end
-		end,
-		UpdateValues = function(values, p) 
-			-- Values are refreshed when the window is open.
-		end,
-		SetEnabled = function(enabled, p)
-			c.Button:SetDisabled(not enabled or #p.Values <= 1);
-		end,
-		SetVisible = function(visible)
-			c.ButtonRoot:SetHide(not visible);
-		end,
-		Destroy = function()
-			g_ButtonParameterManager:ReleaseInstance(c);
-		end,
-	};	
+-- 			-- add update to tooltip text here
+-- 			if(cache.ValueText ~= valueText) or (cache.ValueAmount ~= valueAmount) then 
+-- 				local button = c.Button;
+-- 				button:LocalizeAndSetText(valueText);
+-- 				cache.ValueText = valueText;
+-- 				cache.ValueAmount = valueAmount;
+-- 				button:SetToolTipString(parameter.Description .. ECFE.Content.Tooltips[GameConfiguration.GetValue("RULESET")][parameterId]);    -- show content sources in tooltip text
+-- 			end
+-- 		end,
+-- 		UpdateValues = function(values, p) 
+-- 			-- Values are refreshed when the window is open.
+-- 		end,
+-- 		SetEnabled = function(enabled, p)
+-- 			c.Button:SetDisabled(not enabled or #p.Values <= 1);
+-- 		end,
+-- 		SetVisible = function(visible)
+-- 			c.ButtonRoot:SetHide(not visible);
+-- 		end,
+-- 		Destroy = function()
+-- 			g_ButtonParameterManager:ReleaseInstance(c);
+-- 		end,
+-- 	};	
 
-	return kDriver;
-end
+-- 	return kDriver;
+-- end
 
 --[[ =========================================================================
 	end commonfrontend.lua configuration script
