@@ -100,8 +100,7 @@ g_sRowOfDashes = "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 	the original drivers that this driver replaces should still exist in an unmodified state
 =========================================================================== ]]
 function CreatePickerDriverByParameter(o, parameter, parent) 
-
-	if(parent == nil) then
+	if(parent == nil) then 
 		parent = GetControlStack(parameter.GroupId);
 	end
 			
@@ -111,37 +110,26 @@ function CreatePickerDriverByParameter(o, parameter, parent)
 	local parameterId = parameter.ParameterId;
 	local button = c.Button;
 
-	print(string.format("[+]: Creating driver for %s picker . . .", parameterId));
+	-- print(string.format("[+]: Creating driver for %s picker . . .", parameterId));
 
 	-- define picker based on parameterId
-	if (parameterId == "CityStates") then												-- built-in city-state picker
+	if (parameterId == "CityStates") then    -- built-in city-state picker
 		button:RegisterCallback( Mouse.eLClick, function()
 			LuaEvents.CityStatePicker_Initialize(o.Parameters[parameterId], g_GameParameters);
 			Controls.CityStatePicker:SetHide(false);
 		end);
-	elseif (parameterId == "LeaderPool1" or parameterId == "LeaderPool2") then			-- built-in leader picker
+	elseif (parameterId == "LeaderPool1" or parameterId == "LeaderPool2") then    -- built-in leader picker
 		button:RegisterCallback( Mouse.eLClick, function()
 			LuaEvents.LeaderPicker_Initialize(o.Parameters[parameterId], g_GameParameters);
 			Controls.LeaderPicker:SetHide(false);
 		end);
-	-- elseif (parameterId == "GoodyHutConfig" and g_bIsEnabledEGHV) then					-- EGHV : Goody Hut picker
-	-- 	button:RegisterCallback( Mouse.eLClick, function()
-	-- 		LuaEvents.GoodyHutPicker_Initialize(o.Parameters[parameterId]);
-	-- 		Controls.GoodyHutPicker:SetHide(false);
-	-- 	end);
-	-- elseif (parameterId == "NaturalWonders" and g_bIsEnabledENWS) then					-- ENWS : Natural Wonder picker
-	-- 	button:RegisterCallback( Mouse.eLClick, function()
-	-- 		LuaEvents.NaturalWonderPicker_Initialize(o.Parameters[parameterId]);
-	-- 		Controls.NaturalWonderPicker:SetHide(false);
-	-- 	end);
-	else																				-- fallback to generic multi-select window
+	else    -- fallback to generic multi-select window
 		button:RegisterCallback( Mouse.eLClick, function()
 			LuaEvents.MultiSelectWindow_Initialize(o.Parameters[parameterId]);
 			Controls.MultiSelectWindow:SetHide(false);
 		end);
 	end
-	-- button:SetToolTipString(parameter.Description .. UpdateButtonToolTip(parameterId));		-- update button tooltip text
-	button:SetToolTipString(parameter.Description .. ECFE.Content.Tooltips[GameConfiguration.GetValue("RULESET")][parameterId]);		-- update button tooltip text
+	button:SetToolTipString(parameter.Description .. ECFE.Content.Tooltips[GameConfiguration.GetValue("RULESET")][parameterId]);    -- show content sources in tooltip text
 
 	-- Store the root control, NOT the instance table.
 	g_SortingMap[tostring(c.ButtonRoot)] = parameter;
@@ -171,64 +159,40 @@ function CreatePickerDriverByParameter(o, parameter, parent)
 				end
 			end
 
-			-- local priorityAmount :number = 0;
-			-- if (parameterId == "CityStates" and g_bIsEnabledECSS) then 
-			-- 	priorityAmount = GameConfiguration.GetValue("PRIORITY_CITY_STATES_COUNT") or 0;
-			-- elseif (parameterId == "NaturalWonders" and g_bIsEnabledENWS) then 
-			-- 	priorityAmount = GameConfiguration.GetValue("PRIORITY_NATURAL_WONDERS_COUNT") or 0;
-			-- end
-			-- local priorityText = (priorityAmount > 0) and string.format(", %s %d", Locale.Lookup("LOC_PICKER_PRIORITIZED_TEXT"), priorityAmount) or "";
-
-			if(valueText == nil) then
-				if(value == nil) then
-					if (parameter.UxHint ~= nil and parameter.UxHint == "InvertSelection") then
-						valueText = "LOC_SELECTION_EVERYTHING";
-						valueAmount = #p.Values; 	-- display count for selections of "everything"
-					else
-						valueText = "LOC_SELECTION_NOTHING";
+			-- only amounts displayed by valueText change now so updates to it have been removed here; can this be further simplified?
+			if(valueText == nil) then 
+				if(value == nil) then 
+					if (parameter.UxHint ~= nil and parameter.UxHint == "InvertSelection") then 
+						valueAmount = #p.Values;    -- all available items
 					end
-				elseif(type(value) == "table") then
+				elseif(type(value) == "table") then 
 					local count = #value;
-					if (parameter.UxHint ~= nil and parameter.UxHint == "InvertSelection") then
-						if(count == 0) then
-							valueText = "LOC_SELECTION_EVERYTHING";
-							valueAmount = #p.Values; 	-- display count for selections of "everything"
-						elseif(count == #p.Values) then
-							valueText = "LOC_SELECTION_NOTHING";
-						else
-							valueText = "LOC_SELECTION_CUSTOM";
+					if (parameter.UxHint ~= nil and parameter.UxHint == "InvertSelection") then 
+						if(count == 0) then 
+							valueAmount = #p.Values;    -- all available items
+						else 
 							valueAmount = #p.Values - count;
 						end
-					else
-						if(count == 0) then
-							valueText = "LOC_SELECTION_NOTHING";
-						elseif(count == #p.Values) then
-							valueText = "LOC_SELECTION_EVERYTHING";
-							valueAmount = #p.Values; 	-- display count for selections of "everything"
-						else
-							valueText = "LOC_SELECTION_CUSTOM";
+					else 
+						if(count == #p.Values) then 
+							valueAmount = #p.Values;    -- all available items
+						else 
 							valueAmount = count;
 						end
 					end
 				end
 			end
 
-			-- if(cache.ValueText ~= valueText) or (cache.ValueAmount ~= valueAmount) or (cache.PriorityAmount ~= priorityAmount) then
-			-- 	local button = c.Button;
-			-- 	valueText = string.format("%s %d of %d%s", Locale.Lookup("LOC_PICKER_SELECTED_TEXT"), valueAmount, #p.Values, priorityText);
-			-- 	button:LocalizeAndSetText(valueText);
-			-- 	cache.ValueText = valueText;
-			-- 	cache.ValueAmount = valueAmount;
-			-- 	cache.PriorityAmount = priorityAmount;
-			-- 	button:SetToolTipString(parameter.Description .. UpdateButtonToolTip(parameterId)); 	-- update button tooltip text
-			-- end
-			if(cache.ValueText ~= valueText) or (cache.ValueAmount ~= valueAmount) then
-				local button = c.Button;			
-				button:LocalizeAndSetText(valueText, valueAmount);
+			-- update valueText here
+			valueText = string.format("%s %d of %d", Locale.Lookup("LOC_PICKER_SELECTED_TEXT"), valueAmount, #p.Values);
+
+			-- add update to tooltip text here
+			if(cache.ValueText ~= valueText) or (cache.ValueAmount ~= valueAmount) then 
+				local button = c.Button;
+				button:LocalizeAndSetText(valueText);
 				cache.ValueText = valueText;
 				cache.ValueAmount = valueAmount;
-				-- button:SetToolTipString(parameter.Description .. UpdateButtonToolTip(parameterId)); 	-- update button tooltip text
-				button:SetToolTipString(parameter.Description .. ECFE.Content.Tooltips[GameConfiguration.GetValue("RULESET")][parameterId]);		-- update button tooltip text
+				button:SetToolTipString(parameter.Description .. ECFE.Content.Tooltips[GameConfiguration.GetValue("RULESET")][parameterId]);    -- show content sources in tooltip text
 			end
 		end,
 		UpdateValues = function(values, p) 
