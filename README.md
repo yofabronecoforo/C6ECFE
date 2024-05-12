@@ -128,7 +128,7 @@ BFE and MPH will actually sort-of interoperate. Currently, MPH's replacement fil
 - Enhanced Mod Manager
 
 ## Other Compatible Mods 
-ECFE was developed with the following additional mods enabled, and is thus known to be compatible with them:
+In addition to the above, ECFE was tested with all of the following additional mods enabled, and is thus known to be compatible with them:
 - Better Civilization Icons
 - Better Coastal Cities and Water Tiles
 - Better Report Screen (UI)
@@ -143,6 +143,7 @@ ECFE was developed with the following additional mods enabled, and is thus known
 - Religion Expanded
 - Removable Districts
 - Sailor Cat's Wondrous Goody Huts
+- Select Natural Wonders++
 - Tomatekh's Historical Religions
 
 # Installation 

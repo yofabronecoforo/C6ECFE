@@ -91,7 +91,8 @@ if not ExposedMembers.MembersDefinedAtStartup then
 		for _, item in ipairs(flags) do 
 			item.LeaderPool1 = item.Leaders;
 			item.LeaderPool2 = item.Leaders;
-			item.StartWonders = item.NaturalWonders;
+			item.IncludeNaturalWonders = item.NaturalWonders;    -- Select Natural Wonders++
+			item.StartWonders = item.NaturalWonders;             -- Start by Wonders
 			local bIsEnabled = available.IsEnabled[item.Id] or false;
 			if bIsEnabled then content.Active[(#content.Active + 1)] = item; end
 			item.IsEnabled = bIsEnabled;
