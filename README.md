@@ -93,8 +93,8 @@ Unlike Lua, XML does not support the use of wildcards in Include nodes. ECFE is 
 The dynamic content tooltip feature will only apply to picker types that are recognized by ECFE. Currently, these include:
 - All built-in pickers (City-States, Leaders, Natural Wonders)
 - Any other picker which initializes by reusing components of any of the above pickers
-- The Goody Hut picker provided by [Enhanced Goodies and Hostile Villagers (EGHV)](https://steamcommunity.com/sharedfiles/filedetails/?id=2474051781)
-- The Natural Wonders Picker used by [Enhanced Natural Wonders Selection (ENWS)](https://steamcommunity.com/sharedfiles/filedetails/?id=2273495829)
+- The Goody Hut picker provided by [Enhanced Goodies and Hostile Villagers (EGHV)](https://github.com/yofabronecoforo/C6EGHV)
+- The Natural Wonders Picker used by [Enhanced Natural Wonders Selection (ENWS)](https://github.com/yofabronecoforo/C6ENWS)
 
 # Compatibility 
 ECFE is compatible with single- and multi-player setups.
@@ -152,7 +152,7 @@ ECFE can be installed via the Steam Workshop or GitHub.
 [Subscribe to ECFE in the Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3145434774) to automatically download and install the latest published release, and to automatically receive any updates as they are published to the Workshop.
 
 ## Manual 
-Download the [latest release](https://github.com/zzragnar0kzz/C6ECFE/releases/latest) and extract it into the game's local mods folder. Alternately, clone the repository into a new folder within the game's local mods folder using your preferred tools. To update to a newer release, clone or download the latest release as described above, overwriting any existing items in the destination folder. The local mods folder varies.
+Download the [latest release](https://github.com/yofabronecoforo/C6ECFE/releases/latest) and extract it into the game's local mods folder. Alternately, clone the repository into a new folder within the game's local mods folder using your preferred tools. To update to a newer release, clone or download the latest release as described above, overwriting any existing items in the destination folder. The local mods folder varies.
 
 ### Windows 
 `"$userprofile\Documents\My Games\Sid Meier's Civilization VI\Mods"`
