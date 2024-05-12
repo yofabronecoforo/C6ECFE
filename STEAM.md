@@ -4,7 +4,7 @@ A mod which allows interoperation of disparate Frontend mods.
 
 Of major note, ECFE allows multiple mods to make targeted changes to Frontend context script files, which allows mods that provide wholesale replacements to one or more Frontend scripts to work with other mods that only need to add to or replace small(er) portions of the same scripts.
 
-What does this mean? To a player, not much. ECFE alone changes very little that affects game setup, and nothing that affects gameplay. To a mod developer, though, ECFE allows fine control over which existing files your mod must alter. For example, if your mod is named
+What does this mean? To a player, not much. ECFE alone changes very little that affects game setup, and nothing that affects gameplay. To a mod developer, though, ECFE allows [url=https://github.com/yofabronecoforo/C6ECFE/blob/main/CONTEXTS.md]fine(r) control[/url] over which existing files your mod must alter. For example, if your mod is named
 [code]YourMod[/code]
 and it requires changes to the script
 [code]AdvancedSetup.lua[/code]
@@ -14,7 +14,9 @@ which will be automatically loaded by ECFE with no further action required. This
 
 Other mods in the author's "Enhanced" series have been redesigned with the above in mind, and now depend upon ECFE; this dependency will be noted in the individual mods' README if it applies.
 
-Some limitations apply; please refer to the project's [url=https://github.com/zzragnar0kzz/C6ECFE#readme]README file[/url] for these and more comprehensive details. This file is also included with ECFE, and can be found where it is installed.
+ECFE is [url=https://github.com/yofabronecoforo/C6ECFE#compatibility]compatible with many mods[/url], including mods which [url=https://github.com/yofabronecoforo/C6ECFE#other-mods-which-alter-replaced-contexts]alter Frontend context files[/url], although some [url=https://github.com/yofabronecoforo/C6ECFE#limitations]limitations[/url] apply.
+
+Please refer to the project's [url=https://github.com/yofabronecoforo/C6ECFE#readme]README[/url] for more comprehensive details. This file is also included with ECFE, and can be found where it is installed.
 
 New Frontend and Ingame text fully localized in the following languages:
 [list]
@@ -23,6 +25,4 @@ New Frontend and Ingame text fully localized in the following languages:
 [*]French (fr_FR)
 [/list]
 
-ECFE is compatible with YnAMP.
-
-Prefer a manual installation? Wish to contribute? [url=https://github.com/zzragnar0kzz/C6ECFE]Visit ECFE on Github.[/url]
+Prefer a manual installation? Wish to contribute? [url=https://github.com/yofabronecoforo/C6ECFE]Visit ECFE on Github[/url].
