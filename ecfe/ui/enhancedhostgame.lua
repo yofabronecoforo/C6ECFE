@@ -20,7 +20,6 @@ print("[i]: Loading EnhancedHostGame.lua UI wrapper . . .");
 		(IV) the EnhancedGameSetupLogic.lua wrapper
 	this should catch all changes to this context provided by ECFE and other mods that utilize this framework
 =========================================================================== ]]
-include("exposedmembers");
 include("commonfrontend");
 print("[+]: Including HostGame.lua from last imported source . . .");
 include("HostGame");
@@ -28,20 +27,6 @@ print("[i]: Including any imported files matching pattern '{H|h}ost{G|g}ame_*.lu
 include("HostGame_", true);
 include("hostgame_", true);
 include("enhancedgamesetuplogic");
-
---[[ =========================================================================
-	OVERRIDE: refresh active content tooltips and call original OnShow()
-=========================================================================== ]]
--- Pre_ECFE_OnShow = OnShow;
--- function OnShow() 
---     RefreshActiveContentTooltips();
--- 	Pre_ECFE_OnShow();
--- end
-
---[[ =========================================================================
-	reset context pointer handlers with modified functions
-=========================================================================== ]]
--- ContextPtr:SetShowHandler( OnShow );
 
 --[[ =========================================================================
 	log successful completed loading of this component

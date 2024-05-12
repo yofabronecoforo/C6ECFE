@@ -20,10 +20,9 @@ print("[i]: Loading EnhancedAdvancedSetup.lua UI wrapper . . .");
 		(IV) the EnhancedGameSetupLogic.lua wrapper
 	this should catch all changes to this context provided by ECFE and other mods that utilize this framework
 =========================================================================== ]]
-include("exposedmembers");
 include("commonfrontend");
 print("[+]: Including AdvancedSetup.lua from last imported source . . .");
--- 
+-- Better FrontEnd (UI) compatibility
 if ECFE.Content.BFE.IsEnabled then 
 	include("AdvancedSetupBFE");
 	ContextPtr:LookUpControl("MainWindow"):SetHide(true);
@@ -47,20 +46,6 @@ include("enhancedgamesetuplogic");
 -- 	local player_ids = GameConfiguration.GetParticipatingPlayerIDs();
 -- 	Controls.MajorPlayerCount:SetText(Locale.Lookup("LOC_PLAYERS") .. ": " .. #player_ids);
 -- end
-
---[[ =========================================================================
-	OVERRIDE: refresh active content tooltips and call original OnShow()
-=========================================================================== ]]
--- Pre_ECFE_OnShow = OnShow;
--- function OnShow()
---     RefreshActiveContentTooltips();
--- 	Pre_ECFE_OnShow();
--- end
-
---[[ =========================================================================
-	reset context pointer handlers with modified functions
-=========================================================================== ]]
--- ContextPtr:SetShowHandler( OnShow );
 
 --[[ =========================================================================
 	log successful completed loading of this component

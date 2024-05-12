@@ -18,7 +18,7 @@ print("[i]: Loading EnhancedMainMenu.lua UI wrapper . . .");
 			(B) mainmenu_
 	this should catch all changes to this context provided by ECFE and other mods that utilize this framework
 =========================================================================== ]]
-include("exposedmembers");
+include("commonfrontend");
 print("[+]: Including MainMenu.lua from last imported source . . .");
 include("MainMenu");
 include("MainMenu_", true);

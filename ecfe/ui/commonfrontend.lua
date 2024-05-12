@@ -6,211 +6,174 @@
 
 --[[ =========================================================================
 	begin commonfrontend.lua configuration script
-	this file contains new components that are used by both the (Enhanced)AdvancedSetup and (Enhanced)HostGame contexts
+	this file contains new components that are used by multiple FrontEnd contexts
 	it should be included by those contexts before any other files that are to be included
 =========================================================================== ]]
 print("[i]: Loading CommonFrontend.lua UI script . . .");
 
 --[[ =========================================================================
-	global content presence booleans
+	table ExposedMembers is available to every context
+	we DO want the first context that loads this file to make the declarations below
+	we DON'T want every other context that loads this file to redeclare these commponents
 =========================================================================== ]]
--- g_bIsEnabledECSS  = Modding.IsModEnabled("772960cc-ddaf-4432-870c-e97d698d7011");    -- Enhanced City-States Selection
--- g_bIsEnabledEGHV  = Modding.IsModEnabled("a4b1fac6-8c9e-4873-a1c1-7ddf08dbbf11");    -- Enhanced Goodies and Hostile Villagers
--- g_bIsEnabledENWS  = Modding.IsModEnabled("d0afae5b-02f8-4d01-bd54-c2bbc3d89858");    -- Enhanced Natural Wonders Selection
--- g_bIsEnabledYnAMP = Modding.IsModEnabled("36e88483-48fe-4545-b85f-bafc50dde315");    -- Yet (not) Another Map Pack
--- g_bIsEnabledGCM   = Modding.IsModEnabled("c185a48b-75d0-4897-9134-83308c5fe5ae");    -- Game Config Manager
+ExposedMembers.MembersDefinedAtStartup = ExposedMembers.MembersDefinedAtStartup or false;
+
+if not ExposedMembers.MembersDefinedAtStartup then 
+	print("[i]: Configuring required exposed members at startup . . .");
+
+	ExposedMembers.RowOfDashes = "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -";
+	ExposedMembers.StrangeThings = "Strange things are afoot at the Circle K."
+
+	ExposedMembers.GetInstalledMods = Modding.GetInstalledMods;
+
+	function ExposedMembers.GetMainMenuVersionString( t ) 
+		local version = string.format("Game: %s", tostring(UI.GetAppVersion()));
+		if not t or #t == 0 then return version; end
+		for _, item in ipairs(t) do 
+			if ExposedMembers.Content[item.Name].IsEnabled then 
+				version = string.format("%s[NEWLINE][COLOR%s]%s: %s[ENDCOLOR]", version, (item.Name == "MPH") and "_LIGHTBLUE" or ":Green", item.Name, item.Version);
+			end
+		end
+		return version;
+	end
+
+	function ExposedMembers.GetEnabledMods() 
+		local t = {};
+		for _, mod in ipairs(Modding.GetInstalledMods()) do 
+			if Modding.IsModEnabled(mod.Id) then 
+				t[(#t + 1)] = mod;
+			end
+		end
+		return t;
+	end
+
+	function ExposedMembers.ParseMods( m )
+		if not m or #m == 0 then return {}; end
+		local t = {};
+		for _, mod in ipairs(m) do 
+			t[mod.Id] = true;
+		end
+		return t;
+	end
+
+	function ExposedMembers.GetHandles( m ) 
+		if not m or #m == 0 then return {}; end
+		local t = {};
+		for _, mod in ipairs(m) do 
+			t[mod.Id] = mod.Handle;
+		end
+		return t;
+	end
+
+	function ExposedMembers.GetAvailableContent() 
+		local installed = ExposedMembers.GetInstalledMods();
+		if not installed or #installed == 0 then return nil; end
+		local i = ExposedMembers.ParseMods(installed);
+		local enabled = ExposedMembers.GetEnabledMods();
+		if not enabled or #enabled == 0 then return nil; end
+		local e = ExposedMembers.ParseMods(enabled);
+		local handles = ExposedMembers.GetHandles(installed);
+		return { Installed = installed, IsInstalled = i, Enabled = enabled, IsEnabled = e, Handles = handles };
+	end
+
+	function ExposedMembers.GetContentFlags() 
+		local f = DB.ConfigurationQuery("SELECT DISTINCT * from ContentFlags");
+		if not f or #f == 0 then return {}; end
+		return f;
+	end
+
+	function ExposedMembers.GetValidContent() 
+		local available = ExposedMembers.GetAvailableContent();
+		if not available then return nil; end
+		local flags = ExposedMembers.GetContentFlags();
+		if not flags then return nil; end
+		local content = { Active = {}, Version = {} };
+		for _, item in ipairs(flags) do 
+			item.LeaderPool1 = item.Leaders;
+			item.LeaderPool2 = item.Leaders;
+			item.StartWonders = item.NaturalWonders;
+			local bIsEnabled = available.IsEnabled[item.Id] or false;
+			if bIsEnabled then content.Active[(#content.Active + 1)] = item; end
+			item.IsEnabled = bIsEnabled;
+			item.Handle = available.Handles[item.Id];
+			item.Version = item.Handle and Modding.GetModProperty(item.Handle, "Version") or nil;
+			content[item.Name] = item;
+			if item.Version then content.Version[(#content.Version + 1)] = { Name = item.Name, Version = item.Version }; end
+			-- print(string.format("[+]: %-9sId %-40s%-9sVersion %s", tostring(item.IsEnabled), item.Id, item.Name, tostring(item.Version)));
+		end
+		content.Installed = available.Installed;
+		content.IsInstalled = available.IsInstalled;
+		content.Enabled = available.Enabled;
+		content.IsEnabled = available.IsEnabled;
+		content.Handles = available.Handles;
+		content.Flags = flags;
+		return content;
+	end
+
+	function ExposedMembers.RefreshActiveContent() 
+		print("[i]: Refreshing available content and content flags . . .");
+		local content = ExposedMembers.GetValidContent();
+		if not content then 
+			print(string.format("[!]: GetValidContent() returned nil. %s", ExposedMembers.StrangeThings));
+			return nil;
+		elseif not content.Installed or #content.Installed == 0 then 
+			print("[!]: There is no installed additional content.");
+			return nil;
+		elseif not content.Enabled or #content.Enabled == 0 then 
+			print("[!]: There is no enabled additional content.");
+			return nil;
+		elseif not content.Flags or #content.Flags == 0 then 
+			print("[!]: There are no defined content flags.");
+			return nil;
+		end
+		print(string.format("[!]: Found %d installed item%s (%d enabled).", #content.Installed, (#content.Installed ~= 1) and "s" or "", #content.Enabled));
+		print(string.format("[!]: Found content flags for %d item%s (%d enabled).", #content.Flags, (#content.Flags ~= 1) and "s" or "", #content.Active));
+		local rulesets = DB.ConfigurationQuery("SELECT DISTINCT Key2 AS 'Ruleset' FROM Parameters WHERE Array = 1");
+		local parameters = DB.ConfigurationQuery("SELECT DISTINCT ParameterId FROM Parameters WHERE Array = 1");
+		tooltips = ExposedMembers.GetDefaultPickerTooltipText(rulesets, parameters);
+		tooltips = ExposedMembers.UpdatePickerTooltipText(content.Active, tooltips, rulesets, parameters);
+		content.Tooltips = tooltips;
+		return content;
+	end
+
+	function ExposedMembers.GetDefaultPickerTooltipText( rulesets, parameters ) 
+		local standard = Locale.Lookup("LOC_STANDARD_TT");
+		local t = {};
+		for _, r in ipairs(rulesets) do 
+			t[r.Ruleset] = {};
+			for _, p in ipairs(parameters) do 
+				t[r.Ruleset][p.ParameterId] = standard;
+			end
+		end
+		return t;
+	end
+
+	function ExposedMembers.UpdatePickerTooltipText( content, tooltips, rulesets, parameters ) 
+		print("[i]: Updating picker tooltip text to reflect active content . . .");
+		if content and #content > 0 then 
+			for _, item in ipairs(content) do 
+				local current = Locale.Lookup(item.Tooltip);
+				for _, r in ipairs(rulesets) do 
+					if item[r.Ruleset] then 
+						for _, p in ipairs(parameters) do 
+							if item[p.ParameterId] then tooltips[r.Ruleset][p.ParameterId] = string.format("%s%s", tooltips[r.Ruleset][p.ParameterId], current); end
+						end
+					end
+				end
+			end
+		end
+		print(string.format("[!]: Tooltip text updated for %d picker%s", #parameters, (#parameters ~= 1) and "s" or ""));
+		return tooltips;
+	end
+
+	ExposedMembers.Content = ExposedMembers.RefreshActiveContent();
+	ExposedMembers.MembersDefinedAtStartup = true;
+end
 
 --[[ =========================================================================
-	global picker tooltip tables; these will be indexed by ruleset
+	we DO want every context that loads this file to utilize the table below to conserve keystrokes
 =========================================================================== ]]
--- g_tCityStatesTooltip     = {};
--- g_tGoodyHutsTooltip      = {};
--- g_tLeadersTooltip        = {};
--- g_tNaturalWondersTooltip = {};
-
---[[ =========================================================================
-	global strings
-=========================================================================== ]]
-g_sRowOfDashes = "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -";
-
---[[ =========================================================================
-	NEW: append localized text to picker tooltips
-=========================================================================== ]]
--- function UpdateTooltipText( r, s, t ) 
--- 	if t.CityStates then g_tCityStatesTooltip[r] = string.format("%s%s", g_tCityStatesTooltip[r], s); end
--- 	if t.GoodyHuts then g_tGoodyHutsTooltip[r] = string.format("%s%s", g_tGoodyHutsTooltip[r], s); end
--- 	if t.Leaders then g_tLeadersTooltip[r] = string.format("%s%s", g_tLeadersTooltip[r], s); end
--- 	if t.NaturalWonders then g_tNaturalWondersTooltip[r] = string.format("%s%s", g_tNaturalWondersTooltip[r], s); end
--- end
-
---[[ =========================================================================
-	NEW: validate active content and set tooltip strings
-	Modding.IsModActive() does not appear to work in Frontend context, so we're using IsModInstalled() and IsModEnabled() instead
-=========================================================================== ]]
--- function RefreshActiveContentTooltips() 
--- 	-- known and active recognized items, and the default picker tooltip string
--- 	local iKnownItems, iActiveItems = 0, 0;
--- 	local sStandard                 = Locale.Lookup("LOC_STANDARD_TT");
--- 	-- (re)set tooltip string tables
---     g_tCityStatesTooltip     = { ["RULESET_STANDARD"] = sStandard, ["RULESET_EXPANSION_1"] = sStandard, ["RULESET_EXPANSION_2"] = sStandard };
---     g_tGoodyHutsTooltip      = { ["RULESET_STANDARD"] = sStandard, ["RULESET_EXPANSION_1"] = sStandard, ["RULESET_EXPANSION_2"] = sStandard };
---     g_tLeadersTooltip        = { ["RULESET_STANDARD"] = sStandard, ["RULESET_EXPANSION_1"] = sStandard, ["RULESET_EXPANSION_2"] = sStandard };
---     g_tNaturalWondersTooltip = { ["RULESET_STANDARD"] = sStandard, ["RULESET_EXPANSION_1"] = sStandard, ["RULESET_EXPANSION_2"] = sStandard };
--- 	-- query ContentFlags and parse results for active content
--- 	print("[i]: Querying Configuration table ContentFlags for known content . . .");
--- 	local tContent = DB.ConfigurationQuery("SELECT DISTINCT * from ContentFlags");
--- 	if tContent and #tContent > 0 then 
--- 		iKnownItems = #tContent;
--- 		local sItems = (iKnownItems ~= 1) and "items" or "item";
--- 		print(string.format("[i]: Identified %d known %s; parsing for active content and updating picker tooltip text accordingly . . .", iKnownItems, sItems));
--- 		for _, item in ipairs(tContent) do 
--- 			if (Modding.IsModInstalled(item.GUID) and Modding.IsModEnabled(item.GUID)) then 
--- 				iActiveItems   = iActiveItems + 1;
--- 				local sTooltip = Locale.Lookup(item.Tooltip);
--- 				if item.Base then UpdateTooltipText("RULESET_STANDARD", sTooltip, item); end
--- 				if item.XP1 then UpdateTooltipText("RULESET_EXPANSION_1", sTooltip, item); end
--- 				if item.XP2 then UpdateTooltipText("RULESET_EXPANSION_2", sTooltip, item); end
--- 			end
--- 		end
--- 		print(string.format("[i]: Picker tooltip text updated to reflect %d active of %d known %s; proceeding . . .", iActiveItems, iKnownItems, sItems));
--- 	else
--- 		print("[i]: Configuration table ContentFlags is empty or undefined; proceeding without parsing content flags . . .");
--- 	end
--- end
-
---[[ =========================================================================
-	NEW: update a specific picker's tooltip text based on selected ruleset
-=========================================================================== ]]
--- function UpdateButtonToolTip(parameterId) 
---     local sRuleset = GameConfiguration.GetValue("RULESET");
--- 	if (parameterId == "CityStates") then return g_tCityStatesTooltip[sRuleset];
--- 	elseif (parameterId == "LeaderPool1" or parameterId == "LeaderPool2") then return g_tLeadersTooltip[sRuleset];
--- 	elseif (parameterId == "GoodyHutConfig") then return g_tGoodyHutsTooltip[sRuleset];
--- 	elseif (parameterId == "NaturalWonders" or parameterId == "StartWonders") then return g_tNaturalWondersTooltip[sRuleset];
--- 	else return "";    -- return empty string here to prevent attempts to concatenate nil
--- 	end
--- end
-
---[[ =========================================================================
-	NEW: this driver is for launching the picker indicated by parameter in a separate window
-	since there were only 2 lines that differed between the various original picker drivers, they have been condensed here
-	picker button text is modified to reflect both the amount of selected items and the amount of available itemms
-	tooltip text is modified to reflect sources of available content
-	any new picker(s) can be handled by adding new and/or modifying existing (else)if statement(s) below
-	the original drivers that this driver replaces should still exist in an unmodified state
-=========================================================================== ]]
--- function CreatePickerDriverByParameter(o, parameter, parent) 
--- 	if(parent == nil) then 
--- 		parent = GetControlStack(parameter.GroupId);
--- 	end
-			
--- 	-- Get the UI instance
--- 	local c :object = g_ButtonParameterManager:GetInstance();	
-
--- 	local parameterId = parameter.ParameterId;
--- 	local button = c.Button;
-
--- 	-- print(string.format("[+]: Creating driver for %s picker . . .", parameterId));
-
--- 	-- define picker based on parameterId
--- 	if (parameterId == "CityStates") then    -- built-in city-state picker
--- 		button:RegisterCallback( Mouse.eLClick, function()
--- 			LuaEvents.CityStatePicker_Initialize(o.Parameters[parameterId], g_GameParameters);
--- 			Controls.CityStatePicker:SetHide(false);
--- 		end);
--- 	elseif (parameterId == "LeaderPool1" or parameterId == "LeaderPool2") then    -- built-in leader picker
--- 		button:RegisterCallback( Mouse.eLClick, function()
--- 			LuaEvents.LeaderPicker_Initialize(o.Parameters[parameterId], g_GameParameters);
--- 			Controls.LeaderPicker:SetHide(false);
--- 		end);
--- 	else    -- fallback to generic multi-select window
--- 		button:RegisterCallback( Mouse.eLClick, function()
--- 			LuaEvents.MultiSelectWindow_Initialize(o.Parameters[parameterId]);
--- 			Controls.MultiSelectWindow:SetHide(false);
--- 		end);
--- 	end
--- 	button:SetToolTipString(parameter.Description .. ECFE.Content.Tooltips[GameConfiguration.GetValue("RULESET")][parameterId]);    -- show content sources in tooltip text
-
--- 	-- Store the root control, NOT the instance table.
--- 	g_SortingMap[tostring(c.ButtonRoot)] = parameter;
-
--- 	c.ButtonRoot:ChangeParent(parent);
--- 	if c.StringName ~= nil then
--- 		c.StringName:SetText(parameter.Name);
--- 	end
-
--- 	local cache = {};
-
--- 	local kDriver :table = {
--- 		Control = c,
--- 		Cache = cache,
--- 		UpdateValue = function(value, p)
--- 			local valueText = value and value.Name or nil;
--- 			local valueAmount :number = 0;
-
--- 			-- if this driver is for one of the leader pickers, remove random leaders from the Values table that is used to determine number of leaders selected
--- 			if (parameterId == "LeaderPool1" or parameterId == "LeaderPool2") then 
--- 				for i = #p.Values, 1, -1 do
--- 					local kItem:table = p.Values[i];
--- 					-- print(kItem.Value);
--- 					if kItem.Value == "RANDOM" or kItem.Value == "RANDOM_POOL1" or kItem.Value == "RANDOM_POOL2" then
--- 						table.remove(p.Values, i);
--- 					end
--- 				end
--- 			end
-
--- 			-- only amounts displayed by valueText change now so updates to it have been removed here; can this be further simplified?
--- 			if(valueText == nil) then 
--- 				if(value == nil) then 
--- 					if (parameter.UxHint ~= nil and parameter.UxHint == "InvertSelection") then 
--- 						valueAmount = #p.Values;    -- all available items
--- 					end
--- 				elseif(type(value) == "table") then 
--- 					local count = #value;
--- 					if (parameter.UxHint ~= nil and parameter.UxHint == "InvertSelection") then 
--- 						if(count == 0) then 
--- 							valueAmount = #p.Values;    -- all available items
--- 						else 
--- 							valueAmount = #p.Values - count;
--- 						end
--- 					else 
--- 						if(count == #p.Values) then 
--- 							valueAmount = #p.Values;    -- all available items
--- 						else 
--- 							valueAmount = count;
--- 						end
--- 					end
--- 				end
--- 			end
-
--- 			-- update valueText here
--- 			valueText = string.format("%s %d of %d", Locale.Lookup("LOC_PICKER_SELECTED_TEXT"), valueAmount, #p.Values);
-
--- 			-- add update to tooltip text here
--- 			if(cache.ValueText ~= valueText) or (cache.ValueAmount ~= valueAmount) then 
--- 				local button = c.Button;
--- 				button:LocalizeAndSetText(valueText);
--- 				cache.ValueText = valueText;
--- 				cache.ValueAmount = valueAmount;
--- 				button:SetToolTipString(parameter.Description .. ECFE.Content.Tooltips[GameConfiguration.GetValue("RULESET")][parameterId]);    -- show content sources in tooltip text
--- 			end
--- 		end,
--- 		UpdateValues = function(values, p) 
--- 			-- Values are refreshed when the window is open.
--- 		end,
--- 		SetEnabled = function(enabled, p)
--- 			c.Button:SetDisabled(not enabled or #p.Values <= 1);
--- 		end,
--- 		SetVisible = function(visible)
--- 			c.ButtonRoot:SetHide(not visible);
--- 		end,
--- 		Destroy = function()
--- 			g_ButtonParameterManager:ReleaseInstance(c);
--- 		end,
--- 	};	
-
--- 	return kDriver;
--- end
+ECFE = ExposedMembers;
 
 --[[ =========================================================================
 	end commonfrontend.lua configuration script

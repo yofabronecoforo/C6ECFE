@@ -18,7 +18,7 @@ print("[i]: Loading EnhancedMods.lua UI wrapper . . .");
 			(B) mods_
 	this should catch all changes to this context provided by ECFE and other mods that utilize this framework
 =========================================================================== ]]
-include("exposedmembers");
+include("commonfrontend");
 print("[+]: Including Mods.lua from last imported source . . .");
 include("Mods");
 print("[i]: Including any imported files matching pattern '{M|m}ods_*.lua' . . .");
