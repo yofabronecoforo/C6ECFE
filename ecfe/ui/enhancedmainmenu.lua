@@ -1,6 +1,6 @@
 --[[ =========================================================================
 	C6ECFE : Enhanced Community FrontEnd for Civilization VI
-    Copyright (c) 2023-2024 zzragnar0kzz
+    Copyright (c) 2023-2024 yofabronecoforo
 	All rights reserved
 =========================================================================== ]]
 
