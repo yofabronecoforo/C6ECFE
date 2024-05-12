@@ -43,8 +43,8 @@ This context is a [parent](CONTEXTS.md#parent-contexts) of the following replace
 This context replaces the AdvancedSetup context.
 
 This context is a [parent](CONTEXTS.md#parent-contexts) of the following new contexts:
-- `GoodyHutPicker` used by [Enhanced Goodies and Hostile Villagers (EGHV)](https://steamcommunity.com/sharedfiles/filedetails/?id=2474051781)
-- `NaturalWondersPicker` used by [Enhanced Natural Wonders Selection (ENWS)](https://steamcommunity.com/sharedfiles/filedetails/?id=2273495829)
+- `GoodyHutPicker` used by [Enhanced Goodies and Hostile Villagers (EGHV)](https://github.com/yofabronecoforo/C6EGHV)
+- `NaturalWondersPicker` used by [Enhanced Natural Wonders Selection (ENWS)](https://github.com/yofabronecoforo/C6ENWS)
 
 ## EnhancedHostGame 
 This context replaces the HostGame context.
@@ -53,8 +53,8 @@ This context is a [parent](CONTEXTS.md#parent-contexts) of the following replace
 - `Mods` --> `EnhancedMods`
 
 This context is a [parent](CONTEXTS.md#parent-contexts) of the following new contexts:
-- `GoodyHutPicker` used by [Enhanced Goodies and Hostile Villagers (EGHV)](https://steamcommunity.com/sharedfiles/filedetails/?id=2474051781)
-- `NaturalWondersPicker` used by [Enhanced Natural Wonders Selection (ENWS)](https://steamcommunity.com/sharedfiles/filedetails/?id=2273495829)
+- `GoodyHutPicker` used by [Enhanced Goodies and Hostile Villagers (EGHV)](https://github.com/yofabronecoforo/C6EGHV)
+- `NaturalWondersPicker` used by [Enhanced Natural Wonders Selection (ENWS)](https://github.com/yofabronecoforo/C6ENWS)
 
 ## EnhancedMods 
 This context replaces the Mods context.
