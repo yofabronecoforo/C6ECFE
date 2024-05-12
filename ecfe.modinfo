@@ -2,7 +2,7 @@
 <Mod id="29dfeca5-042a-4259-853d-61f554851af7" version="2">
     <Properties>
         <Name>LOC_ECFE_MOD_TITLE</Name>
-		<Version>2.0.240507.2334</Version>
+		<Version>2.0.240512.0219</Version>
         <Teaser>LOC_ECFE_MOD_TEASER</Teaser>
         <Description>LOC_ECFE_MOD_DESCRIPTION</Description>
         <Authors>LOC_ECFE_MOD_AUTHORS</Authors>
@@ -117,9 +117,9 @@
 			<fr_FR>Permet un contrôle précis des scripts FrontEnd et permet à des mods FrontEnd disparates de coexister pacifiquement.</fr_FR>
 		</Text>
 		<Text id="LOC_ECFE_MOD_AUTHORS">
-			<en_US>zzragnar0kzz</en_US>
-			<es_ES>zzragnar0kzz</es_ES>
-			<fr_FR>zzragnar0kzz</fr_FR>
+			<en_US>yofabronecoforo</en_US>
+			<es_ES>yofabronecoforo</es_ES>
+			<fr_FR>yofabronecoforo</fr_FR>
 		</Text>
 		<Text id="LOC_ECFE_MOD_SPECIALTHANKS">
 			<en_US>The Community</en_US>
