@@ -25,8 +25,20 @@
 
 	<!-- EnhancedAdvancedSetup replaces and extends AdvancedSetup -->
 	<LuaContext ID="AdvancedSetup" DeferLoad="1" FileName="EnhancedAdvancedSetup" Hidden="1" />
+
+	<!-- EnhancedLobby replaces and extends Lobby -->
+	<LuaContext ID="Lobby"                       FileName="EnhancedLobby"         Hidden="1" />
   
 	<!-- EnhancedHostGame replaces and extends HostGame -->
 	<LuaContext ID="HostGame"                    FileName="EnhancedHostGame"      Hidden="1" />
+
+	<!-- EnhancedStagingRoom replaces and extends StagingRoom -->
+	<LuaContext ID="StagingRoom"                 FileName="EnhancedStagingRoom"   Hidden="1" />
+
+	<!-- EnhancedLoadGameMenu replaces and extends LoadGameMenu -->
+	<LuaContext ID="LoadGameMenu"                FileName="EnhancedLoadGameMenu"  Hidden="1" />
+
+	<!-- EnhancedSaveGameMenu replaces and extends SaveGameMenu -->
+	<LuaContext ID="SaveGameMenu"                FileName="EnhancedSaveGameMenu"  Hidden="1" />
   
 </ContextDefaults>

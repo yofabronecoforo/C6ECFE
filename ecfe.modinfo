@@ -64,6 +64,12 @@
                 <File>ecfe/ui/commonfrontend.lua</File>
                 <!-- enhanced game setup logic wrapper -->
                 <File>ecfe/ui/enhancedgamesetuplogic.lua</File>
+				<!-- enhanced lobby context -->
+				<File>ecfe/ui/enhancedlobby.lua</File>
+				<File>ecfe/ui/enhancedlobby.xml</File>
+				<!-- enhanced load game menu context -->
+				<File>ecfe/ui/enhancedloadgamemenu.lua</File>
+				<File>ecfe/ui/enhancedloadgamemenu.xml</File>
 				<!-- enhanced main menu context -->
 				<File>ecfe/ui/enhancedmainmenu.lua</File>
 				<File>ecfe/ui/enhancedmainmenu.xml</File>
@@ -76,6 +82,12 @@
                 <!-- enhanced host game context -->
 				<File>ecfe/ui/enhancedhostgame.lua</File>
 				<File>ecfe/ui/enhancedhostgame.xml</File>
+				<!-- enhanced staging room context -->
+				<File>ecfe/ui/enhancedstagingroom.lua</File>
+				<File>ecfe/ui/enhancedstagingroom.xml</File>
+				<!-- enhanced save game menu context -->
+				<File>ecfe/ui/enhancedsavegamemenu.lua</File>
+				<File>ecfe/ui/enhancedsavegamemenu.xml</File>
 			</Items>
 		</ImportFiles>
         <UpdateDatabase id="ECFE_CONFIGURATION_DATABASE">
@@ -148,12 +160,24 @@
         <!-- enhanced host game context -->
 		<File>ecfe/ui/enhancedhostgame.lua</File>
 		<File>ecfe/ui/enhancedhostgame.xml</File>
+		<!-- enhanced lobby context -->
+		<File>ecfe/ui/enhancedlobby.lua</File>
+		<File>ecfe/ui/enhancedlobby.xml</File>
+		<!-- enhanced load game menu context -->
+		<File>ecfe/ui/enhancedloadgamemenu.lua</File>
+		<File>ecfe/ui/enhancedloadgamemenu.xml</File>
 		<!-- enhanced main menu context -->
 		<File>ecfe/ui/enhancedmainmenu.lua</File>
 		<File>ecfe/ui/enhancedmainmenu.xml</File>
 		<!-- enhanced mods context -->
 		<File>ecfe/ui/enhancedmods.lua</File>
 		<File>ecfe/ui/enhancedmods.xml</File>
+		<!-- enhanced staging room context -->
+		<File>ecfe/ui/enhancedstagingroom.lua</File>
+		<File>ecfe/ui/enhancedstagingroom.xml</File>
+		<!-- enhanced save game menu context -->
+		<File>ecfe/ui/enhancedsavegamemenu.lua</File>
+		<File>ecfe/ui/enhancedsavegamemenu.xml</File>
 		<!-- replacement front end UI controls template -->
 		<File>ecfe/ui/frontend.xml</File>
         <!-- dummy file for goody hut picker context, prevents errors in log -->

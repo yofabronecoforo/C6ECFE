@@ -5,36 +5,31 @@
 =========================================================================== ]]
 
 --[[ =========================================================================
-	begin enhancedmainmenu.lua configuration script
-	this file is a wrapper for the (Enhanced)MainMenu context
+	begin enhancedsavegamemenu.lua configuration script
+	this file is a wrapper for the (Enhanced)SaveGameMenu context
 =========================================================================== ]]
-print("[i]: Loading EnhancedMainMenu.lua UI wrapper . . .");
+print("[i]: Loading EnhancedSaveGameMenu.lua UI wrapper . . .");
 
 --[[ =========================================================================
 	here is where the wrapper magic happens; in order, load the following: 
-		(I) the last imported MainMenu.lua UI implementation script
+		(I) the last imported SaveGameMenu.lua UI implementation script
 		(II) the contents of any files matching these patterns:
-			(A) MainMenu_
-			(B) mainmenu_
+			(A) SaveGameMenu_
+			(B) savegamemenu_
 	this should catch all changes to this context provided by ECFE and other mods that utilize this framework
 =========================================================================== ]]
 include("commonfrontend");
-print("[+]: Including MainMenu.lua from last imported source . . .");
-include("MainMenu");
-print("[i]: Including any imported files matching pattern '{M|m}ain{M|m}enu_*.lua' . . .");
-include("MainMenu_", true);
-include("mainmenu_", true);
-
---[[ =========================================================================
-	reset version string
-=========================================================================== ]]
-Controls.VersionLabel:SetText(ECFE.GetMainMenuVersionString(ECFE.Content.Version));
+print("[+]: Including SaveGameMenu.lua from last imported source . . .");
+include("SaveGameMenu");
+print("[i]: Including any imported files matching pattern '{S|s}ave{G|g}ame{M|m}enu_*.lua' . . .");
+include("SaveGameMenu_", true);
+include("savegamemenu_", true);
 
 --[[ =========================================================================
 	log successful completed loading of this component
 =========================================================================== ]]
-print("[!]: Finished loading EnhancedMainMenu.lua UI wrapper.");
+print("[!]: Finished loading EnhancedSaveGameMenu.lua UI wrapper.");
 
 --[[ =========================================================================
-	end enhancedmainmenu.lua configuration script
+	end enhancedsavegamemenu.lua configuration script
 =========================================================================== ]]

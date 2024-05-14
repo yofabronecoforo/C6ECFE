@@ -25,56 +25,32 @@ ECFE replaces the following Frontend context files:
 ECFE replaces the following Frontend contexts:
 - AdvancedSetup
 - HostGame
+- LoadGameMenu
+- Lobby
 - MainMenu
 - Mods
+- SaveGameMenu
+- StagingRoom
+
+ECFE provides the following new (wrapper) scripts used to replace and/or extend code in replaced contexts:
+- `CommonFrontend.lua`
+- `EnhancedGameSetupLogic.lua`
 
 ## `FrontEnd.xml` 
 This UI controls file is a modified version which provides the `EnhancedMainMenu` context by [modifying the LuaContext node](CONTEXTS.md#parent-contexts) for the `MainMenu` context. There are no other differences between this file and the built-in version.
 
-## EnhancedMainMenu 
-This context replaces the MainMenu context.
-
-This context is a [parent](CONTEXTS.md#parent-contexts) of the following replaced contexts:
-- `AdvancedSetup` --> `EnhancedAdvancedSetup`
-- `HostGame` --> `EnhancedHostGame`
-- `Mods` --> `EnhancedMods`
-
-## EnhancedAdvancedSetup 
-This context replaces the AdvancedSetup context.
-
-This context is a [parent](CONTEXTS.md#parent-contexts) of the following new contexts:
-- `GoodyHutPicker` used by [Enhanced Goodies and Hostile Villagers (EGHV)](https://github.com/yofabronecoforo/C6EGHV)
-- `NaturalWondersPicker` used by [Enhanced Natural Wonders Selection (ENWS)](https://github.com/yofabronecoforo/C6ENWS)
-
-## EnhancedHostGame 
-This context replaces the HostGame context.
-
-This context is a [parent](CONTEXTS.md#parent-contexts) of the following replaced contexts:
-- `Mods` --> `EnhancedMods`
-
-This context is a [parent](CONTEXTS.md#parent-contexts) of the following new contexts:
-- `GoodyHutPicker` used by [Enhanced Goodies and Hostile Villagers (EGHV)](https://github.com/yofabronecoforo/C6EGHV)
-- `NaturalWondersPicker` used by [Enhanced Natural Wonders Selection (ENWS)](https://github.com/yofabronecoforo/C6ENWS)
-
-## EnhancedMods 
-This context replaces the Mods context.
-
-This context is a child of the following replaced contexts:
-- `AdvancedSetup` --> `EnhancedAdvancedSetup`
-- `HostGame` --> `EnhancedHostGame`
+## Replaced Contexts 
+Replaced Frontend contexts are implemented as wrappers which load the last-imported original files, and replace and/or extend code as needed. Comprehensive details can be found [here](CONTEXTS.md).
 
 ## `CommonFrontend.lua` 
-This file contains additions that affect both the (Enhanced)AdvancedSetup and (Enhanced)HostGame contexts, and which generally should be loaded before any other files in those contexts.
+This file contains additions that affect multiple contexts, and which generally should be loaded before any other files in those contexts.
 
 ## `EnhancedGameSetupLogic.lua` 
 This Lua wrapper consists of changes to the `GameSetupLogic.lua` script used by both the (Enhanced)AdvancedSetup and (Enhanced)HostGame contexts. It contains the following components:
-1. Directives to include files matching the following patterns:
+1. Any additional changes to `GameSetupLogic.lua` that should be loaded after the files listed above.
+2. Directives to include files matching the following patterns:
     - `GameSetupLogic_*.lua`
     - `gamesetuplogic_*.lua`
-2. Any additional changes to `GameSetupLogic.lua` that should be loaded after the files listed above.
-
-## `ExposedMembers.lua` 
-This Lua wrapper consists of components which are declared in the ExposedMembers table, and can thus be shared between contexts.
 
 ## New Picker Button Text 
 ECFE modifies the text of picker buttons to reflect the number of selected items and the number of available items at all times.
@@ -118,6 +94,9 @@ BFE is a special case as it is explicitly compatible with YnAMP. By utilizing so
 ### HostGame 
 - Multiplayer Helper
 
+### LoadGameMenu
+- Better FrontEnd (UI)
+
 ### MainMenu 
 - Better FrontEnd (UI)
 - Multiplayer Helper
@@ -126,6 +105,9 @@ BFE and MPH will actually sort-of interoperate. Currently, MPH's replacement fil
 
 ### Mods 
 - Enhanced Mod Manager
+
+### SaveGameMenu
+- Better FrontEnd (UI)
 
 ## Other Compatible Mods 
 In addition to the above, ECFE was tested with all of the following additional mods enabled, and is thus known to be compatible with them:
@@ -183,12 +165,15 @@ ECFE replaces the following existing Frontend context file(s):
 ECFE adds the following new Frontend context file(s):
 - `EnhancedAdvancedSetup.lua` and `EnhancedAdvancedSetup.xml`
 - `EnhancedHostGame.lua` and `EnhancedHostGame.xml`
+- `EnhancedLoadGameMenu.lua` and `EnhancedLoadGameMenu.xml`
+- `EnhancedLobby.lua` and `EnhancedLobby.xml`
 - `EnhancedMainMenu.lua` and `EnhancedMainMenu.xml`
 - `EnhancedMods.lua` and `EnhancedMods.xml`
+- `EnhancedSaveGameMenu.lua` and `EnhancedSaveGameMenu.xml`
+- `EnhancedStagingRoom.lua` and `EnhancedStagingRoom.xml`
 
 ECFE adds the following new Frontend Lua script file(s):
 - `CommonFrontend.lua`
 - `EnhancedGameSetupLogic.lua`
-- `ExposedMembers.lua`
 
 If your mod replaces any of these files, compatibility issues **WILL** arise.

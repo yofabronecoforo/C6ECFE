@@ -1,0 +1,18 @@
+﻿<!--==========================================================================
+	C6ECFE : Enhanced Community FrontEnd for Civilization VI
+    Copyright (c) 2023-2024 yofabronecoforo
+	All rights reserved
+===========================================================================-->
+<?xml version="1.0" encoding="utf-8"?>
+<!--==========================================================================
+	enhancedsavegamemenu.xml 
+	this file is a wrapper for the (Enhanced)SaveGameMenu context
+	it loads the last imported SaveGameMenu.xml UI controls template
+===========================================================================-->
+<Context ColorSet="BodyTextCool" 
+	Style="FontNormal22" 
+	FontEffect="Stroke" >
+
+	<Include File="SaveGameMenu" />
+	
+</Context>

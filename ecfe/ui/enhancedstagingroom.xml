@@ -1,0 +1,21 @@
+﻿<!--==========================================================================
+	C6ECFE : Enhanced Community FrontEnd for Civilization VI
+    Copyright (c) 2023-2024 yofabronecoforo
+	All rights reserved
+===========================================================================-->
+<?xml version="1.0" encoding="utf-8"?>
+<!--==========================================================================
+	enhancedstagingroom.xml 
+	this file is a wrapper for the (Enhanced)StagingRoom context
+	it loads the last imported StagingRoom.xml UI controls template
+===========================================================================-->
+<ContextDefaults ColorSet="BodyTextCool" 
+	Style="FontNormal22" 
+	FontStyle="Glow" 
+	Name="StagingRoom" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:noNamespaceSchemaLocation="..\..\ForgeUI_Assets\Controls.xsd">
+
+	<Include File="StagingRoom" />
+	
+</ContextDefaults>

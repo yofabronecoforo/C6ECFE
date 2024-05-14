@@ -157,6 +157,21 @@ function GameParameters_UI_CreateParameterDriver(o, parameter, ...)
 end
 
 --[[ =========================================================================
+	NEW/OVERRIDE: declare OnSetParameterValue() here if the loaded AdvancedSetup or HostGame script does not do so
+	otherwise use the previously defined function
+	this is going here to avoid duplicating code
+=========================================================================== ]]
+OnSetParameterValue = OnSetParameterValue or function (pid: string, value: number) 
+	if (g_GameParameters) then 
+		local kParameter: table = g_GameParameters.Parameters and g_GameParameters.Parameters[pid] or nil;
+		if (kParameter and kParameter.Value ~= nil) then	
+            g_GameParameters:SetParameterValue(kParameter, value);
+			Network.BroadcastGameConfig();	
+		end
+	end	
+end
+
+--[[ =========================================================================
 	include any additional modifications to GameSetupLogic
 =========================================================================== ]]
 print("[i]: Including any imported files matching pattern '{G|g}ame{S|s}etup{L|l}ogic_*.lua' . . .");

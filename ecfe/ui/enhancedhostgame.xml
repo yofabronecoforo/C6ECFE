@@ -21,6 +21,12 @@
 	<!-- EnhancedMods replaces and extends Mods -->
 	<LuaContext ID="ModsMenu"            FileName="EnhancedMods"        Hidden="1" />
 
+	<!-- EnhancedLoadGameMenu replaces and extends LoadGameMenu -->
+	<LuaContext ID="LoadGameMenu"        FileName="EnhancedLoadGameMenu"  Hidden="1" />
+
+	<!-- EnhancedSaveGameMenu replaces and extends SaveGameMenu -->
+	<LuaContext ID="SaveGameMenu"        FileName="EnhancedSaveGameMenu"  Hidden="1" />
+
 	<!-- new Lua context for Enhanced Goodies and Hostile Villagers -->
 	<LuaContext ID="GoodyHutPicker"      FileName="GoodyHutPicker"      Hidden="1"/>
 	
